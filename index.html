@@ -42,7 +42,7 @@
             border-radius: 12px;
             padding: 11px 16px;
             color: white;
-            background: rgba(30,30,50,0.9);
+            background: rgba(30,30,50,0.92);
             backdrop-filter: blur(10px);
             cursor: pointer;
             font-weight: bold;
@@ -59,7 +59,7 @@
             margin-top: 10px;
             padding: 20px;
             text-align: left;
-            background: rgba(20,20,35,0.97);
+            background: rgba(20,20,35,0.98);
             border: 1px solid rgba(255,255,255,0.12);
             border-radius: 16px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.4);
@@ -170,7 +170,7 @@
             z-index: 1;
             width: min(1000px, calc(100% - 30px));
             margin: auto;
-            padding: 30px 0 60px;
+            padding: 75px 0 60px;
         }
 
         .header {
@@ -471,7 +471,7 @@
         }
 
         /* =========================
-           SHAKE
+           SCREEN SHAKE
         ========================= */
 
         .shake {
@@ -616,6 +616,25 @@
         }
 
         /* =========================
+           RESET
+        ========================= */
+
+        #resetButton {
+            margin-top: 35px;
+            border: none;
+            border-radius: 9px;
+            padding: 12px 18px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            background: linear-gradient(135deg, #ef5350, #b71c1c);
+        }
+
+        #resetButton:hover {
+            filter: brightness(1.1);
+        }
+
+        /* =========================
            TOAST
         ========================= */
 
@@ -670,16 +689,18 @@
 <body>
 
 <!-- =========================
-     ACCOUNT MENU
+     ACCOUNT
 ========================= -->
 
 <div class="account-area">
 
-    <button id="accountButton" onclick="toggleAccountMenu()">
+    <button id="accountButton"
+            onclick="toggleAccountMenu()">
         👤 Sign Up / Log In
     </button>
 
-    <div class="account-menu" id="accountMenu">
+    <div class="account-menu"
+         id="accountMenu">
 
         <h3>👤 Account</h3>
 
@@ -709,10 +730,8 @@
             Log In
         </button>
 
-        <button
-            class="secondary-button"
-            onclick="logOut()"
-        >
+        <button class="secondary-button"
+                onclick="logOut()">
             Log Out
         </button>
 
@@ -720,6 +739,8 @@
 
 </div>
 
+
+<!-- BACKGROUND -->
 
 <div id="backgroundParticles"></div>
 
@@ -748,6 +769,8 @@
             points
         </div>
 
+
+        <!-- STATS -->
 
         <div class="stats">
 
@@ -778,7 +801,7 @@
         </div>
 
 
-        <!-- COMBO -->
+        <!-- COMBO BAR -->
 
         <div class="combo-area">
 
@@ -811,9 +834,7 @@
 
             <button id="clickButton"
                     onclick="clickPoint()">
-
                 CLICK!
-
             </button>
 
             <div id="popupArea"></div>
@@ -843,7 +864,9 @@
 
             <div class="cost">
                 Cost:
-                <span id="clickUpgradeCost">10</span>
+                <span id="clickUpgradeCost">
+                    10
+                </span>
             </div>
 
             <button id="clickUpgradeButton"
@@ -864,7 +887,9 @@
 
             <div class="cost">
                 Cost:
-                <span id="autoUpgradeCost">50</span>
+                <span id="autoUpgradeCost">
+                    50
+                </span>
             </div>
 
             <button id="autoUpgradeButton"
@@ -885,7 +910,9 @@
 
             <div class="cost">
                 Cost:
-                <span id="critUpgradeCost">100</span>
+                <span id="critUpgradeCost">
+                    100
+                </span>
             </div>
 
             <button id="critUpgradeButton"
@@ -906,7 +933,9 @@
 
             <div class="cost">
                 Cost:
-                <span id="comboUpgradeCost">150</span>
+                <span id="comboUpgradeCost">
+                    150
+                </span>
             </div>
 
             <button id="comboUpgradeButton"
@@ -927,7 +956,9 @@
 
             <div class="cost">
                 Cost:
-                <span id="megaUpgradeCost">300</span>
+                <span id="megaUpgradeCost">
+                    300
+                </span>
             </div>
 
             <button id="megaUpgradeButton"
@@ -948,7 +979,9 @@
 
             <div class="cost">
                 Cost:
-                <span id="autoPowerCost">500</span>
+                <span id="autoPowerCost">
+                    500
+                </span>
             </div>
 
             <button id="autoPowerButton"
@@ -971,94 +1004,274 @@
 
     <div class="achievements">
 
+        <!-- 1 -->
         <div class="achievement" id="achievement100">
-
             <div class="achievement-title">
                 🎯 First 100
             </div>
-
             <div class="achievement-text">
                 Reach 100 points.
             </div>
-
         </div>
 
-
+        <!-- 2 -->
         <div class="achievement" id="achievement1000">
-
             <div class="achievement-title">
                 💰 Big Saver
             </div>
-
             <div class="achievement-text">
                 Reach 1,000 points.
             </div>
-
         </div>
 
-
+        <!-- 3 -->
         <div class="achievement" id="achievement10000">
-
             <div class="achievement-title">
                 👑 Click Master
             </div>
-
             <div class="achievement-text">
                 Reach 10,000 points.
             </div>
-
         </div>
 
-
+        <!-- 4 -->
         <div class="achievement" id="achievement100clicks">
-
             <div class="achievement-title">
                 🖱️ Clicker Pro
             </div>
-
             <div class="achievement-text">
                 Click 100 times.
             </div>
-
         </div>
 
-
+        <!-- 5 -->
         <div class="achievement" id="achievementCombo10">
-
             <div class="achievement-title">
                 🔥 Combo Starter
             </div>
-
             <div class="achievement-text">
                 Reach a 10x combo.
             </div>
-
         </div>
 
-
+        <!-- 6 -->
         <div class="achievement" id="achievementCombo25">
-
             <div class="achievement-title">
                 ⚡ Combo Master
             </div>
-
             <div class="achievement-text">
                 Reach a 25x combo.
             </div>
-
         </div>
 
-
+        <!-- 7 -->
         <div class="achievement" id="achievementCrit">
-
             <div class="achievement-title">
                 💥 Critical Hit
             </div>
-
             <div class="achievement-text">
                 Land a critical click.
             </div>
+        </div>
 
+        <!-- 8 -->
+        <div class="achievement" id="achievement500">
+            <div class="achievement-title">
+                💎 Halfway There
+            </div>
+            <div class="achievement-text">
+                Reach 500 points.
+            </div>
+        </div>
+
+        <!-- 9 -->
+        <div class="achievement" id="achievement50000">
+            <div class="achievement-title">
+                🚀 Point Explosion
+            </div>
+            <div class="achievement-text">
+                Reach 50,000 points.
+            </div>
+        </div>
+
+        <!-- 10 -->
+        <div class="achievement" id="achievement100000">
+            <div class="achievement-title">
+                🌟 Six Figures
+            </div>
+            <div class="achievement-text">
+                Reach 100,000 points.
+            </div>
+        </div>
+
+        <!-- 11 -->
+        <div class="achievement" id="achievement1000000">
+            <div class="achievement-title">
+                👽 Millionaire
+            </div>
+            <div class="achievement-text">
+                Reach 1,000,000 points.
+            </div>
+        </div>
+
+        <!-- 12 -->
+        <div class="achievement" id="achievement500clicks">
+            <div class="achievement-title">
+                🖱️ Speed Clicker
+            </div>
+            <div class="achievement-text">
+                Click 500 times.
+            </div>
+        </div>
+
+        <!-- 13 -->
+        <div class="achievement" id="achievement1000clicks">
+            <div class="achievement-title">
+                🔥 Click Addict
+            </div>
+            <div class="achievement-text">
+                Click 1,000 times.
+            </div>
+        </div>
+
+        <!-- 14 -->
+        <div class="achievement" id="achievement5000clicks">
+            <div class="achievement-title">
+                ⚡ Clicking Machine
+            </div>
+            <div class="achievement-text">
+                Click 5,000 times.
+            </div>
+        </div>
+
+        <!-- 15 -->
+        <div class="achievement" id="achievement10000clicks">
+            <div class="achievement-title">
+                🤖 Human Robot
+            </div>
+            <div class="achievement-text">
+                Click 10,000 times.
+            </div>
+        </div>
+
+        <!-- 16 -->
+        <div class="achievement" id="achievementCombo50">
+            <div class="achievement-title">
+                🔥 Unstoppable
+            </div>
+            <div class="achievement-text">
+                Reach a 50x combo.
+            </div>
+        </div>
+
+        <!-- 17 -->
+        <div class="achievement" id="achievementCombo100">
+            <div class="achievement-title">
+                ⚡ Combo Legend
+            </div>
+            <div class="achievement-text">
+                Reach a 100x combo.
+            </div>
+        </div>
+
+        <!-- 18 -->
+        <div class="achievement" id="achievementCombo250">
+            <div class="achievement-title">
+                👑 Combo God
+            </div>
+            <div class="achievement-text">
+                Reach a 250x combo.
+            </div>
+        </div>
+
+        <!-- 19 -->
+        <div class="achievement" id="achievementCrit10">
+            <div class="achievement-title">
+                🎯 Lucky Streak
+            </div>
+            <div class="achievement-text">
+                Land 10 critical clicks.
+            </div>
+        </div>
+
+        <!-- 20 -->
+        <div class="achievement" id="achievementCrit50">
+            <div class="achievement-title">
+                💥 Critical Expert
+            </div>
+            <div class="achievement-text">
+                Land 50 critical clicks.
+            </div>
+        </div>
+
+        <!-- 21 -->
+        <div class="achievement" id="achievementCrit100">
+            <div class="achievement-title">
+                ☄️ Critical Champion
+            </div>
+            <div class="achievement-text">
+                Land 100 critical clicks.
+            </div>
+        </div>
+
+        <!-- 22 -->
+        <div class="achievement" id="achievementAuto10">
+            <div class="achievement-title">
+                🤖 Getting Automated
+            </div>
+            <div class="achievement-text">
+                Reach 10 points per second.
+            </div>
+        </div>
+
+        <!-- 23 -->
+        <div class="achievement" id="achievementAuto50">
+            <div class="achievement-title">
+                🚀 Automation Nation
+            </div>
+            <div class="achievement-text">
+                Reach 50 points per second.
+            </div>
+        </div>
+
+        <!-- 24 -->
+        <div class="achievement" id="achievementAuto100">
+            <div class="achievement-title">
+                🏭 Point Factory
+            </div>
+            <div class="achievement-text">
+                Reach 100 points per second.
+            </div>
+        </div>
+
+        <!-- 25 -->
+        <div class="achievement" id="achievementPower25">
+            <div class="achievement-title">
+                💪 Super Click
+            </div>
+            <div class="achievement-text">
+                Reach 25 points per click.
+            </div>
+        </div>
+
+        <!-- 26 -->
+        <div class="achievement" id="achievementPower100">
+            <div class="achievement-title">
+                💪 Mega Clicker
+            </div>
+            <div class="achievement-text">
+                Reach 100 points per click.
+            </div>
+        </div>
+
+        <!-- 27 -->
+        <div class="achievement" id="achievementLevel25">
+            <div class="achievement-title">
+                ⭐ Rising Star
+            </div>
+            <div class="achievement-text">
+                Reach level 25.
+            </div>
         </div>
 
     </div>
@@ -1081,9 +1294,9 @@
 
 <script>
 
-    // ==========================================
+    // =========================================================
     // ACCOUNT SYSTEM
-    // ==========================================
+    // =========================================================
 
     let currentUser =
         localStorage.getItem("currentUser") || null;
@@ -1091,29 +1304,61 @@
 
     function getAccounts() {
 
-        return JSON.parse(
-            localStorage.getItem("clickerAccounts") || "{}"
-        );
+        try {
+
+            return JSON.parse(
+                localStorage.getItem(
+                    "ultimateClickerAccounts"
+                ) || "{}"
+            );
+
+        } catch {
+
+            return {};
+        }
     }
 
 
     function saveAccounts(accounts) {
 
         localStorage.setItem(
-            "clickerAccounts",
+            "ultimateClickerAccounts",
             JSON.stringify(accounts)
         );
+    }
+
+
+    function toggleAccountMenu() {
+
+        document
+            .getElementById("accountMenu")
+            .classList.toggle("show");
+    }
+
+
+    function clearAccountInputs() {
+
+        document.getElementById(
+            "username"
+        ).value = "";
+
+        document.getElementById(
+            "password"
+        ).value = "";
     }
 
 
     function signUp() {
 
         const username =
-            document.getElementById("username")
-                .value.trim();
+            document
+                .getElementById("username")
+                .value
+                .trim();
 
         const password =
-            document.getElementById("password")
+            document
+                .getElementById("password")
                 .value;
 
         if (!username || !password) {
@@ -1146,7 +1391,10 @@
         const accounts =
             getAccounts();
 
-        if (accounts[username]) {
+        const accountKey =
+            username.toLowerCase();
+
+        if (accounts[accountKey]) {
 
             showToast(
                 "That username already exists."
@@ -1155,14 +1403,19 @@
             return;
         }
 
-        accounts[username] = {
+        accounts[accountKey] = {
+
+            username: username,
+
             password: password,
+
             game: createNewGame()
         };
 
         saveAccounts(accounts);
 
-        currentUser = username;
+        currentUser =
+            accountKey;
 
         localStorage.setItem(
             "currentUser",
@@ -1184,17 +1437,23 @@
     function logIn() {
 
         const username =
-            document.getElementById("username")
-                .value.trim();
+            document
+                .getElementById("username")
+                .value
+                .trim();
 
         const password =
-            document.getElementById("password")
+            document
+                .getElementById("password")
                 .value;
 
         const accounts =
             getAccounts();
 
-        if (!accounts[username]) {
+        const accountKey =
+            username.toLowerCase();
+
+        if (!accounts[accountKey]) {
 
             showToast(
                 "Account not found."
@@ -1203,7 +1462,10 @@
             return;
         }
 
-        if (accounts[username].password !== password) {
+        if (
+            accounts[accountKey].password !==
+            password
+        ) {
 
             showToast(
                 "Incorrect password."
@@ -1212,7 +1474,8 @@
             return;
         }
 
-        currentUser = username;
+        currentUser =
+            accountKey;
 
         localStorage.setItem(
             "currentUser",
@@ -1224,7 +1487,9 @@
         clearAccountInputs();
 
         showToast(
-            "✅ Welcome back, " + username + "!"
+            "✅ Welcome back, " +
+            accounts[accountKey].username +
+            "!"
         );
 
         updateAccountUI();
@@ -1234,7 +1499,6 @@
     function logOut() {
 
         if (currentUser) {
-
             saveCurrentUserGame();
         }
 
@@ -1255,26 +1519,6 @@
     }
 
 
-    function toggleAccountMenu() {
-
-        document
-            .getElementById("accountMenu")
-            .classList.toggle("show");
-    }
-
-
-    function clearAccountInputs() {
-
-        document.getElementById(
-            "username"
-        ).value = "";
-
-        document.getElementById(
-            "password"
-        ).value = "";
-    }
-
-
     function updateAccountUI() {
 
         const button =
@@ -1292,16 +1536,27 @@
                 "playerWelcome"
             );
 
-        if (currentUser) {
+        const accounts =
+            getAccounts();
+
+        if (
+            currentUser &&
+            accounts[currentUser]
+        ) {
+
+            const displayName =
+                accounts[currentUser].username;
 
             button.textContent =
-                "👤 " + currentUser;
+                "👤 " + displayName;
 
             status.textContent =
-                "Logged in as " + currentUser;
+                "Logged in as " +
+                displayName;
 
             welcome.textContent =
-                "Playing as " + currentUser;
+                "Playing as " +
+                displayName;
 
         } else {
 
@@ -1317,27 +1572,40 @@
     }
 
 
-    // ==========================================
+    // =========================================================
     // GAME VARIABLES
-    // ==========================================
+    // =========================================================
 
     let points = 0;
+
     let pointsPerClick = 1;
+
     let pointsPerSecond = 0;
 
     let criticalChance = 5;
+
     let criticalMultiplier = 2;
+
     let comboBonusPerLevel = 2;
 
     let clickUpgradeCost = 10;
+
     let autoUpgradeCost = 50;
+
     let critUpgradeCost = 100;
+
     let comboUpgradeCost = 150;
+
     let megaUpgradeCost = 300;
+
     let autoPowerCost = 500;
 
     let totalClicks = 0;
+
+    let criticalHits = 0;
+
     let combo = 0;
+
     let maxCombo = 0;
 
     let achievements = {};
@@ -1347,30 +1615,44 @@
     const COMBO_TIME = 2000;
 
 
-    // ==========================================
-    // CREATE NEW GAME
-    // ==========================================
+    // =========================================================
+    // NEW GAME DATA
+    // =========================================================
 
     function createNewGame() {
 
         return {
+
             points: 0,
+
             pointsPerClick: 1,
+
             pointsPerSecond: 0,
 
             criticalChance: 5,
+
             criticalMultiplier: 2,
+
             comboBonusPerLevel: 2,
 
             clickUpgradeCost: 10,
+
             autoUpgradeCost: 50,
+
             critUpgradeCost: 100,
+
             comboUpgradeCost: 150,
+
             megaUpgradeCost: 300,
+
             autoPowerCost: 500,
 
             totalClicks: 0,
+
+            criticalHits: 0,
+
             combo: 0,
+
             maxCombo: 0,
 
             achievements: {}
@@ -1378,9 +1660,73 @@
     }
 
 
-    // ==========================================
-    // SAVE CURRENT PLAYER
-    // ==========================================
+    // =========================================================
+    // RESET ONLY THE CURRENT VARIABLES
+    // =========================================================
+
+    function resetVariablesOnly() {
+
+        const fresh =
+            createNewGame();
+
+        points =
+            fresh.points;
+
+        pointsPerClick =
+            fresh.pointsPerClick;
+
+        pointsPerSecond =
+            fresh.pointsPerSecond;
+
+        criticalChance =
+            fresh.criticalChance;
+
+        criticalMultiplier =
+            fresh.criticalMultiplier;
+
+        comboBonusPerLevel =
+            fresh.comboBonusPerLevel;
+
+        clickUpgradeCost =
+            fresh.clickUpgradeCost;
+
+        autoUpgradeCost =
+            fresh.autoUpgradeCost;
+
+        critUpgradeCost =
+            fresh.critUpgradeCost;
+
+        comboUpgradeCost =
+            fresh.comboUpgradeCost;
+
+        megaUpgradeCost =
+            fresh.megaUpgradeCost;
+
+        autoPowerCost =
+            fresh.autoPowerCost;
+
+        totalClicks =
+            fresh.totalClicks;
+
+        criticalHits =
+            fresh.criticalHits;
+
+        combo =
+            fresh.combo;
+
+        maxCombo =
+            fresh.maxCombo;
+
+        achievements =
+            fresh.achievements;
+
+        comboTimer = 0;
+    }
+
+
+    // =========================================================
+    // SAVE CURRENT USER'S GAME
+    // =========================================================
 
     function saveCurrentUserGame() {
 
@@ -1396,23 +1742,37 @@
         }
 
         accounts[currentUser].game = {
+
             points,
+
             pointsPerClick,
+
             pointsPerSecond,
 
             criticalChance,
+
             criticalMultiplier,
+
             comboBonusPerLevel,
 
             clickUpgradeCost,
+
             autoUpgradeCost,
+
             critUpgradeCost,
+
             comboUpgradeCost,
+
             megaUpgradeCost,
+
             autoPowerCost,
 
             totalClicks,
+
+            criticalHits,
+
             combo,
+
             maxCombo,
 
             achievements
@@ -1422,24 +1782,30 @@
     }
 
 
-    // ==========================================
-    // LOAD CURRENT PLAYER
-    // ==========================================
+    // =========================================================
+    // LOAD CURRENT USER'S GAME
+    // =========================================================
 
     function loadCurrentUserGame() {
 
         const accounts =
             getAccounts();
 
-        if (!currentUser ||
-            !accounts[currentUser]) {
+        if (
+            !currentUser ||
+            !accounts[currentUser]
+        ) {
 
             resetVariablesOnly();
+
+            updateScreen();
+
             return;
         }
 
         const data =
-            accounts[currentUser].game;
+            accounts[currentUser].game ||
+            createNewGame();
 
         points =
             data.points ?? 0;
@@ -1480,6 +1846,9 @@
         totalClicks =
             data.totalClicks ?? 0;
 
+        criticalHits =
+            data.criticalHits ?? 0;
+
         combo =
             data.combo ?? 0;
 
@@ -1495,57 +1864,12 @@
     }
 
 
-    // ==========================================
-    // RESET VARIABLES
-    // ==========================================
-
-    function resetVariablesOnly() {
-
-        const fresh =
-            createNewGame();
-
-        points = fresh.points;
-        pointsPerClick = fresh.pointsPerClick;
-        pointsPerSecond = fresh.pointsPerSecond;
-
-        criticalChance = fresh.criticalChance;
-        criticalMultiplier = fresh.criticalMultiplier;
-        comboBonusPerLevel =
-            fresh.comboBonusPerLevel;
-
-        clickUpgradeCost =
-            fresh.clickUpgradeCost;
-
-        autoUpgradeCost =
-            fresh.autoUpgradeCost;
-
-        critUpgradeCost =
-            fresh.critUpgradeCost;
-
-        comboUpgradeCost =
-            fresh.comboUpgradeCost;
-
-        megaUpgradeCost =
-            fresh.megaUpgradeCost;
-
-        autoPowerCost =
-            fresh.autoPowerCost;
-
-        totalClicks = 0;
-        combo = 0;
-        maxCombo = 0;
-
-        achievements = {};
-
-        comboTimer = 0;
-    }
-
-
-    // ==========================================
-    // SOUND
-    // ==========================================
+    // =========================================================
+    // SOUND SYSTEM
+    // =========================================================
 
     let audioContext = null;
+
 
     function getAudioContext() {
 
@@ -1558,7 +1882,11 @@
                 )();
         }
 
-        if (audioContext.state === "suspended") {
+        if (
+            audioContext.state ===
+            "suspended"
+        ) {
+
             audioContext.resume();
         }
 
@@ -1599,6 +1927,7 @@
         );
 
         oscillator.connect(gain);
+
         gain.connect(ctx.destination);
 
         oscillator.start();
@@ -1630,12 +1959,13 @@
         );
 
         setTimeout(
-            () => playSound(
-                800,
-                0.15,
-                "triangle",
-                0.05
-            ),
+            () =>
+                playSound(
+                    800,
+                    0.15,
+                    "triangle",
+                    0.05
+                ),
             60
         );
     }
@@ -1651,73 +1981,94 @@
         );
 
         setTimeout(
-            () => playSound(
-                700,
-                0.12,
-                "sine",
-                0.04
-            ),
+            () =>
+                playSound(
+                    700,
+                    0.12,
+                    "sine",
+                    0.04
+                ),
             70
         );
     }
 
 
-    // ==========================================
+    // =========================================================
     // MAIN CLICK
-    // ==========================================
+    // =========================================================
 
     function clickPoint() {
 
         totalClicks++;
 
         combo++;
-        comboTimer = COMBO_TIME;
+
+        comboTimer =
+            COMBO_TIME;
 
         if (combo > maxCombo) {
-            maxCombo = combo;
+
+            maxCombo =
+                combo;
         }
 
         const comboMultiplier =
             1 +
-            (combo * comboBonusPerLevel / 100);
+            (
+                combo *
+                comboBonusPerLevel /
+                100
+            );
 
         const isCritical =
-            Math.random() * 100 <
+            Math.random() *
+            100 <
             criticalChance;
 
         let multiplier =
             comboMultiplier;
 
+
         if (isCritical) {
 
-            multiplier *= criticalMultiplier;
+            criticalHits++;
 
-            achievements["Critical Hit"] =
-                true;
+            achievements[
+                "Critical Hit"
+            ] = true;
+
+            multiplier *=
+                criticalMultiplier;
 
             criticalSound();
 
             showPopup(
                 "💥 CRITICAL +" +
                 formatNumber(
-                    pointsPerClick * multiplier
+                    pointsPerClick *
+                    multiplier
                 ),
                 "critical-popup"
             );
 
             createParticles(22);
 
-            document
-                .getElementById("game")
-                .classList.add("shake");
+            const game =
+                document.getElementById(
+                    "game"
+                );
 
-            setTimeout(function() {
+            game.classList.add(
+                "shake"
+            );
 
-                document
-                    .getElementById("game")
-                    .classList.remove("shake");
-
-            }, 180);
+            setTimeout(
+                () =>
+                    game.classList.remove(
+                        "shake"
+                    ),
+                180
+            );
 
         } else {
 
@@ -1726,7 +2077,8 @@
             showPopup(
                 "+" +
                 formatNumber(
-                    pointsPerClick * multiplier
+                    pointsPerClick *
+                    multiplier
                 ),
                 "normal-popup"
             );
@@ -1734,8 +2086,11 @@
             createParticles(8);
         }
 
+
         points +=
-            pointsPerClick * multiplier;
+            pointsPerClick *
+            multiplier;
+
 
         if (combo === 10) {
 
@@ -1752,6 +2107,7 @@
             );
         }
 
+
         if (combo === 25) {
 
             showPopup(
@@ -1767,16 +2123,18 @@
             );
         }
 
+
         pulseClickButton();
 
         saveCurrentUserGame();
+
         updateScreen();
     }
 
 
-    // ==========================================
+    // =========================================================
     // CLICK BUTTON ANIMATION
-    // ==========================================
+    // =========================================================
 
     function pulseClickButton() {
 
@@ -1797,9 +2155,9 @@
     }
 
 
-    // ==========================================
-    // POPUPS
-    // ==========================================
+    // =========================================================
+    // POPUP
+    // =========================================================
 
     function showPopup(
         text,
@@ -1817,29 +2175,36 @@
             );
 
         popup.className =
-            "popup " + className;
+            "popup " +
+            className;
 
         popup.textContent =
             text;
 
         popup.style.left =
-            (50 + (
-                Math.random() * 30 - 15
-            )) + "%";
+            (
+                50 +
+                (
+                    Math.random() *
+                    30 - 15
+                )
+            ) +
+            "%";
 
-        area.appendChild(popup);
+        area.appendChild(
+            popup
+        );
 
-        setTimeout(function() {
-
-            popup.remove();
-
-        }, 900);
+        setTimeout(
+            () => popup.remove(),
+            900
+        );
     }
 
 
-    // ==========================================
+    // =========================================================
     // PARTICLES
-    // ==========================================
+    // =========================================================
 
     function createParticles(amount) {
 
@@ -1847,6 +2212,14 @@
             document.getElementById(
                 "popupArea"
             );
+
+        const particleColors = [
+            "#4dd0e1",
+            "#ffd740",
+            "#ff4081",
+            "#7c4dff",
+            "#69f0ae"
+        ];
 
         for (
             let i = 0;
@@ -1864,27 +2237,32 @@
 
             const angle =
                 Math.random() *
-                Math.PI * 2;
+                Math.PI *
+                2;
 
             const distance =
                 80 +
-                Math.random() * 120;
+                Math.random() *
+                120;
 
             particle.style.setProperty(
                 "--x",
                 Math.cos(angle) *
-                distance + "px"
+                distance +
+                "px"
             );
 
             particle.style.setProperty(
                 "--y",
                 Math.sin(angle) *
-                distance + "px"
+                distance +
+                "px"
             );
 
             const size =
                 4 +
-                Math.random() * 7;
+                Math.random() *
+                7;
 
             particle.style.width =
                 size + "px";
@@ -1893,15 +2271,10 @@
                 size + "px";
 
             particle.style.background =
-                [
-                    "#4dd0e1",
-                    "#ffd740",
-                    "#ff4081",
-                    "#7c4dff",
-                    "#69f0ae"
-                ][
+                particleColors[
                     Math.floor(
-                        Math.random() * 5
+                        Math.random() *
+                        particleColors.length
                     )
                 ];
 
@@ -1909,18 +2282,98 @@
                 particle
             );
 
-            setTimeout(function() {
-
-                particle.remove();
-
-            }, 700);
+            setTimeout(
+                () => particle.remove(),
+                700
+            );
         }
     }
 
 
-    // ==========================================
-    // SCREEN
-    // ==========================================
+    // =========================================================
+    // COMBO BAR
+    // =========================================================
+
+    function updateComboBar() {
+
+        const percent =
+            (
+                comboTimer /
+                COMBO_TIME
+            ) * 100;
+
+        document.getElementById(
+            "comboBar"
+        ).style.width =
+            Math.max(
+                0,
+                percent
+            ) +
+            "%";
+
+        document.getElementById(
+            "comboTimerText"
+        ).textContent =
+            comboTimer > 0
+                ? (
+                    comboTimer / 1000
+                ).toFixed(1) +
+                "s"
+                : "Ready!";
+    }
+
+
+    setInterval(
+        function() {
+
+            if (comboTimer > 0) {
+
+                comboTimer -= 50;
+
+                if (comboTimer <= 0) {
+
+                    comboTimer = 0;
+
+                    combo = 0;
+
+                    saveCurrentUserGame();
+
+                    updateScreen();
+                }
+
+                updateComboBar();
+            }
+
+        },
+        50
+    );
+
+
+    // =========================================================
+    // AUTO POINTS
+    // =========================================================
+
+    setInterval(
+        function() {
+
+            if (pointsPerSecond > 0) {
+
+                points +=
+                    pointsPerSecond;
+
+                saveCurrentUserGame();
+
+                updateScreen();
+            }
+
+        },
+        1000
+    );
+
+
+    // =========================================================
+    // UPDATES
+    // =========================================================
 
     function updateScreen() {
 
@@ -1932,27 +2385,36 @@
         document.getElementById(
             "perClick"
         ).textContent =
-            formatNumber(pointsPerClick);
+            formatNumber(
+                pointsPerClick
+            );
 
         document.getElementById(
             "perSecond"
         ).textContent =
-            formatNumber(pointsPerSecond);
+            formatNumber(
+                pointsPerSecond
+            );
 
         document.getElementById(
             "critChance"
         ).textContent =
-            criticalChance + "%";
+            criticalChance +
+            "%";
 
         document.getElementById(
             "combo"
         ).textContent =
-            combo + "x";
+            combo +
+            "x";
 
         document.getElementById(
             "comboBonus"
         ).textContent =
-            (combo * comboBonusPerLevel) +
+            (
+                combo *
+                comboBonusPerLevel
+            ) +
             "%";
 
         document.getElementById(
@@ -1998,7 +2460,9 @@
             );
 
         const level =
-            Math.floor(points / 100) + 1;
+            Math.floor(
+                points / 100
+            ) + 1;
 
         document.getElementById(
             "level"
@@ -2006,148 +2470,99 @@
             level;
 
         updateButtons();
+
         updateComboBar();
+
         checkAchievements();
+
         updateAccountUI();
     }
 
 
-    // ==========================================
-    // BUTTONS
-    // ==========================================
+    // =========================================================
+    // UPGRADE BUTTONS
+    // =========================================================
 
     function updateButtons() {
 
         const buttons = [
+
             [
                 "clickUpgradeButton",
                 clickUpgradeCost
             ],
+
             [
                 "autoUpgradeButton",
                 autoUpgradeCost
             ],
+
             [
                 "critUpgradeButton",
                 critUpgradeCost
             ],
+
             [
                 "comboUpgradeButton",
                 comboUpgradeCost
             ],
+
             [
                 "megaUpgradeButton",
                 megaUpgradeCost
             ],
+
             [
                 "autoPowerButton",
                 autoPowerCost
             ]
         ];
 
-        buttons.forEach(function(item) {
+        buttons.forEach(
+            function(item) {
 
-            const button =
-                document.getElementById(
-                    item[0]
+                const button =
+                    document.getElementById(
+                        item[0]
+                    );
+
+                const affordable =
+                    points >= item[1];
+
+                button.disabled =
+                    !affordable;
+
+                button.classList.toggle(
+                    "affordable",
+                    affordable
                 );
-
-            const affordable =
-                points >= item[1];
-
-            button.disabled =
-                !affordable;
-
-            button.classList.toggle(
-                "affordable",
-                affordable
-            );
-        });
-    }
-
-
-    // ==========================================
-    // COMBO BAR
-    // ==========================================
-
-    function updateComboBar() {
-
-        const percent =
-            (comboTimer /
-                COMBO_TIME) * 100;
-
-        document.getElementById(
-            "comboBar"
-        ).style.width =
-            Math.max(
-                0,
-                percent
-            ) + "%";
-
-        document.getElementById(
-            "comboTimerText"
-        ).textContent =
-            comboTimer > 0
-                ? (comboTimer / 1000)
-                    .toFixed(1) + "s"
-                : "Ready!";
-    }
-
-
-    setInterval(function() {
-
-        if (comboTimer > 0) {
-
-            comboTimer -= 50;
-
-            if (comboTimer <= 0) {
-
-                comboTimer = 0;
-                combo = 0;
-
-                saveCurrentUserGame();
-                updateScreen();
             }
-
-            updateComboBar();
-        }
-
-    }, 50);
+        );
+    }
 
 
-    // ==========================================
-    // AUTO POINTS
-    // ==========================================
-
-    setInterval(function() {
-
-        if (pointsPerSecond > 0) {
-
-            points +=
-                pointsPerSecond;
-
-            saveCurrentUserGame();
-            updateScreen();
-        }
-
-    }, 1000);
-
-
-    // ==========================================
+    // =========================================================
     // UPGRADES
-    // ==========================================
+    // =========================================================
 
     function buyClickUpgrade() {
 
-        if (points < clickUpgradeCost)
+        if (
+            points <
+            clickUpgradeCost
+        ) {
             return;
+        }
 
-        points -= clickUpgradeCost;
+        points -=
+            clickUpgradeCost;
+
         pointsPerClick++;
 
         clickUpgradeCost =
             Math.floor(
-                clickUpgradeCost * 1.5
+                clickUpgradeCost *
+                1.5
             );
 
         upgradeSound();
@@ -2157,21 +2572,29 @@
         );
 
         saveCurrentUserGame();
+
         updateScreen();
     }
 
 
     function buyAutoUpgrade() {
 
-        if (points < autoUpgradeCost)
+        if (
+            points <
+            autoUpgradeCost
+        ) {
             return;
+        }
 
-        points -= autoUpgradeCost;
+        points -=
+            autoUpgradeCost;
+
         pointsPerSecond++;
 
         autoUpgradeCost =
             Math.floor(
-                autoUpgradeCost * 1.7
+                autoUpgradeCost *
+                1.7
             );
 
         upgradeSound();
@@ -2181,16 +2604,22 @@
         );
 
         saveCurrentUserGame();
+
         updateScreen();
     }
 
 
     function buyCritUpgrade() {
 
-        if (points < critUpgradeCost)
+        if (
+            points <
+            critUpgradeCost
+        ) {
             return;
+        }
 
-        points -= critUpgradeCost;
+        points -=
+            critUpgradeCost;
 
         criticalChance =
             Math.min(
@@ -2200,7 +2629,8 @@
 
         critUpgradeCost =
             Math.floor(
-                critUpgradeCost * 1.8
+                critUpgradeCost *
+                1.8
             );
 
         upgradeSound();
@@ -2210,22 +2640,29 @@
         );
 
         saveCurrentUserGame();
+
         updateScreen();
     }
 
 
     function buyComboUpgrade() {
 
-        if (points < comboUpgradeCost)
+        if (
+            points <
+            comboUpgradeCost
+        ) {
             return;
+        }
 
-        points -= comboUpgradeCost;
+        points -=
+            comboUpgradeCost;
 
         comboBonusPerLevel++;
 
         comboUpgradeCost =
             Math.floor(
-                comboUpgradeCost * 1.8
+                comboUpgradeCost *
+                1.8
             );
 
         upgradeSound();
@@ -2235,22 +2672,30 @@
         );
 
         saveCurrentUserGame();
+
         updateScreen();
     }
 
 
     function buyMegaUpgrade() {
 
-        if (points < megaUpgradeCost)
+        if (
+            points <
+            megaUpgradeCost
+        ) {
             return;
+        }
 
-        points -= megaUpgradeCost;
+        points -=
+            megaUpgradeCost;
 
-        criticalMultiplier += 0.5;
+        criticalMultiplier +=
+            0.5;
 
         megaUpgradeCost =
             Math.floor(
-                megaUpgradeCost * 2
+                megaUpgradeCost *
+                2
             );
 
         upgradeSound();
@@ -2260,22 +2705,29 @@
         );
 
         saveCurrentUserGame();
+
         updateScreen();
     }
 
 
     function buyAutoPowerUpgrade() {
 
-        if (points < autoPowerCost)
+        if (
+            points <
+            autoPowerCost
+        ) {
             return;
+        }
 
-        points -= autoPowerCost;
+        points -=
+            autoPowerCost;
 
         pointsPerSecond += 5;
 
         autoPowerCost =
             Math.floor(
-                autoPowerCost * 2
+                autoPowerCost *
+                2
             );
 
         upgradeSound();
@@ -2285,13 +2737,14 @@
         );
 
         saveCurrentUserGame();
+
         updateScreen();
     }
 
 
-    // ==========================================
+    // =========================================================
     // ACHIEVEMENTS
-    // ==========================================
+    // =========================================================
 
     function checkAchievements() {
 
@@ -2336,6 +2789,131 @@
             achievements["Critical Hit"] === true,
             "Critical Hit"
         );
+
+
+        // 20 NEW ACHIEVEMENTS
+
+        unlockAchievement(
+            "achievement500",
+            points >= 500,
+            "Halfway There"
+        );
+
+        unlockAchievement(
+            "achievement50000",
+            points >= 50000,
+            "Point Explosion"
+        );
+
+        unlockAchievement(
+            "achievement100000",
+            points >= 100000,
+            "Six Figures"
+        );
+
+        unlockAchievement(
+            "achievement1000000",
+            points >= 1000000,
+            "Millionaire"
+        );
+
+        unlockAchievement(
+            "achievement500clicks",
+            totalClicks >= 500,
+            "Speed Clicker"
+        );
+
+        unlockAchievement(
+            "achievement1000clicks",
+            totalClicks >= 1000,
+            "Click Addict"
+        );
+
+        unlockAchievement(
+            "achievement5000clicks",
+            totalClicks >= 5000,
+            "Clicking Machine"
+        );
+
+        unlockAchievement(
+            "achievement10000clicks",
+            totalClicks >= 10000,
+            "Human Robot"
+        );
+
+        unlockAchievement(
+            "achievementCombo50",
+            maxCombo >= 50,
+            "Unstoppable"
+        );
+
+        unlockAchievement(
+            "achievementCombo100",
+            maxCombo >= 100,
+            "Combo Legend"
+        );
+
+        unlockAchievement(
+            "achievementCombo250",
+            maxCombo >= 250,
+            "Combo God"
+        );
+
+        unlockAchievement(
+            "achievementCrit10",
+            criticalHits >= 10,
+            "Lucky Streak"
+        );
+
+        unlockAchievement(
+            "achievementCrit50",
+            criticalHits >= 50,
+            "Critical Expert"
+        );
+
+        unlockAchievement(
+            "achievementCrit100",
+            criticalHits >= 100,
+            "Critical Champion"
+        );
+
+        unlockAchievement(
+            "achievementAuto10",
+            pointsPerSecond >= 10,
+            "Getting Automated"
+        );
+
+        unlockAchievement(
+            "achievementAuto50",
+            pointsPerSecond >= 50,
+            "Automation Nation"
+        );
+
+        unlockAchievement(
+            "achievementAuto100",
+            pointsPerSecond >= 100,
+            "Point Factory"
+        );
+
+        unlockAchievement(
+            "achievementPower25",
+            pointsPerClick >= 25,
+            "Super Click"
+        );
+
+        unlockAchievement(
+            "achievementPower100",
+            pointsPerClick >= 100,
+            "Mega Clicker"
+        );
+
+        unlockAchievement(
+            "achievementLevel25",
+            Math.floor(
+                points / 100
+            ) + 1 >= 25,
+            "Rising Star"
+        );
     }
 
 
@@ -2347,6 +2925,10 @@
 
         const element =
             document.getElementById(id);
+
+        if (!element) {
+            return;
+        }
 
         if (condition) {
 
@@ -2372,12 +2954,13 @@
                 );
 
                 setTimeout(
-                    () => playSound(
-                        950,
-                        0.2,
-                        "triangle",
-                        0.05
-                    ),
+                    () =>
+                        playSound(
+                            950,
+                            0.2,
+                            "triangle",
+                            0.05
+                        ),
                     120
                 );
 
@@ -2393,21 +2976,24 @@
     }
 
 
-    // ==========================================
-    // RESET
-    // ==========================================
+    // =========================================================
+    // RESET GAME
+    // =========================================================
 
     function resetGame() {
 
-        if (!confirm(
-            "Reset your entire game?"
-        )) {
+        if (
+            !confirm(
+                "Reset your entire game?"
+            )
+        ) {
             return;
         }
 
         resetVariablesOnly();
 
         saveCurrentUserGame();
+
         updateScreen();
 
         showToast(
@@ -2416,34 +3002,47 @@
     }
 
 
-    // ==========================================
+    // =========================================================
     // UTILITIES
-    // ==========================================
+    // =========================================================
 
     function formatNumber(number) {
 
-        if (number >= 1e12)
+        if (number >= 1e12) {
+
             return (
                 number / 1e12
-            ).toFixed(2) + "T";
+            ).toFixed(2) +
+            "T";
+        }
 
-        if (number >= 1e9)
+        if (number >= 1e9) {
+
             return (
                 number / 1e9
-            ).toFixed(2) + "B";
+            ).toFixed(2) +
+            "B";
+        }
 
-        if (number >= 1e6)
+        if (number >= 1e6) {
+
             return (
                 number / 1e6
-            ).toFixed(2) + "M";
+            ).toFixed(2) +
+            "M";
+        }
 
-        if (number >= 1e3)
+        if (number >= 1e3) {
+
             return (
                 number / 1e3
-            ).toFixed(2) + "K";
+            ).toFixed(2) +
+            "K";
+        }
 
-        return Math.floor(number)
-            .toLocaleString();
+        return Math.floor(
+            number
+        ).toLocaleString();
     }
 
 
@@ -2466,19 +3065,22 @@
         );
 
         showToast.timeout =
-            setTimeout(function() {
+            setTimeout(
+                function() {
 
-                toast.classList.remove(
-                    "show"
-                );
+                    toast.classList.remove(
+                        "show"
+                    );
 
-            }, 1800);
+                },
+                1800
+            );
     }
 
 
-    // ==========================================
+    // =========================================================
     // BACKGROUND PARTICLES
-    // ==========================================
+    // =========================================================
 
     function createBackgroundParticles() {
 
@@ -2503,14 +3105,20 @@
 
             particle.style.left =
                 Math.random() *
-                100 + "%";
+                100 +
+                "%";
 
             particle.style.animationDuration =
-                (8 + Math.random() * 15) +
+                (
+                    8 +
+                    Math.random() * 15
+                ) +
                 "s";
 
             particle.style.animationDelay =
-                (-Math.random() * 15) +
+                (
+                    -Math.random() * 15
+                ) +
                 "s";
 
             particle.style.opacity =
@@ -2524,18 +3132,37 @@
     }
 
 
-    // ==========================================
+    // =========================================================
     // START GAME
-    // ==========================================
+    // =========================================================
 
     if (currentUser) {
+
         loadCurrentUserGame();
+
     } else {
+
         resetVariablesOnly();
     }
 
     createBackgroundParticles();
+
+    updateAccountUI();
+
     updateScreen();
+
+
+    // =========================================================
+    // AUTO-SAVE WHEN LEAVING
+    // =========================================================
+
+    window.addEventListener(
+        "beforeunload",
+        function() {
+
+            saveCurrentUserGame();
+        }
+    );
 
 </script>
 
