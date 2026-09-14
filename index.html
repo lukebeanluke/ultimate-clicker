@@ -4452,12 +4452,15 @@
          * grow increasingly quickly.
          */
 
+        const n = level - 1;
+
+        // Each new level is harder than the last.
+        // The squared term makes the gap grow quickly, while the
+        // extra scaling factor makes higher levels progressively tougher.
         return Math.floor(
             300 *
-            Math.pow(
-                level - 1,
-                1.75
-            )
+            Math.pow(n, 2) *
+            (1 + 0.05 * n)
         );
     }
 
@@ -4472,7 +4475,7 @@
         let level = Math.max(
             1,
             Math.floor(
-                1 + Math.pow(points / 300, 1 / 1.75)
+                1 + Math.pow(points / 300, 1 / 2.5)
             )
         );
 
