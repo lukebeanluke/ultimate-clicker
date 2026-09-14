@@ -4,146 +4,295 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Ultimate Clicker</title>
 
     <style>
+        :root {
+            --primary: #3478f6;
+            --secondary: #7c4dff;
+            --accent: #4dd0e1;
+            --highlight: #ffd740;
+            --danger: #ef5350;
+            --panel: rgba(30, 30, 50, 0.82);
+            --background: #090914;
+            --glow: rgba(77, 208, 225, 0.45);
+        }
+
         * {
             box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
             margin: 0;
             min-height: 100vh;
+
             font-family: Arial, sans-serif;
             color: white;
             text-align: center;
+
             overflow-x: hidden;
 
             background:
-                radial-gradient(circle at 20% 20%, #273469 0, transparent 35%),
-                radial-gradient(circle at 80% 30%, #45276e 0, transparent 35%),
-                radial-gradient(circle at 50% 100%, #123b52 0, transparent 40%),
-                #090914;
+                radial-gradient(
+                    circle at 20% 20%,
+                    var(--primary),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 80% 30%,
+                    var(--secondary),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 50% 100%,
+                    var(--accent),
+                    transparent 40%
+                ),
+                var(--background);
+
+            transition:
+                background 0.8s ease;
         }
 
-        /* =========================
+        /* =====================================================
            ACCOUNT AREA
-        ========================= */
+        ===================================================== */
 
         .account-area {
             position: fixed;
+
             top: 18px;
             right: 18px;
-            z-index: 100;
+
+            z-index: 500;
         }
 
         #accountButton {
-            border: 1px solid rgba(255,255,255,0.15);
+            border:
+                1px solid
+                rgba(255,255,255,0.15);
+
             border-radius: 12px;
-            padding: 11px 16px;
+
+            padding:
+                11px 16px;
+
             color: white;
-            background: rgba(30,30,50,0.92);
-            backdrop-filter: blur(10px);
+
+            background:
+                rgba(30,30,50,0.92);
+
+            backdrop-filter:
+                blur(10px);
+
             cursor: pointer;
+
             font-weight: bold;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+
+            box-shadow:
+                0 8px 25px
+                rgba(0,0,0,0.25);
+
+            transition:
+                0.2s;
         }
 
         #accountButton:hover {
-            background: rgba(50,50,80,0.95);
+            background:
+                rgba(50,50,80,0.98);
+
+            transform:
+                translateY(-1px);
+
+            box-shadow:
+                0 0 20px
+                var(--glow);
         }
 
         .account-menu {
             display: none;
-            width: 280px;
+
+            width: 285px;
+
             margin-top: 10px;
+
             padding: 20px;
+
             text-align: left;
-            background: rgba(20,20,35,0.98);
-            border: 1px solid rgba(255,255,255,0.12);
+
+            background:
+                rgba(20,20,35,0.98);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.12);
+
             border-radius: 16px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+
+            box-shadow:
+                0 20px 50px
+                rgba(0,0,0,0.45);
+
+            backdrop-filter:
+                blur(15px);
         }
 
         .account-menu.show {
             display: block;
+
+            animation:
+                menuIn
+                0.2s
+                ease-out;
+        }
+
+        @keyframes menuIn {
+
+            from {
+                opacity: 0;
+                transform:
+                    translateY(-8px);
+            }
+
+            to {
+                opacity: 1;
+                transform:
+                    translateY(0);
+            }
         }
 
         .account-menu h3 {
-            margin-top: 0;
+            margin:
+                0 0 12px;
+
             text-align: center;
         }
 
         .account-menu input {
             width: 100%;
+
             padding: 11px;
-            margin: 6px 0;
+
+            margin:
+                6px 0;
+
             border: none;
+
             border-radius: 8px;
-            background: #151522;
+
+            background:
+                #151522;
+
             color: white;
+
             outline: none;
         }
 
         .account-menu input:focus {
-            box-shadow: 0 0 0 2px #7c4dff;
+            box-shadow:
+                0 0 0 2px
+                var(--secondary);
         }
 
         .account-menu button {
             width: 100%;
+
             padding: 11px;
+
             margin-top: 7px;
+
             border: none;
+
             border-radius: 8px;
+
             color: white;
+
             font-weight: bold;
+
             cursor: pointer;
-            background: linear-gradient(135deg, #3478f6, #7c4dff);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--secondary)
+                );
+
+            transition:
+                0.15s;
         }
 
         .account-menu button:hover {
             filter: brightness(1.15);
+
+            transform:
+                translateY(-1px);
         }
 
         .secondary-button {
-            background: #343445 !important;
-        }
-
-        .danger-button {
-            background: linear-gradient(135deg, #ef5350, #b71c1c) !important;
+            background:
+                #343445 !important;
         }
 
         #accountStatus {
             font-size: 13px;
-            color: #aaaabd;
-            margin: 8px 0;
+
+            color:
+                #aaaabd;
+
+            margin:
+                8px 0 12px;
+
             text-align: center;
         }
 
-        /* =========================
+        /* =====================================================
            BACKGROUND PARTICLES
-        ========================= */
+        ===================================================== */
 
         #backgroundParticles {
             position: fixed;
+
             inset: 0;
+
             pointer-events: none;
+
             overflow: hidden;
+
             z-index: 0;
         }
 
         .bg-particle {
             position: absolute;
+
             width: 4px;
             height: 4px;
+
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.35);
-            animation: drift linear infinite;
+
+            background:
+                rgba(255,255,255,0.35);
+
+            animation:
+                drift
+                linear
+                infinite;
+
+            transition:
+                background 0.8s ease;
         }
 
         @keyframes drift {
+
             from {
-                transform: translateY(110vh);
+                transform:
+                    translateY(110vh);
+
                 opacity: 0;
             }
 
@@ -156,531 +305,1454 @@
             }
 
             to {
-                transform: translateY(-10vh);
+                transform:
+                    translateY(-10vh);
+
                 opacity: 0;
             }
         }
 
-        /* =========================
+        /* =====================================================
            MAIN GAME
-        ========================= */
+        ===================================================== */
 
         .game {
             position: relative;
+
             z-index: 1;
-            width: min(1000px, calc(100% - 30px));
+
+            width:
+                min(
+                    1000px,
+                    calc(100% - 30px)
+                );
+
             margin: auto;
-            padding: 75px 0 60px;
+
+            padding:
+                75px 0 60px;
+
+            transition:
+                filter 0.5s ease;
         }
 
         .header {
-            background: rgba(20, 20, 38, 0.72);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(12px);
-            border-radius: 24px;
-            padding: 25px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+
+            background:
+                rgba(20,20,38,0.72);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.1);
+
+            backdrop-filter:
+                blur(12px);
+
+            border-radius:
+                24px;
+
+            padding:
+                25px;
+
+            box-shadow:
+                0 20px 60px
+                rgba(0,0,0,0.3);
+
+            overflow: hidden;
+
+            transition:
+                box-shadow 0.8s ease,
+                border-color 0.8s ease;
+        }
+
+        .header::before {
+            content: "";
+
+            position: absolute;
+
+            inset: -100px;
+
+            background:
+                radial-gradient(
+                    circle,
+                    var(--glow),
+                    transparent 45%
+                );
+
+            opacity: 0.18;
+
+            pointer-events: none;
+
+            transition:
+                background 0.8s ease;
         }
 
         h1 {
+            position: relative;
+
             margin: 0;
-            font-size: clamp(38px, 7vw, 64px);
-            letter-spacing: -2px;
+
+            font-size:
+                clamp(
+                    38px,
+                    7vw,
+                    64px
+                );
+
+            letter-spacing:
+                -2px;
+
+            text-shadow:
+                0 0 20px
+                var(--glow);
+
+            transition:
+                text-shadow 0.8s ease;
         }
 
         .subtitle {
-            color: #b8b8cf;
-            margin: 8px 0 20px;
+            position: relative;
+
+            color:
+                #b8b8cf;
+
+            margin:
+                8px 0 20px;
         }
 
         #playerWelcome {
-            color: #70e1ff;
-            font-weight: bold;
-            min-height: 20px;
-        }
-
-        #points {
-            font-size: clamp(55px, 10vw, 90px);
-            font-weight: 900;
-            line-height: 1;
-            margin: 20px 0 10px;
-            text-shadow:
-                0 0 15px rgba(120, 220, 255, 0.4),
-                0 0 40px rgba(120, 220, 255, 0.2);
-        }
-
-        .points-label {
-            color: #85859f;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-        }
-
-        .stats {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 20px auto;
-        }
-
-        .stat {
-            background: rgba(255, 255, 255, 0.07);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 10px 15px;
-            border-radius: 100px;
-            color: #d7d7e7;
-        }
-
-        .stat strong {
-            color: white;
-        }
-
-        #level {
-            color: #ffd54f;
-        }
-
-        #combo {
-            color: #ff9800;
-        }
-
-        #critChance {
-            color: #ff70c7;
-        }
-
-        #comboBonus {
-            color: #4dd0e1;
-        }
-
-        /* =========================
-           COMBO
-        ========================= */
-
-        .combo-area {
-            max-width: 600px;
-            margin: 20px auto 25px;
-        }
-
-        .combo-row {
-            display: flex;
-            justify-content: space-between;
-            font-size: 13px;
-            color: #a9a9bd;
-            margin-bottom: 7px;
-        }
-
-        .combo-container {
-            height: 14px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 50px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        #comboBar {
-            width: 0%;
-            height: 100%;
-            border-radius: 50px;
-            background: linear-gradient(90deg, #ff7a00, #ffd740, #ff4081);
-            box-shadow: 0 0 18px rgba(255, 152, 0, 0.7);
-            transition: width 0.08s linear;
-        }
-
-        /* =========================
-           CLICKER
-        ========================= */
-
-        .clicker-area {
             position: relative;
-            width: 340px;
-            height: 340px;
-            margin: 20px auto;
+
+            color:
+                var(--accent);
+
+            font-weight:
+                bold;
+
+            min-height:
+                20px;
+
+            transition:
+                color 0.8s ease;
         }
 
-        .click-ring {
-            position: absolute;
-            inset: 20px;
-            border-radius: 50%;
-            border: 2px solid rgba(91, 237, 255, 0.25);
-            animation: rotate 8s linear infinite;
-        }
+        /* =====================================================
+           LEVEL UP DISPLAY
+        ===================================================== */
 
-        .click-ring::before,
-        .click-ring::after {
-            content: "";
-            position: absolute;
-            inset: 15px;
-            border-radius: 50%;
-            border: 1px dashed rgba(255, 105, 180, 0.22);
-            animation: rotateReverse 12s linear infinite;
-        }
+        #levelUpMessage {
+            position: fixed;
 
-        .click-ring::after {
-            inset: 35px;
-            border-color: rgba(255, 214, 64, 0.2);
-        }
-
-        @keyframes rotate {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes rotateReverse {
-            to {
-                transform: rotate(-360deg);
-            }
-        }
-
-        #clickButton {
-            position: absolute;
-            inset: 55px;
-            width: calc(100% - 110px);
-            height: calc(100% - 110px);
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            user-select: none;
-            color: white;
-            font-size: 34px;
-            font-weight: 900;
-            letter-spacing: 1px;
-
-            background:
-                radial-gradient(circle at 35% 30%, #80ff9a, transparent 20%),
-                radial-gradient(circle at 60% 70%, #227cff, transparent 45%),
-                linear-gradient(145deg, #30e27a, #1769e0);
-
-            box-shadow:
-                inset 0 0 30px rgba(255,255,255,0.2),
-                0 0 25px rgba(49, 210, 255, 0.45),
-                0 20px 0 #103b8d,
-                0 30px 50px rgba(0,0,0,0.35);
-
-            transition: transform 0.1s, filter 0.15s;
-        }
-
-        #clickButton:hover {
-            filter: brightness(1.12);
-            transform: scale(1.035);
-        }
-
-        #clickButton:active {
-            transform: translateY(15px) scale(0.97);
-            box-shadow:
-                inset 0 0 30px rgba(255,255,255,0.2),
-                0 0 25px rgba(49, 210, 255, 0.45),
-                0 5px 0 #103b8d,
-                0 20px 30px rgba(0,0,0,0.35);
-        }
-
-        .click-pulse {
-            animation: pulse 0.25s ease-out;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-
-            40% {
-                transform: scale(1.08);
-            }
-
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        /* =========================
-           POPUPS
-        ========================= */
-
-        #popupArea {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-        }
-
-        .popup {
-            position: absolute;
             left: 50%;
-            top: 20px;
-            transform: translateX(-50%);
-            font-size: 25px;
-            font-weight: 900;
-            white-space: nowrap;
-            animation: popupFloat 0.9s ease-out forwards;
-            text-shadow: 0 3px 8px rgba(0,0,0,0.4);
+            top: 45%;
+
+            transform:
+                translate(-50%, -50%)
+                scale(0);
+
+            z-index: 900;
+
+            font-size:
+                clamp(
+                    40px,
+                    9vw,
+                    90px
+                );
+
+            font-weight:
+                900;
+
+            color:
+                white;
+
+            text-shadow:
+                0 0 15px var(--accent),
+                0 0 40px var(--primary),
+                0 0 70px var(--secondary);
+
+            pointer-events:
+                none;
+
+            opacity: 0;
         }
 
-        .normal-popup {
-            color: #ffffff;
+        #levelUpMessage.show {
+            animation:
+                levelUp
+                1.2s
+                ease-out
+                forwards;
         }
 
-        .critical-popup {
-            color: #ff4d9d;
-            font-size: 31px;
-        }
+        @keyframes levelUp {
 
-        .combo-popup {
-            color: #ffd740;
-            font-size: 28px;
-        }
-
-        @keyframes popupFloat {
             0% {
                 opacity: 0;
-                transform: translate(-50%, 30px) scale(0.7);
+                transform:
+                    translate(-50%, -50%)
+                    scale(0.2)
+                    rotate(-8deg);
             }
 
             20% {
                 opacity: 1;
-                transform: translate(-50%, 0) scale(1.05);
+                transform:
+                    translate(-50%, -50%)
+                    scale(1.2)
+                    rotate(2deg);
+            }
+
+            55% {
+                opacity: 1;
+                transform:
+                    translate(-50%, -50%)
+                    scale(1)
+                    rotate(0);
             }
 
             100% {
                 opacity: 0;
-                transform: translate(-50%, -90px) scale(1);
+                transform:
+                    translate(-50%, -50%)
+                    scale(1.4);
             }
         }
 
-        /* =========================
+        /* =====================================================
+           SCORE
+        ===================================================== */
+
+        #points {
+            position: relative;
+
+            font-size:
+                clamp(
+                    55px,
+                    10vw,
+                    90px
+                );
+
+            font-weight:
+                900;
+
+            line-height:
+                1;
+
+            margin:
+                20px 0 10px;
+
+            text-shadow:
+                0 0 15px var(--glow),
+                0 0 40px var(--glow);
+
+            transition:
+                text-shadow 0.8s ease;
+        }
+
+        .points-bump {
+            animation:
+                pointsBump
+                0.18s
+                ease-out;
+        }
+
+        @keyframes pointsBump {
+
+            0% {
+                transform:
+                    scale(1);
+            }
+
+            50% {
+                transform:
+                    scale(1.08);
+            }
+
+            100% {
+                transform:
+                    scale(1);
+            }
+        }
+
+        .points-label {
+            color:
+                #85859f;
+
+            font-size:
+                14px;
+
+            text-transform:
+                uppercase;
+
+            letter-spacing:
+                3px;
+        }
+
+        /* =====================================================
+           STATS
+        ===================================================== */
+
+        .stats {
+            display:
+                flex;
+
+            justify-content:
+                center;
+
+            flex-wrap:
+                wrap;
+
+            gap:
+                10px;
+
+            margin:
+                20px auto;
+        }
+
+        .stat {
+            background:
+                rgba(255,255,255,0.07);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            padding:
+                10px 15px;
+
+            border-radius:
+                100px;
+
+            color:
+                #d7d7e7;
+
+            transition:
+                0.2s;
+        }
+
+        .stat:hover {
+            background:
+                rgba(255,255,255,0.11);
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 0 12px
+                rgba(255,255,255,0.08);
+        }
+
+        .stat strong {
+            color:
+                white;
+        }
+
+        #level {
+            color:
+                var(--highlight);
+        }
+
+        #combo {
+            color:
+                #ff9800;
+        }
+
+        #critChance {
+            color:
+                #ff70c7;
+        }
+
+        #comboBonus {
+            color:
+                var(--accent);
+        }
+
+        /* =====================================================
+           COMBO BAR
+        ===================================================== */
+
+        .combo-area {
+            max-width:
+                600px;
+
+            margin:
+                20px auto 25px;
+        }
+
+        .combo-row {
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            font-size:
+                13px;
+
+            color:
+                #a9a9bd;
+
+            margin-bottom:
+                7px;
+        }
+
+        .combo-container {
+            height:
+                14px;
+
+            background:
+                rgba(255,255,255,0.08);
+
+            border-radius:
+                50px;
+
+            overflow:
+                hidden;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.1);
+        }
+
+        #comboBar {
+            width:
+                0%;
+
+            height:
+                100%;
+
+            border-radius:
+                50px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ff7a00,
+                    #ffd740,
+                    #ff4081
+                );
+
+            box-shadow:
+                0 0 18px
+                rgba(255,152,0,0.7);
+
+            transition:
+                width 0.08s linear;
+        }
+
+        /* =====================================================
+           CLICKER
+        ===================================================== */
+
+        .clicker-area {
+            position: relative;
+
+            width:
+                340px;
+
+            height:
+                340px;
+
+            margin:
+                20px auto;
+        }
+
+        .click-ring {
+            position:
+                absolute;
+
+            inset:
+                20px;
+
+            border-radius:
+                50%;
+
+            border:
+                2px solid
+                var(--accent);
+
+            opacity:
+                0.35;
+
+            animation:
+                rotate
+                8s
+                linear
+                infinite;
+
+            transition:
+                border-color 0.8s ease;
+        }
+
+        .click-ring::before,
+        .click-ring::after {
+
+            content: "";
+
+            position:
+                absolute;
+
+            inset:
+                15px;
+
+            border-radius:
+                50%;
+
+            border:
+                1px dashed
+                var(--secondary);
+
+            opacity:
+                0.5;
+
+            animation:
+                rotateReverse
+                12s
+                linear
+                infinite;
+        }
+
+        .click-ring::after {
+
+            inset:
+                35px;
+
+            border-color:
+                var(--highlight);
+        }
+
+        @keyframes rotate {
+
+            to {
+                transform:
+                    rotate(360deg);
+            }
+        }
+
+        @keyframes rotateReverse {
+
+            to {
+                transform:
+                    rotate(-360deg);
+            }
+        }
+
+        #clickButton {
+            position:
+                absolute;
+
+            inset:
+                55px;
+
+            width:
+                calc(100% - 110px);
+
+            height:
+                calc(100% - 110px);
+
+            border:
+                none;
+
+            border-radius:
+                50%;
+
+            cursor:
+                pointer;
+
+            user-select:
+                none;
+
+            color:
+                white;
+
+            font-size:
+                34px;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                1px;
+
+            background:
+                radial-gradient(
+                    circle at 35% 30%,
+                    #80ff9a,
+                    transparent 20%
+                ),
+                radial-gradient(
+                    circle at 60% 70%,
+                    var(--primary),
+                    transparent 45%
+                ),
+                linear-gradient(
+                    145deg,
+                    #30e27a,
+                    var(--secondary)
+                );
+
+            box-shadow:
+                inset 0 0 30px rgba(255,255,255,0.2),
+                0 0 25px var(--glow),
+                0 20px 0
+                    color-mix(
+                        in srgb,
+                        var(--primary),
+                        black 45%
+                    ),
+                0 30px 50px
+                    rgba(0,0,0,0.35);
+
+            transition:
+                transform 0.08s,
+                filter 0.08s,
+                box-shadow 0.08s,
+                background 0.8s ease;
+        }
+
+        #clickButton:hover {
+            filter:
+                brightness(1.12);
+
+            transform:
+                scale(1.035);
+        }
+
+        #clickButton:active {
+            transform:
+                translateY(15px)
+                scale(0.97);
+
+            box-shadow:
+                inset 0 0 30px
+                rgba(255,255,255,0.2),
+
+                0 0 35px
+                var(--glow),
+
+                0 5px 0
+                color-mix(
+                    in srgb,
+                    var(--primary),
+                    black 45%
+                ),
+
+                0 20px 30px
+                rgba(0,0,0,0.35);
+        }
+
+        .click-pulse {
+            animation:
+                satisfyingClick
+                0.22s
+                ease-out;
+        }
+
+        @keyframes satisfyingClick {
+
+            0% {
+                transform:
+                    scale(1);
+
+                filter:
+                    brightness(1);
+            }
+
+            35% {
+                transform:
+                    scale(1.13);
+
+                filter:
+                    brightness(1.4);
+            }
+
+            70% {
+                transform:
+                    scale(0.96);
+
+                filter:
+                    brightness(1.18);
+            }
+
+            100% {
+                transform:
+                    scale(1);
+
+                filter:
+                    brightness(1);
+            }
+        }
+
+        /* =====================================================
+           POPUPS
+        ===================================================== */
+
+        #popupArea {
+            position:
+                absolute;
+
+            inset:
+                0;
+
+            pointer-events:
+                none;
+        }
+
+        .popup {
+            position:
+                absolute;
+
+            left:
+                50%;
+
+            top:
+                20px;
+
+            transform:
+                translateX(-50%);
+
+            font-size:
+                25px;
+
+            font-weight:
+                900;
+
+            white-space:
+                nowrap;
+
+            text-shadow:
+                0 3px 8px
+                rgba(0,0,0,0.4);
+        }
+
+        .normal-popup {
+            animation:
+                popupFloat
+                0.9s
+                ease-out
+                forwards;
+
+            color:
+                #ffffff;
+        }
+
+        .critical-popup {
+            color:
+                #ff4d9d;
+
+            font-size:
+                31px;
+
+            animation:
+                criticalFloat
+                1s
+                ease-out
+                forwards,
+
+                criticalGlow
+                0.3s
+                ease-in-out
+                infinite alternate;
+        }
+
+        .combo-popup {
+            color:
+                #ffd740;
+
+            font-size:
+                28px;
+
+            animation:
+                comboFloat
+                0.95s
+                ease-out
+                forwards;
+        }
+
+        @keyframes popupFloat {
+
+            0% {
+                opacity:
+                    0;
+
+                transform:
+                    translate(-50%,30px)
+                    scale(0.7);
+            }
+
+            20% {
+                opacity:
+                    1;
+
+                transform:
+                    translate(-50%,0)
+                    scale(1.05);
+            }
+
+            100% {
+                opacity:
+                    0;
+
+                transform:
+                    translate(-50%,-90px)
+                    scale(1);
+            }
+        }
+
+        @keyframes criticalFloat {
+
+            0% {
+                opacity:
+                    0;
+
+                transform:
+                    translate(-50%,40px)
+                    scale(0.4);
+            }
+
+            20% {
+                opacity:
+                    1;
+
+                transform:
+                    translate(-50%,0)
+                    scale(1.3);
+            }
+
+            60% {
+                opacity:
+                    1;
+
+                transform:
+                    translate(-50%,-30px)
+                    scale(1.05);
+            }
+
+            100% {
+                opacity:
+                    0;
+
+                transform:
+                    translate(-50%,-110px)
+                    scale(1);
+            }
+        }
+
+        @keyframes comboFloat {
+
+            0% {
+                opacity:
+                    0;
+
+                transform:
+                    translate(-50%,30px)
+                    scale(0.5);
+            }
+
+            25% {
+                opacity:
+                    1;
+
+                transform:
+                    translate(-50%,0)
+                    scale(1.25);
+            }
+
+            100% {
+                opacity:
+                    0;
+
+                transform:
+                    translate(-50%,-100px)
+                    scale(1);
+            }
+        }
+
+        @keyframes criticalGlow {
+
+            from {
+                text-shadow:
+                    0 0 5px #ff4081,
+                    0 0 15px #ff4081;
+            }
+
+            to {
+                text-shadow:
+                    0 0 15px #ff4081,
+                    0 0 35px #ff4081;
+            }
+        }
+
+        /* =====================================================
            PARTICLES
-        ========================= */
+        ===================================================== */
 
         .particle {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            left: 50%;
-            top: 50%;
-            pointer-events: none;
-            animation: particleFly 0.7s ease-out forwards;
+            position:
+                absolute;
+
+            width:
+                8px;
+
+            height:
+                8px;
+
+            border-radius:
+                50%;
+
+            left:
+                50%;
+
+            top:
+                50%;
+
+            pointer-events:
+                none;
+
+            animation:
+                particleFly
+                0.7s
+                ease-out
+                forwards;
         }
 
         @keyframes particleFly {
+
             to {
                 transform:
-                    translate(var(--x), var(--y))
+                    translate(
+                        var(--x),
+                        var(--y)
+                    )
                     rotate(360deg)
                     scale(0);
-                opacity: 0;
+
+                opacity:
+                    0;
             }
         }
 
-        /* =========================
-           SCREEN SHAKE
-        ========================= */
+        /* =====================================================
+           LEVEL-UP FLASH
+        ===================================================== */
+
+        #game.level-flash::after {
+
+            content:
+                "";
+
+            position:
+                fixed;
+
+            inset:
+                0;
+
+            background:
+                var(--glow);
+
+            opacity:
+                0.3;
+
+            pointer-events:
+                none;
+
+            z-index:
+                700;
+
+            animation:
+                levelFlash
+                0.7s
+                ease-out
+                forwards;
+        }
+
+        @keyframes levelFlash {
+
+            0% {
+                opacity:
+                    0.5;
+            }
+
+            100% {
+                opacity:
+                    0;
+            }
+        }
+
+        /* =====================================================
+           SHAKE
+        ===================================================== */
 
         .shake {
-            animation: shake 0.18s ease-in-out;
+            animation:
+                shake
+                0.18s
+                ease-in-out;
         }
 
         @keyframes shake {
-            0% { transform: translate(0); }
-            20% { transform: translate(-5px, 2px); }
-            40% { transform: translate(5px, -2px); }
-            60% { transform: translate(-4px, -1px); }
-            80% { transform: translate(4px, 1px); }
-            100% { transform: translate(0); }
+
+            0% {
+                transform:
+                    translate(0);
+            }
+
+            20% {
+                transform:
+                    translate(-5px,2px);
+            }
+
+            40% {
+                transform:
+                    translate(5px,-2px);
+            }
+
+            60% {
+                transform:
+                    translate(-4px,-1px);
+            }
+
+            80% {
+                transform:
+                    translate(4px,1px);
+            }
+
+            100% {
+                transform:
+                    translate(0);
+            }
         }
 
-        /* =========================
-           UPGRADES
-        ========================= */
+        /* =====================================================
+           SECTIONS
+        ===================================================== */
 
         h2 {
-            margin: 45px 0 20px;
+            margin:
+                45px 0 20px;
         }
 
         .section-title {
-            font-size: 28px;
+            font-size:
+                28px;
+
+            text-shadow:
+                0 0 15px
+                var(--glow);
         }
 
+        /* =====================================================
+           UPGRADE CARDS
+        ===================================================== */
+
         .cards {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(3,1fr);
+
+            gap:
+                15px;
         }
 
         .card {
-            position: relative;
-            padding: 22px;
-            text-align: left;
-            border-radius: 18px;
-            background: rgba(30, 30, 50, 0.8);
-            border: 1px solid rgba(255,255,255,0.08);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-            transition: transform 0.2s, border-color 0.2s;
+            position:
+                relative;
+
+            padding:
+                22px;
+
+            text-align:
+                left;
+
+            border-radius:
+                18px;
+
+            background:
+                var(--panel);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            box-shadow:
+                0 15px 40px
+                rgba(0,0,0,0.2);
+
+            transition:
+                transform 0.2s,
+                border-color 0.5s,
+                box-shadow 0.5s;
         }
 
         .card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(255,255,255,0.2);
+            transform:
+                translateY(-4px);
+
+            border-color:
+                var(--accent);
+
+            box-shadow:
+                0 10px 35px
+                rgba(0,0,0,0.25),
+                0 0 20px
+                rgba(77,208,225,0.1);
         }
 
         .card h3 {
-            margin: 0 0 8px;
-            font-size: 19px;
+            margin:
+                0 0 8px;
+
+            font-size:
+                19px;
         }
 
         .card p {
-            color: #a9a9bd;
-            min-height: 48px;
-            margin: 8px 0 15px;
-            line-height: 1.45;
+            color:
+                #a9a9bd;
+
+            min-height:
+                48px;
+
+            margin:
+                8px 0 15px;
+
+            line-height:
+                1.45;
         }
 
         .cost {
-            color: #ffd54f;
-            font-weight: bold;
-            margin-bottom: 10px;
+            color:
+                var(--highlight);
+
+            font-weight:
+                bold;
+
+            margin-bottom:
+                10px;
         }
 
         .card button {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 10px;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            background: linear-gradient(135deg, #3478f6, #7c4dff);
-            transition: transform 0.15s, filter 0.15s;
+            width:
+                100%;
+
+            padding:
+                12px;
+
+            border:
+                none;
+
+            border-radius:
+                10px;
+
+            color:
+                white;
+
+            font-weight:
+                bold;
+
+            cursor:
+                pointer;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--secondary)
+                );
+
+            transition:
+                transform 0.15s,
+                filter 0.15s;
         }
 
         .card button:hover {
-            filter: brightness(1.15);
-            transform: translateY(-1px);
+            filter:
+                brightness(1.15);
+
+            transform:
+                translateY(-1px);
         }
 
         .card button:disabled {
-            background: #454553;
-            color: #888;
-            cursor: not-allowed;
-            filter: none;
-            transform: none;
+            background:
+                #454553;
+
+            color:
+                #888;
+
+            cursor:
+                not-allowed;
+
+            filter:
+                none;
+
+            transform:
+                none;
+
+            animation:
+                none;
         }
 
         .affordable {
-            animation: affordableGlow 1.3s ease-in-out infinite alternate;
+            animation:
+                affordableGlow
+                1.3s
+                ease-in-out
+                infinite alternate;
         }
 
         @keyframes affordableGlow {
+
             from {
-                box-shadow: 0 0 0 rgba(89, 220, 255, 0);
+                box-shadow:
+                    0 0 0
+                    rgba(89,220,255,0);
             }
 
             to {
-                box-shadow: 0 0 18px rgba(89, 220, 255, 0.45);
+                box-shadow:
+                    0 0 18px
+                    var(--glow);
             }
         }
 
-        /* =========================
+        /* =====================================================
            ACHIEVEMENTS
-        ========================= */
+        ===================================================== */
 
         .achievements {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(2,1fr);
+
+            gap:
+                12px;
         }
 
         .achievement {
-            padding: 16px;
-            text-align: left;
-            border-radius: 14px;
-            background: rgba(30,30,50,0.75);
-            border: 1px solid rgba(255,255,255,0.06);
-            opacity: 0.38;
-            transition: 0.3s;
+            padding:
+                16px;
+
+            text-align:
+                left;
+
+            border-radius:
+                14px;
+
+            background:
+                var(--panel);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.06);
+
+            opacity:
+                0.38;
+
+            transition:
+                0.3s;
         }
 
         .achievement.unlocked {
-            opacity: 1;
-            border-color: #ffd54f;
-            box-shadow: 0 0 20px rgba(255,213,79,0.12);
+            opacity:
+                1;
+
+            border-color:
+                var(--highlight);
+
+            box-shadow:
+                0 0 20px
+                rgba(255,213,79,0.12);
         }
 
         .achievement-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 5px;
+            font-size:
+                18px;
+
+            font-weight:
+                bold;
+
+            margin-bottom:
+                5px;
         }
 
         .achievement-text {
-            color: #aaaab9;
-            font-size: 14px;
+            color:
+                #aaaab9;
+
+            font-size:
+                14px;
         }
 
-        /* =========================
+        /* =====================================================
            RESET
-        ========================= */
+        ===================================================== */
 
         #resetButton {
-            margin-top: 35px;
-            border: none;
-            border-radius: 9px;
-            padding: 12px 18px;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            background: linear-gradient(135deg, #ef5350, #b71c1c);
+            margin-top:
+                35px;
+
+            border:
+                none;
+
+            border-radius:
+                9px;
+
+            padding:
+                12px 18px;
+
+            color:
+                white;
+
+            font-weight:
+                bold;
+
+            cursor:
+                pointer;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ef5350,
+                    #b71c1c
+                );
+
+            transition:
+                0.15s;
         }
 
         #resetButton:hover {
-            filter: brightness(1.1);
+            filter:
+                brightness(1.1);
+
+            transform:
+                translateY(-1px);
         }
 
-        /* =========================
+        /* =====================================================
            TOAST
-        ========================= */
+        ===================================================== */
 
         #toast {
-            position: fixed;
-            left: 50%;
-            bottom: 25px;
-            transform: translateX(-50%) translateY(100px);
-            background: rgba(20,20,35,0.95);
-            border: 1px solid rgba(255,255,255,0.12);
-            padding: 14px 20px;
-            border-radius: 12px;
-            opacity: 0;
-            transition: 0.3s;
-            z-index: 200;
-            pointer-events: none;
+            position:
+                fixed;
+
+            left:
+                50%;
+
+            bottom:
+                25px;
+
+            transform:
+                translateX(-50%)
+                translateY(100px);
+
+            background:
+                rgba(20,20,35,0.95);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.12);
+
+            padding:
+                14px 20px;
+
+            border-radius:
+                12px;
+
+            opacity:
+                0;
+
+            transition:
+                0.3s;
+
+            z-index:
+                1000;
+
+            pointer-events:
+                none;
+
+            box-shadow:
+                0 10px 35px
+                rgba(0,0,0,0.35);
         }
 
         #toast.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
+            transform:
+                translateX(-50%)
+                translateY(0);
+
+            opacity:
+                1;
         }
 
-        /* =========================
+        /* =====================================================
            MOBILE
-        ========================= */
+        ===================================================== */
 
-        @media (max-width: 750px) {
+        @media (max-width:750px) {
 
             .cards,
             .achievements {
-                grid-template-columns: 1fr;
+                grid-template-columns:
+                    1fr;
             }
 
             .clicker-area {
-                transform: scale(0.85);
-                margin: -5px auto;
+                transform:
+                    scale(0.85);
+
+                margin:
+                    -5px auto;
             }
 
             .account-area {
-                top: 10px;
-                right: 10px;
+                top:
+                    10px;
+
+                right:
+                    10px;
             }
 
             .game {
-                padding-top: 75px;
+                padding-top:
+                    75px;
+            }
+        }
+
+        @media (max-width:450px) {
+
+            .account-menu {
+                position:
+                    fixed;
+
+                top:
+                    60px;
+
+                right:
+                    10px;
+
+                width:
+                    min(
+                        285px,
+                        calc(100vw - 20px)
+                    );
+            }
+
+            .clicker-area {
+                transform:
+                    scale(0.72);
+
+                margin-top:
+                    -35px;
+
+                margin-bottom:
+                    -30px;
             }
         }
     </style>
@@ -688,21 +1760,27 @@
 
 <body>
 
-<!-- =========================
+<!-- =========================================================
      ACCOUNT
-========================= -->
+========================================================= -->
 
 <div class="account-area">
 
-    <button id="accountButton"
-            onclick="toggleAccountMenu()">
+    <button
+        id="accountButton"
+        onclick="toggleAccountMenu()"
+    >
         👤 Sign Up / Log In
     </button>
 
-    <div class="account-menu"
-         id="accountMenu">
+    <div
+        class="account-menu"
+        id="accountMenu"
+    >
 
-        <h3>👤 Account</h3>
+        <h3>
+            👤 Account
+        </h3>
 
         <div id="accountStatus">
             Not logged in
@@ -713,6 +1791,7 @@
             id="username"
             placeholder="Username"
             maxlength="20"
+            autocomplete="username"
         >
 
         <input
@@ -720,6 +1799,7 @@
             id="password"
             placeholder="Password"
             maxlength="30"
+            autocomplete="current-password"
         >
 
         <button onclick="signUp()">
@@ -730,30 +1810,40 @@
             Log In
         </button>
 
-        <button class="secondary-button"
-                onclick="logOut()">
+        <button
+            class="secondary-button"
+            onclick="logOut()"
+        >
             Log Out
         </button>
 
     </div>
-
 </div>
 
-
-<!-- BACKGROUND -->
 
 <div id="backgroundParticles"></div>
 
 
-<!-- =========================
-     GAME
-========================= -->
+<div
+    id="levelUpMessage"
+>
+</div>
 
-<div class="game" id="game">
+
+<!-- =========================================================
+     GAME
+========================================================= -->
+
+<div
+    class="game"
+    id="game"
+>
 
     <div class="header">
 
-        <h1>⚡ Ultimate Clicker</h1>
+        <h1>
+            ⚡ Ultimate Clicker
+        </h1>
 
         <div class="subtitle">
             Build combos. Hit criticals. Become the click master.
@@ -763,7 +1853,9 @@
             Playing as Guest
         </div>
 
-        <div id="points">0</div>
+        <div id="points">
+            0
+        </div>
 
         <div class="points-label">
             points
@@ -775,33 +1867,55 @@
         <div class="stats">
 
             <div class="stat">
-                🖱️ <strong id="perClick">1</strong> / click
+                🖱️
+                <strong id="perClick">
+                    1
+                </strong>
+                / click
             </div>
 
             <div class="stat">
-                🤖 <strong id="perSecond">0</strong> / sec
+                🤖
+                <strong id="perSecond">
+                    0
+                </strong>
+                / sec
             </div>
 
             <div class="stat">
-                ⭐ Level <strong id="level">1</strong>
+                ⭐ Level
+                <strong id="level">
+                    1
+                </strong>
             </div>
 
             <div class="stat">
-                🎯 <strong id="critChance">5%</strong> crit
+                🎯
+                <strong id="critChance">
+                    5%
+                </strong>
+                crit
             </div>
 
             <div class="stat">
-                🔥 <strong id="combo">0</strong>x combo
+                🔥
+                <strong id="combo">
+                    0
+                </strong>x combo
             </div>
 
             <div class="stat">
-                ⚡ <strong id="comboBonus">0%</strong> combo bonus
+                ⚡
+                <strong id="comboBonus">
+                    0%
+                </strong>
+                combo bonus
             </div>
 
         </div>
 
 
-        <!-- COMBO BAR -->
+        <!-- COMBO -->
 
         <div class="combo-area">
 
@@ -811,7 +1925,9 @@
                     COMBO ENERGY
                 </span>
 
-                <span id="comboTimerText">
+                <span
+                    id="comboTimerText"
+                >
                     Ready!
                 </span>
 
@@ -826,27 +1942,31 @@
         </div>
 
 
-        <!-- CLICK BUTTON -->
+        <!-- CLICKER -->
 
         <div class="clicker-area">
 
             <div class="click-ring"></div>
 
-            <button id="clickButton"
-                    onclick="clickPoint()">
+            <button
+                id="clickButton"
+                onclick="clickPoint()"
+            >
                 CLICK!
             </button>
 
-            <div id="popupArea"></div>
+            <div
+                id="popupArea"
+            ></div>
 
         </div>
 
     </div>
 
 
-    <!-- =========================
+    <!-- =====================================================
          UPGRADES
-    ========================= -->
+    ===================================================== -->
 
     <h2 class="section-title">
         🛒 Upgrade Shop
@@ -856,7 +1976,9 @@
 
         <div class="card">
 
-            <h3>💪 Power Click</h3>
+            <h3>
+                💪 Power Click
+            </h3>
 
             <p>
                 Increase points earned from every click.
@@ -869,8 +1991,10 @@
                 </span>
             </div>
 
-            <button id="clickUpgradeButton"
-                    onclick="buyClickUpgrade()">
+            <button
+                id="clickUpgradeButton"
+                onclick="buyClickUpgrade()"
+            >
                 Buy
             </button>
 
@@ -879,7 +2003,9 @@
 
         <div class="card">
 
-            <h3>🤖 Auto Clicker</h3>
+            <h3>
+                🤖 Auto Clicker
+            </h3>
 
             <p>
                 Automatically generate points every second.
@@ -892,8 +2018,10 @@
                 </span>
             </div>
 
-            <button id="autoUpgradeButton"
-                    onclick="buyAutoUpgrade()">
+            <button
+                id="autoUpgradeButton"
+                onclick="buyAutoUpgrade()"
+            >
                 Buy
             </button>
 
@@ -902,7 +2030,9 @@
 
         <div class="card">
 
-            <h3>🎯 Critical Luck</h3>
+            <h3>
+                🎯 Critical Luck
+            </h3>
 
             <p>
                 Increase your chance of landing a critical click.
@@ -915,8 +2045,10 @@
                 </span>
             </div>
 
-            <button id="critUpgradeButton"
-                    onclick="buyCritUpgrade()">
+            <button
+                id="critUpgradeButton"
+                onclick="buyCritUpgrade()"
+            >
                 Buy
             </button>
 
@@ -925,7 +2057,9 @@
 
         <div class="card">
 
-            <h3>🔥 Combo Power</h3>
+            <h3>
+                🔥 Combo Power
+            </h3>
 
             <p>
                 Increase the bonus received from every combo level.
@@ -938,8 +2072,10 @@
                 </span>
             </div>
 
-            <button id="comboUpgradeButton"
-                    onclick="buyComboUpgrade()">
+            <button
+                id="comboUpgradeButton"
+                onclick="buyComboUpgrade()"
+            >
                 Buy
             </button>
 
@@ -948,7 +2084,9 @@
 
         <div class="card">
 
-            <h3>💥 Mega Crit</h3>
+            <h3>
+                💥 Mega Crit
+            </h3>
 
             <p>
                 Increase the multiplier applied to critical clicks.
@@ -961,8 +2099,10 @@
                 </span>
             </div>
 
-            <button id="megaUpgradeButton"
-                    onclick="buyMegaUpgrade()">
+            <button
+                id="megaUpgradeButton"
+                onclick="buyMegaUpgrade()"
+            >
                 Buy
             </button>
 
@@ -971,7 +2111,9 @@
 
         <div class="card">
 
-            <h3>🚀 Automation</h3>
+            <h3>
+                🚀 Automation
+            </h3>
 
             <p>
                 Increase points generated by auto clickers.
@@ -984,8 +2126,10 @@
                 </span>
             </div>
 
-            <button id="autoPowerButton"
-                    onclick="buyAutoPowerUpgrade()">
+            <button
+                id="autoPowerButton"
+                onclick="buyAutoPowerUpgrade()"
+            >
                 Buy
             </button>
 
@@ -994,9 +2138,9 @@
     </div>
 
 
-    <!-- =========================
+    <!-- =====================================================
          ACHIEVEMENTS
-    ========================= -->
+    ===================================================== -->
 
     <h2 class="section-title">
         🏆 Achievements
@@ -1004,8 +2148,10 @@
 
     <div class="achievements">
 
-        <!-- 1 -->
-        <div class="achievement" id="achievement100">
+        <div
+            class="achievement"
+            id="achievement100"
+        >
             <div class="achievement-title">
                 🎯 First 100
             </div>
@@ -1014,8 +2160,11 @@
             </div>
         </div>
 
-        <!-- 2 -->
-        <div class="achievement" id="achievement1000">
+
+        <div
+            class="achievement"
+            id="achievement1000"
+        >
             <div class="achievement-title">
                 💰 Big Saver
             </div>
@@ -1024,8 +2173,11 @@
             </div>
         </div>
 
-        <!-- 3 -->
-        <div class="achievement" id="achievement10000">
+
+        <div
+            class="achievement"
+            id="achievement10000"
+        >
             <div class="achievement-title">
                 👑 Click Master
             </div>
@@ -1034,8 +2186,11 @@
             </div>
         </div>
 
-        <!-- 4 -->
-        <div class="achievement" id="achievement100clicks">
+
+        <div
+            class="achievement"
+            id="achievement100clicks"
+        >
             <div class="achievement-title">
                 🖱️ Clicker Pro
             </div>
@@ -1044,8 +2199,11 @@
             </div>
         </div>
 
-        <!-- 5 -->
-        <div class="achievement" id="achievementCombo10">
+
+        <div
+            class="achievement"
+            id="achievementCombo10"
+        >
             <div class="achievement-title">
                 🔥 Combo Starter
             </div>
@@ -1054,8 +2212,11 @@
             </div>
         </div>
 
-        <!-- 6 -->
-        <div class="achievement" id="achievementCombo25">
+
+        <div
+            class="achievement"
+            id="achievementCombo25"
+        >
             <div class="achievement-title">
                 ⚡ Combo Master
             </div>
@@ -1064,8 +2225,11 @@
             </div>
         </div>
 
-        <!-- 7 -->
-        <div class="achievement" id="achievementCrit">
+
+        <div
+            class="achievement"
+            id="achievementCrit"
+        >
             <div class="achievement-title">
                 💥 Critical Hit
             </div>
@@ -1074,8 +2238,11 @@
             </div>
         </div>
 
-        <!-- 8 -->
-        <div class="achievement" id="achievement500">
+
+        <div
+            class="achievement"
+            id="achievement500"
+        >
             <div class="achievement-title">
                 💎 Halfway There
             </div>
@@ -1084,8 +2251,11 @@
             </div>
         </div>
 
-        <!-- 9 -->
-        <div class="achievement" id="achievement50000">
+
+        <div
+            class="achievement"
+            id="achievement50000"
+        >
             <div class="achievement-title">
                 🚀 Point Explosion
             </div>
@@ -1094,8 +2264,11 @@
             </div>
         </div>
 
-        <!-- 10 -->
-        <div class="achievement" id="achievement100000">
+
+        <div
+            class="achievement"
+            id="achievement100000"
+        >
             <div class="achievement-title">
                 🌟 Six Figures
             </div>
@@ -1104,8 +2277,11 @@
             </div>
         </div>
 
-        <!-- 11 -->
-        <div class="achievement" id="achievement1000000">
+
+        <div
+            class="achievement"
+            id="achievement1000000"
+        >
             <div class="achievement-title">
                 👽 Millionaire
             </div>
@@ -1114,8 +2290,11 @@
             </div>
         </div>
 
-        <!-- 12 -->
-        <div class="achievement" id="achievement500clicks">
+
+        <div
+            class="achievement"
+            id="achievement500clicks"
+        >
             <div class="achievement-title">
                 🖱️ Speed Clicker
             </div>
@@ -1124,8 +2303,11 @@
             </div>
         </div>
 
-        <!-- 13 -->
-        <div class="achievement" id="achievement1000clicks">
+
+        <div
+            class="achievement"
+            id="achievement1000clicks"
+        >
             <div class="achievement-title">
                 🔥 Click Addict
             </div>
@@ -1134,8 +2316,11 @@
             </div>
         </div>
 
-        <!-- 14 -->
-        <div class="achievement" id="achievement5000clicks">
+
+        <div
+            class="achievement"
+            id="achievement5000clicks"
+        >
             <div class="achievement-title">
                 ⚡ Clicking Machine
             </div>
@@ -1144,8 +2329,11 @@
             </div>
         </div>
 
-        <!-- 15 -->
-        <div class="achievement" id="achievement10000clicks">
+
+        <div
+            class="achievement"
+            id="achievement10000clicks"
+        >
             <div class="achievement-title">
                 🤖 Human Robot
             </div>
@@ -1154,8 +2342,11 @@
             </div>
         </div>
 
-        <!-- 16 -->
-        <div class="achievement" id="achievementCombo50">
+
+        <div
+            class="achievement"
+            id="achievementCombo50"
+        >
             <div class="achievement-title">
                 🔥 Unstoppable
             </div>
@@ -1164,8 +2355,11 @@
             </div>
         </div>
 
-        <!-- 17 -->
-        <div class="achievement" id="achievementCombo100">
+
+        <div
+            class="achievement"
+            id="achievementCombo100"
+        >
             <div class="achievement-title">
                 ⚡ Combo Legend
             </div>
@@ -1174,8 +2368,11 @@
             </div>
         </div>
 
-        <!-- 18 -->
-        <div class="achievement" id="achievementCombo250">
+
+        <div
+            class="achievement"
+            id="achievementCombo250"
+        >
             <div class="achievement-title">
                 👑 Combo God
             </div>
@@ -1184,8 +2381,11 @@
             </div>
         </div>
 
-        <!-- 19 -->
-        <div class="achievement" id="achievementCrit10">
+
+        <div
+            class="achievement"
+            id="achievementCrit10"
+        >
             <div class="achievement-title">
                 🎯 Lucky Streak
             </div>
@@ -1194,8 +2394,11 @@
             </div>
         </div>
 
-        <!-- 20 -->
-        <div class="achievement" id="achievementCrit50">
+
+        <div
+            class="achievement"
+            id="achievementCrit50"
+        >
             <div class="achievement-title">
                 💥 Critical Expert
             </div>
@@ -1204,8 +2407,11 @@
             </div>
         </div>
 
-        <!-- 21 -->
-        <div class="achievement" id="achievementCrit100">
+
+        <div
+            class="achievement"
+            id="achievementCrit100"
+        >
             <div class="achievement-title">
                 ☄️ Critical Champion
             </div>
@@ -1214,8 +2420,11 @@
             </div>
         </div>
 
-        <!-- 22 -->
-        <div class="achievement" id="achievementAuto10">
+
+        <div
+            class="achievement"
+            id="achievementAuto10"
+        >
             <div class="achievement-title">
                 🤖 Getting Automated
             </div>
@@ -1224,8 +2433,11 @@
             </div>
         </div>
 
-        <!-- 23 -->
-        <div class="achievement" id="achievementAuto50">
+
+        <div
+            class="achievement"
+            id="achievementAuto50"
+        >
             <div class="achievement-title">
                 🚀 Automation Nation
             </div>
@@ -1234,8 +2446,11 @@
             </div>
         </div>
 
-        <!-- 24 -->
-        <div class="achievement" id="achievementAuto100">
+
+        <div
+            class="achievement"
+            id="achievementAuto100"
+        >
             <div class="achievement-title">
                 🏭 Point Factory
             </div>
@@ -1244,8 +2459,11 @@
             </div>
         </div>
 
-        <!-- 25 -->
-        <div class="achievement" id="achievementPower25">
+
+        <div
+            class="achievement"
+            id="achievementPower25"
+        >
             <div class="achievement-title">
                 💪 Super Click
             </div>
@@ -1254,8 +2472,11 @@
             </div>
         </div>
 
-        <!-- 26 -->
-        <div class="achievement" id="achievementPower100">
+
+        <div
+            class="achievement"
+            id="achievementPower100"
+        >
             <div class="achievement-title">
                 💪 Mega Clicker
             </div>
@@ -1264,8 +2485,11 @@
             </div>
         </div>
 
-        <!-- 27 -->
-        <div class="achievement" id="achievementLevel25">
+
+        <div
+            class="achievement"
+            id="achievementLevel25"
+        >
             <div class="achievement-title">
                 ⭐ Rising Star
             </div>
@@ -1277,13 +2501,11 @@
     </div>
 
 
-    <!-- RESET -->
-
-    <button id="resetButton"
-            onclick="resetGame()">
-
+    <button
+        id="resetButton"
+        onclick="resetGame()"
+    >
         🔄 Reset Game
-
     </button>
 
 </div>
@@ -1294,12 +2516,14 @@
 
 <script>
 
-    // =========================================================
-    // ACCOUNT SYSTEM
-    // =========================================================
+    /* =========================================================
+       ACCOUNT SYSTEM
+    ========================================================= */
 
     let currentUser =
-        localStorage.getItem("currentUser") || null;
+        localStorage.getItem(
+            "currentUser"
+        ) || null;
 
 
     function getAccounts() {
@@ -1331,8 +2555,12 @@
     function toggleAccountMenu() {
 
         document
-            .getElementById("accountMenu")
-            .classList.toggle("show");
+            .getElementById(
+                "accountMenu"
+            )
+            .classList.toggle(
+                "show"
+            );
     }
 
 
@@ -1352,16 +2580,24 @@
 
         const username =
             document
-                .getElementById("username")
+                .getElementById(
+                    "username"
+                )
                 .value
                 .trim();
 
         const password =
             document
-                .getElementById("password")
+                .getElementById(
+                    "password"
+                )
                 .value;
 
-        if (!username || !password) {
+
+        if (
+            !username ||
+            !password
+        ) {
 
             showToast(
                 "Enter a username and password."
@@ -1370,7 +2606,10 @@
             return;
         }
 
-        if (username.length < 3) {
+
+        if (
+            username.length < 3
+        ) {
 
             showToast(
                 "Username must be at least 3 characters."
@@ -1379,7 +2618,10 @@
             return;
         }
 
-        if (password.length < 4) {
+
+        if (
+            password.length < 4
+        ) {
 
             showToast(
                 "Password must be at least 4 characters."
@@ -1388,13 +2630,17 @@
             return;
         }
 
+
         const accounts =
             getAccounts();
 
         const accountKey =
             username.toLowerCase();
 
-        if (accounts[accountKey]) {
+
+        if (
+            accounts[accountKey]
+        ) {
 
             showToast(
                 "That username already exists."
@@ -1403,24 +2649,34 @@
             return;
         }
 
+
         accounts[accountKey] = {
 
-            username: username,
+            username:
+                username,
 
-            password: password,
+            password:
+                password,
 
-            game: createNewGame()
+            game:
+                createNewGame()
         };
 
-        saveAccounts(accounts);
+
+        saveAccounts(
+            accounts
+        );
+
 
         currentUser =
             accountKey;
+
 
         localStorage.setItem(
             "currentUser",
             currentUser
         );
+
 
         loadCurrentUserGame();
 
@@ -1438,14 +2694,19 @@
 
         const username =
             document
-                .getElementById("username")
+                .getElementById(
+                    "username"
+                )
                 .value
                 .trim();
 
         const password =
             document
-                .getElementById("password")
+                .getElementById(
+                    "password"
+                )
                 .value;
+
 
         const accounts =
             getAccounts();
@@ -1453,7 +2714,10 @@
         const accountKey =
             username.toLowerCase();
 
-        if (!accounts[accountKey]) {
+
+        if (
+            !accounts[accountKey]
+        ) {
 
             showToast(
                 "Account not found."
@@ -1462,9 +2726,10 @@
             return;
         }
 
+
         if (
-            accounts[accountKey].password !==
-            password
+            accounts[accountKey]
+                .password !== password
         ) {
 
             showToast(
@@ -1474,13 +2739,16 @@
             return;
         }
 
+
         currentUser =
             accountKey;
+
 
         localStorage.setItem(
             "currentUser",
             currentUser
         );
+
 
         loadCurrentUserGame();
 
@@ -1488,7 +2756,8 @@
 
         showToast(
             "✅ Welcome back, " +
-            accounts[accountKey].username +
+            accounts[accountKey]
+                .username +
             "!"
         );
 
@@ -1502,15 +2771,19 @@
             saveCurrentUserGame();
         }
 
+
         currentUser = null;
+
 
         localStorage.removeItem(
             "currentUser"
         );
 
+
         resetVariablesOnly();
 
         updateScreen();
+
         updateAccountUI();
 
         showToast(
@@ -1539,20 +2812,26 @@
         const accounts =
             getAccounts();
 
+
         if (
             currentUser &&
             accounts[currentUser]
         ) {
 
             const displayName =
-                accounts[currentUser].username;
+                accounts[currentUser]
+                    .username;
+
 
             button.textContent =
-                "👤 " + displayName;
+                "👤 " +
+                displayName;
+
 
             status.textContent =
                 "Logged in as " +
                 displayName;
+
 
             welcome.textContent =
                 "Playing as " +
@@ -1563,8 +2842,10 @@
             button.textContent =
                 "👤 Sign Up / Log In";
 
+
             status.textContent =
                 "Not logged in";
+
 
             welcome.textContent =
                 "Playing as Guest";
@@ -1572,9 +2853,9 @@
     }
 
 
-    // =========================================================
-    // GAME VARIABLES
-    // =========================================================
+    /* =========================================================
+       GAME VARIABLES
+    ========================================================= */
 
     let points = 0;
 
@@ -1612,12 +2893,320 @@
 
     let comboTimer = 0;
 
+    let lastKnownLevel = 1;
+
     const COMBO_TIME = 2000;
 
 
-    // =========================================================
-    // NEW GAME DATA
-    // =========================================================
+    /* =========================================================
+       LEVEL SYSTEM
+       =========================================================
+
+       Level 1 starts at 0 points.
+
+       Each new level requires more points than the last.
+
+       Example:
+       Level 2  = around 300 total points
+       Level 3  = around 730 total points
+       Level 4  = around 1,220 total points
+       etc.
+
+       The exponent makes later levels increasingly difficult.
+    ========================================================= */
+
+    function pointsRequiredForLevel(level) {
+
+        if (level <= 1) {
+            return 0;
+        }
+
+        return Math.floor(
+            300 *
+            Math.pow(level - 1, 1.75)
+        );
+    }
+
+
+    function getLevel() {
+
+        let level = 1;
+
+        while (
+            points >=
+            pointsRequiredForLevel(
+                level + 1
+            )
+        ) {
+
+            level++;
+
+            /*
+             * Safety limit prevents the browser
+             * from doing an enormous loop if
+             * someone somehow has an absurd score.
+             */
+            if (level >= 10000) {
+                break;
+            }
+        }
+
+        return level;
+    }
+
+
+    /* =========================================================
+       LEVEL UP
+    ========================================================= */
+
+    function checkForLevelUp() {
+
+        const newLevel =
+            getLevel();
+
+
+        if (
+            newLevel >
+            lastKnownLevel
+        ) {
+
+            for (
+                let level =
+                    lastKnownLevel + 1;
+                level <= newLevel;
+                level++
+            ) {
+
+                applyThemeForLevel(
+                    level
+                );
+
+                showLevelUp(
+                    level
+                );
+
+                createParticles(
+                    60
+                );
+
+                levelUpSound();
+            }
+
+
+            lastKnownLevel =
+                newLevel;
+        }
+    }
+
+
+    /* =========================================================
+       LEVEL THEMES
+    ========================================================= */
+
+    const levelThemes = [
+
+        {
+            primary: "#3478f6",
+            secondary: "#7c4dff",
+            accent: "#4dd0e1",
+            highlight: "#ffd740",
+            background: "#090914",
+            glow: "rgba(77,208,225,0.45)"
+        },
+
+        {
+            primary: "#00bfa5",
+            secondary: "#00e676",
+            accent: "#69f0ae",
+            highlight: "#ffff00",
+            background: "#061412",
+            glow: "rgba(105,240,174,0.45)"
+        },
+
+        {
+            primary: "#ff6d00",
+            secondary: "#ff1744",
+            accent: "#ffab40",
+            highlight: "#ffe082",
+            background: "#180906",
+            glow: "rgba(255,109,0,0.5)"
+        },
+
+        {
+            primary: "#aa00ff",
+            secondary: "#e040fb",
+            accent: "#ea80fc",
+            highlight: "#f8bbd0",
+            background: "#120615",
+            glow: "rgba(224,64,251,0.5)"
+        },
+
+        {
+            primary: "#00b8d4",
+            secondary: "#2979ff",
+            accent: "#80deea",
+            highlight: "#40c4ff",
+            background: "#061018",
+            glow: "rgba(0,188,212,0.5)"
+        },
+
+        {
+            primary: "#d50000",
+            secondary: "#ff4081",
+            accent: "#ff80ab",
+            highlight: "#ff5252",
+            background: "#190608",
+            glow: "rgba(255,64,129,0.5)"
+        },
+
+        {
+            primary: "#00c853",
+            secondary: "#64dd17",
+            accent: "#b2ff59",
+            highlight: "#eeff41",
+            background: "#071305",
+            glow: "rgba(100,221,23,0.5)"
+        },
+
+        {
+            primary: "#6200ea",
+            secondary: "#304ffe",
+            accent: "#7c4dff",
+            highlight: "#b388ff",
+            background: "#090712",
+            glow: "rgba(98,0,234,0.5)"
+        },
+
+        {
+            primary: "#ff0080",
+            secondary: "#ff8c00",
+            accent: "#ffea00",
+            highlight: "#ffffff",
+            background: "#180608",
+            glow: "rgba(255,0,128,0.5)"
+        },
+
+        {
+            primary: "#00e5ff",
+            secondary: "#1de9b6",
+            accent: "#64ffda",
+            highlight: "#ffffff",
+            background: "#041112",
+            glow: "rgba(0,229,255,0.5)"
+        }
+    ];
+
+
+    function applyThemeForLevel(
+        level
+    ) {
+
+        const theme =
+            levelThemes[
+                (level - 1) %
+                levelThemes.length
+            ];
+
+
+        const root =
+            document.documentElement;
+
+
+        root.style.setProperty(
+            "--primary",
+            theme.primary
+        );
+
+        root.style.setProperty(
+            "--secondary",
+            theme.secondary
+        );
+
+        root.style.setProperty(
+            "--accent",
+            theme.accent
+        );
+
+        root.style.setProperty(
+            "--highlight",
+            theme.highlight
+        );
+
+        root.style.setProperty(
+            "--background",
+            theme.background
+        );
+
+        root.style.setProperty(
+            "--glow",
+            theme.glow
+        );
+    }
+
+
+    function showLevelUp(
+        level
+    ) {
+
+        const message =
+            document.getElementById(
+                "levelUpMessage"
+            );
+
+
+        message.textContent =
+            "⭐ LEVEL " +
+            level +
+            "!";
+
+
+        message.classList.remove(
+            "show"
+        );
+
+
+        void message.offsetWidth;
+
+
+        message.classList.add(
+            "show"
+        );
+
+
+        const game =
+            document.getElementById(
+                "game"
+            );
+
+
+        game.classList.add(
+            "level-flash"
+        );
+
+
+        setTimeout(
+            function() {
+
+                game.classList.remove(
+                    "level-flash"
+                );
+
+            },
+            700
+        );
+
+
+        showToast(
+            "⭐ You reached level " +
+            level +
+            "!"
+        );
+    }
+
+
+    /* =========================================================
+       NEW GAME
+    ========================================================= */
 
     function createNewGame() {
 
@@ -1660,14 +3249,15 @@
     }
 
 
-    // =========================================================
-    // RESET ONLY THE CURRENT VARIABLES
-    // =========================================================
+    /* =========================================================
+       RESET VARIABLES
+    ========================================================= */
 
     function resetVariablesOnly() {
 
         const fresh =
             createNewGame();
+
 
         points =
             fresh.points;
@@ -1721,12 +3311,18 @@
             fresh.achievements;
 
         comboTimer = 0;
+
+        lastKnownLevel = 1;
+
+        applyThemeForLevel(
+            1
+        );
     }
 
 
-    // =========================================================
-    // SAVE CURRENT USER'S GAME
-    // =========================================================
+    /* =========================================================
+       SAVE
+    ========================================================= */
 
     function saveCurrentUserGame() {
 
@@ -1734,12 +3330,17 @@
             return;
         }
 
+
         const accounts =
             getAccounts();
 
-        if (!accounts[currentUser]) {
+
+        if (
+            !accounts[currentUser]
+        ) {
             return;
         }
+
 
         accounts[currentUser].game = {
 
@@ -1778,18 +3379,22 @@
             achievements
         };
 
-        saveAccounts(accounts);
+
+        saveAccounts(
+            accounts
+        );
     }
 
 
-    // =========================================================
-    // LOAD CURRENT USER'S GAME
-    // =========================================================
+    /* =========================================================
+       LOAD
+    ========================================================= */
 
     function loadCurrentUserGame() {
 
         const accounts =
             getAccounts();
+
 
         if (
             !currentUser ||
@@ -1803,9 +3408,12 @@
             return;
         }
 
+
         const data =
-            accounts[currentUser].game ||
+            accounts[currentUser]
+                .game ||
             createNewGame();
+
 
         points =
             data.points ?? 0;
@@ -1860,13 +3468,23 @@
 
         comboTimer = 0;
 
+
+        lastKnownLevel =
+            getLevel();
+
+
+        applyThemeForLevel(
+            lastKnownLevel
+        );
+
+
         updateScreen();
     }
 
 
-    // =========================================================
-    // SOUND SYSTEM
-    // =========================================================
+    /* =========================================================
+       SOUND ENGINE
+    ========================================================= */
 
     let audioContext = null;
 
@@ -1882,6 +3500,7 @@
                 )();
         }
 
+
         if (
             audioContext.state ===
             "suspended"
@@ -1889,6 +3508,7 @@
 
             audioContext.resume();
         }
+
 
         return audioContext;
     }
@@ -1904,11 +3524,13 @@
         const ctx =
             getAudioContext();
 
+
         const oscillator =
             ctx.createOscillator();
 
         const gain =
             ctx.createGain();
+
 
         oscillator.type =
             type;
@@ -1916,57 +3538,136 @@
         oscillator.frequency.value =
             frequency;
 
+
         gain.gain.setValueAtTime(
             volume,
             ctx.currentTime
         );
 
+
         gain.gain.exponentialRampToValueAtTime(
             0.001,
-            ctx.currentTime + duration
+            ctx.currentTime +
+            duration
         );
 
-        oscillator.connect(gain);
 
-        gain.connect(ctx.destination);
+        oscillator.connect(
+            gain
+        );
+
+        gain.connect(
+            ctx.destination
+        );
+
 
         oscillator.start();
 
+
         oscillator.stop(
-            ctx.currentTime + duration
+            ctx.currentTime +
+            duration
         );
     }
 
+
+    /* Much louder click sound */
 
     function clickSound() {
 
         playSound(
-            220 + combo * 5,
-            0.06,
+            180 + combo * 4,
+            0.10,
             "sine",
-            0.035
+            0.22
+        );
+
+
+        setTimeout(
+            function() {
+
+                playSound(
+                    420 + combo * 8,
+                    0.06,
+                    "triangle",
+                    0.12
+                );
+
+            },
+            20
+        );
+
+
+        setTimeout(
+            function() {
+
+                playSound(
+                    100,
+                    0.05,
+                    "square",
+                    0.045
+                );
+
+            },
+            5
         );
     }
 
 
+    /* Much louder critical sound */
+
     function criticalSound() {
 
         playSound(
-            500,
-            0.1,
-            "triangle",
-            0.05
+            90,
+            0.22,
+            "sawtooth",
+            0.22
         );
 
+
         setTimeout(
-            () =>
+            function() {
+
+                playSound(
+                    500,
+                    0.13,
+                    "triangle",
+                    0.19
+                );
+
+            },
+            50
+        );
+
+
+        setTimeout(
+            function() {
+
                 playSound(
                     800,
-                    0.15,
+                    0.17,
                     "triangle",
-                    0.05
-                ),
-            60
+                    0.18
+                );
+
+            },
+            120
+        );
+
+
+        setTimeout(
+            function() {
+
+                playSound(
+                    1100,
+                    0.22,
+                    "sine",
+                    0.15
+                );
+
+            },
+            190
         );
     }
 
@@ -1977,40 +3678,146 @@
             500,
             0.08,
             "sine",
-            0.04
+            0.12
         );
 
+
         setTimeout(
-            () =>
+            function() {
+
                 playSound(
                     700,
                     0.12,
                     "sine",
-                    0.04
-                ),
+                    0.12
+                );
+
+            },
             70
         );
     }
 
 
-    // =========================================================
-    // MAIN CLICK
-    // =========================================================
+    function levelUpSound() {
+
+        playSound(
+            400,
+            0.10,
+            "triangle",
+            0.15
+        );
+
+
+        setTimeout(
+            function() {
+
+                playSound(
+                    600,
+                    0.12,
+                    "triangle",
+                    0.15
+                );
+
+            },
+            90
+        );
+
+
+        setTimeout(
+            function() {
+
+                playSound(
+                    850,
+                    0.15,
+                    "triangle",
+                    0.15
+                );
+
+            },
+            180
+        );
+
+
+        setTimeout(
+            function() {
+
+                playSound(
+                    1200,
+                    0.22,
+                    "triangle",
+                    0.13
+                );
+
+            },
+            300
+        );
+    }
+
+
+    function achievementSound() {
+
+        playSound(
+            700,
+            0.15,
+            "triangle",
+            0.12
+        );
+
+
+        setTimeout(
+            function() {
+
+                playSound(
+                    950,
+                    0.20,
+                    "triangle",
+                    0.12
+                );
+
+            },
+            120
+        );
+
+
+        setTimeout(
+            function() {
+
+                playSound(
+                    1200,
+                    0.25,
+                    "triangle",
+                    0.10
+                );
+
+            },
+            250
+        );
+    }
+
+
+    /* =========================================================
+       CLICK
+    ========================================================= */
 
     function clickPoint() {
 
         totalClicks++;
+
 
         combo++;
 
         comboTimer =
             COMBO_TIME;
 
-        if (combo > maxCombo) {
+
+        if (
+            combo > maxCombo
+        ) {
 
             maxCombo =
                 combo;
         }
+
 
         const comboMultiplier =
             1 +
@@ -2020,10 +3827,12 @@
                 100
             );
 
+
         const isCritical =
             Math.random() *
             100 <
             criticalChance;
+
 
         let multiplier =
             comboMultiplier;
@@ -2033,14 +3842,18 @@
 
             criticalHits++;
 
+
             achievements[
                 "Critical Hit"
             ] = true;
 
+
             multiplier *=
                 criticalMultiplier;
 
+
             criticalSound();
+
 
             showPopup(
                 "💥 CRITICAL +" +
@@ -2051,28 +3864,55 @@
                 "critical-popup"
             );
 
-            createParticles(22);
+
+            createParticles(
+                40
+            );
+
 
             const game =
                 document.getElementById(
                     "game"
                 );
 
+
+            game.classList.add(
+                "critical-flash"
+            );
+
+
+            setTimeout(
+                function() {
+
+                    game.classList.remove(
+                        "critical-flash"
+                    );
+
+                },
+                350
+            );
+
+
             game.classList.add(
                 "shake"
             );
 
+
             setTimeout(
-                () =>
+                function() {
+
                     game.classList.remove(
                         "shake"
-                    ),
+                    );
+
+                },
                 180
             );
 
         } else {
 
             clickSound();
+
 
             showPopup(
                 "+" +
@@ -2083,7 +3923,10 @@
                 "normal-popup"
             );
 
-            createParticles(8);
+
+            createParticles(
+                14
+            );
         }
 
 
@@ -2092,39 +3935,115 @@
             multiplier;
 
 
-        if (combo === 10) {
+        if (
+            combo === 10
+        ) {
 
             showPopup(
                 "🔥 10x COMBO!",
                 "combo-popup"
             );
 
+
+            createParticles(
+                30
+            );
+
+
             playSound(
-                650,
-                0.18,
+                450,
+                0.10,
                 "triangle",
-                0.05
+                0.14
+            );
+
+
+            setTimeout(
+                function() {
+
+                    playSound(
+                        700,
+                        0.15,
+                        "triangle",
+                        0.14
+                    );
+
+                },
+                100
+            );
+
+
+            showToast(
+                "🔥 COMBO STARTED!"
             );
         }
 
 
-        if (combo === 25) {
+        if (
+            combo === 25
+        ) {
 
             showPopup(
                 "⚡ 25x COMBO!",
                 "combo-popup"
             );
 
+
+            createParticles(
+                50
+            );
+
+
             playSound(
-                900,
-                0.22,
+                500,
+                0.10,
                 "triangle",
-                0.06
+                0.15
+            );
+
+
+            setTimeout(
+                function() {
+
+                    playSound(
+                        800,
+                        0.12,
+                        "triangle",
+                        0.15
+                    );
+
+                },
+                100
+            );
+
+
+            setTimeout(
+                function() {
+
+                    playSound(
+                        1100,
+                        0.20,
+                        "triangle",
+                        0.15
+                    );
+
+                },
+                200
+            );
+
+
+            showToast(
+                "⚡ 25x COMBO!"
             );
         }
 
 
+        checkForLevelUp();
+
+
         pulseClickButton();
+
+        bumpPoints();
 
         saveCurrentUserGame();
 
@@ -2132,9 +4051,9 @@
     }
 
 
-    // =========================================================
-    // CLICK BUTTON ANIMATION
-    // =========================================================
+    /* =========================================================
+       BUTTON ANIMATION
+    ========================================================= */
 
     function pulseClickButton() {
 
@@ -2143,11 +4062,14 @@
                 "clickButton"
             );
 
+
         button.classList.remove(
             "click-pulse"
         );
 
+
         void button.offsetWidth;
+
 
         button.classList.add(
             "click-pulse"
@@ -2155,9 +4077,31 @@
     }
 
 
-    // =========================================================
-    // POPUP
-    // =========================================================
+    function bumpPoints() {
+
+        const element =
+            document.getElementById(
+                "points"
+            );
+
+
+        element.classList.remove(
+            "points-bump"
+        );
+
+
+        void element.offsetWidth;
+
+
+        element.classList.add(
+            "points-bump"
+        );
+    }
+
+
+    /* =========================================================
+       POPUPS
+    ========================================================= */
 
     function showPopup(
         text,
@@ -2169,57 +4113,74 @@
                 "popupArea"
             );
 
+
         const popup =
             document.createElement(
                 "div"
             );
 
+
         popup.className =
             "popup " +
             className;
 
+
         popup.textContent =
             text;
+
 
         popup.style.left =
             (
                 50 +
                 (
                     Math.random() *
-                    30 - 15
+                    30 -
+                    15
                 )
             ) +
             "%";
+
 
         area.appendChild(
             popup
         );
 
+
         setTimeout(
-            () => popup.remove(),
-            900
+            function() {
+
+                popup.remove();
+
+            },
+            1000
         );
     }
 
 
-    // =========================================================
-    // PARTICLES
-    // =========================================================
+    /* =========================================================
+       PARTICLES
+    ========================================================= */
 
-    function createParticles(amount) {
+    function createParticles(
+        amount
+    ) {
 
         const area =
             document.getElementById(
                 "popupArea"
             );
 
-        const particleColors = [
+
+        const colors = [
+
             "#4dd0e1",
             "#ffd740",
             "#ff4081",
             "#7c4dff",
-            "#69f0ae"
+            "#69f0ae",
+            "#ffffff"
         ];
+
 
         for (
             let i = 0;
@@ -2232,18 +4193,22 @@
                     "div"
                 );
 
+
             particle.className =
                 "particle";
+
 
             const angle =
                 Math.random() *
                 Math.PI *
                 2;
 
+
             const distance =
                 80 +
                 Math.random() *
                 120;
+
 
             particle.style.setProperty(
                 "--x",
@@ -2252,6 +4217,7 @@
                 "px"
             );
 
+
             particle.style.setProperty(
                 "--y",
                 Math.sin(angle) *
@@ -2259,40 +4225,52 @@
                 "px"
             );
 
+
             const size =
-                4 +
+                5 +
                 Math.random() *
-                7;
+                9;
+
 
             particle.style.width =
-                size + "px";
+                size +
+                "px";
+
 
             particle.style.height =
-                size + "px";
+                size +
+                "px";
+
 
             particle.style.background =
-                particleColors[
+                colors[
                     Math.floor(
                         Math.random() *
-                        particleColors.length
+                        colors.length
                     )
                 ];
+
 
             area.appendChild(
                 particle
             );
 
+
             setTimeout(
-                () => particle.remove(),
+                function() {
+
+                    particle.remove();
+
+                },
                 700
             );
         }
     }
 
 
-    // =========================================================
-    // COMBO BAR
-    // =========================================================
+    /* =========================================================
+       COMBO TIMER
+    ========================================================= */
 
     function updateComboBar() {
 
@@ -2301,6 +4279,7 @@
                 comboTimer /
                 COMBO_TIME
             ) * 100;
+
 
         document.getElementById(
             "comboBar"
@@ -2311,12 +4290,14 @@
             ) +
             "%";
 
+
         document.getElementById(
             "comboTimerText"
         ).textContent =
             comboTimer > 0
                 ? (
-                    comboTimer / 1000
+                    comboTimer /
+                    1000
                 ).toFixed(1) +
                 "s"
                 : "Ready!";
@@ -2326,11 +4307,17 @@
     setInterval(
         function() {
 
-            if (comboTimer > 0) {
+            if (
+                comboTimer > 0
+            ) {
 
-                comboTimer -= 50;
+                comboTimer -=
+                    50;
 
-                if (comboTimer <= 0) {
+
+                if (
+                    comboTimer <= 0
+                ) {
 
                     comboTimer = 0;
 
@@ -2341,6 +4328,7 @@
                     updateScreen();
                 }
 
+
                 updateComboBar();
             }
 
@@ -2349,17 +4337,37 @@
     );
 
 
-    // =========================================================
-    // AUTO POINTS
-    // =========================================================
+    /* =========================================================
+       AUTO POINTS
+    ========================================================= */
 
     setInterval(
         function() {
 
-            if (pointsPerSecond > 0) {
+            if (
+                pointsPerSecond > 0
+            ) {
+
+                const oldLevel =
+                    getLevel();
+
 
                 points +=
                     pointsPerSecond;
+
+
+                const newLevel =
+                    getLevel();
+
+
+                if (
+                    newLevel >
+                    oldLevel
+                ) {
+
+                    checkForLevelUp();
+                }
+
 
                 saveCurrentUserGame();
 
@@ -2371,16 +4379,19 @@
     );
 
 
-    // =========================================================
-    // UPDATES
-    // =========================================================
+    /* =========================================================
+       UPDATE SCREEN
+    ========================================================= */
 
     function updateScreen() {
 
         document.getElementById(
             "points"
         ).textContent =
-            formatNumber(points);
+            formatNumber(
+                points
+            );
+
 
         document.getElementById(
             "perClick"
@@ -2389,6 +4400,7 @@
                 pointsPerClick
             );
 
+
         document.getElementById(
             "perSecond"
         ).textContent =
@@ -2396,17 +4408,20 @@
                 pointsPerSecond
             );
 
+
         document.getElementById(
             "critChance"
         ).textContent =
             criticalChance +
             "%";
 
+
         document.getElementById(
             "combo"
         ).textContent =
             combo +
             "x";
+
 
         document.getElementById(
             "comboBonus"
@@ -2417,12 +4432,14 @@
             ) +
             "%";
 
+
         document.getElementById(
             "clickUpgradeCost"
         ).textContent =
             formatNumber(
                 clickUpgradeCost
             );
+
 
         document.getElementById(
             "autoUpgradeCost"
@@ -2431,12 +4448,14 @@
                 autoUpgradeCost
             );
 
+
         document.getElementById(
             "critUpgradeCost"
         ).textContent =
             formatNumber(
                 critUpgradeCost
             );
+
 
         document.getElementById(
             "comboUpgradeCost"
@@ -2445,12 +4464,14 @@
                 comboUpgradeCost
             );
 
+
         document.getElementById(
             "megaUpgradeCost"
         ).textContent =
             formatNumber(
                 megaUpgradeCost
             );
+
 
         document.getElementById(
             "autoPowerCost"
@@ -2459,15 +4480,16 @@
                 autoPowerCost
             );
 
+
         const level =
-            Math.floor(
-                points / 100
-            ) + 1;
+            getLevel();
+
 
         document.getElementById(
             "level"
         ).textContent =
             level;
+
 
         updateButtons();
 
@@ -2479,9 +4501,9 @@
     }
 
 
-    // =========================================================
-    // UPGRADE BUTTONS
-    // =========================================================
+    /* =========================================================
+       UPGRADE BUTTONS
+    ========================================================= */
 
     function updateButtons() {
 
@@ -2518,6 +4540,7 @@
             ]
         ];
 
+
         buttons.forEach(
             function(item) {
 
@@ -2526,11 +4549,15 @@
                         item[0]
                     );
 
+
                 const affordable =
-                    points >= item[1];
+                    points >=
+                    item[1];
+
 
                 button.disabled =
                     !affordable;
+
 
                 button.classList.toggle(
                     "affordable",
@@ -2541,9 +4568,9 @@
     }
 
 
-    // =========================================================
-    // UPGRADES
-    // =========================================================
+    /* =========================================================
+       UPGRADES
+    ========================================================= */
 
     function buyClickUpgrade() {
 
@@ -2554,10 +4581,12 @@
             return;
         }
 
+
         points -=
             clickUpgradeCost;
 
         pointsPerClick++;
+
 
         clickUpgradeCost =
             Math.floor(
@@ -2565,11 +4594,13 @@
                 1.5
             );
 
+
         upgradeSound();
 
         showToast(
             "💪 Power Click upgraded!"
         );
+
 
         saveCurrentUserGame();
 
@@ -2586,10 +4617,12 @@
             return;
         }
 
+
         points -=
             autoUpgradeCost;
 
         pointsPerSecond++;
+
 
         autoUpgradeCost =
             Math.floor(
@@ -2597,11 +4630,13 @@
                 1.7
             );
 
+
         upgradeSound();
 
         showToast(
             "🤖 Auto Clicker purchased!"
         );
+
 
         saveCurrentUserGame();
 
@@ -2618,8 +4653,10 @@
             return;
         }
 
+
         points -=
             critUpgradeCost;
+
 
         criticalChance =
             Math.min(
@@ -2627,17 +4664,20 @@
                 criticalChance + 5
             );
 
+
         critUpgradeCost =
             Math.floor(
                 critUpgradeCost *
                 1.8
             );
 
+
         upgradeSound();
 
         showToast(
             "🎯 Critical chance increased!"
         );
+
 
         saveCurrentUserGame();
 
@@ -2654,10 +4694,12 @@
             return;
         }
 
+
         points -=
             comboUpgradeCost;
 
         comboBonusPerLevel++;
+
 
         comboUpgradeCost =
             Math.floor(
@@ -2665,11 +4707,13 @@
                 1.8
             );
 
+
         upgradeSound();
 
         showToast(
             "🔥 Combo power increased!"
         );
+
 
         saveCurrentUserGame();
 
@@ -2686,11 +4730,13 @@
             return;
         }
 
+
         points -=
             megaUpgradeCost;
 
         criticalMultiplier +=
             0.5;
+
 
         megaUpgradeCost =
             Math.floor(
@@ -2698,11 +4744,13 @@
                 2
             );
 
+
         upgradeSound();
 
         showToast(
             "💥 Critical multiplier increased!"
         );
+
 
         saveCurrentUserGame();
 
@@ -2719,10 +4767,14 @@
             return;
         }
 
+
         points -=
             autoPowerCost;
 
-        pointsPerSecond += 5;
+
+        pointsPerSecond +=
+            5;
+
 
         autoPowerCost =
             Math.floor(
@@ -2730,11 +4782,13 @@
                 2
             );
 
+
         upgradeSound();
 
         showToast(
             "🚀 Automation boosted!"
         );
+
 
         saveCurrentUserGame();
 
@@ -2742,9 +4796,9 @@
     }
 
 
-    // =========================================================
-    // ACHIEVEMENTS
-    // =========================================================
+    /* =========================================================
+       ACHIEVEMENTS
+    ========================================================= */
 
     function checkAchievements() {
 
@@ -2754,11 +4808,13 @@
             "First 100"
         );
 
+
         unlockAchievement(
             "achievement1000",
             points >= 1000,
             "Big Saver"
         );
+
 
         unlockAchievement(
             "achievement10000",
@@ -2766,11 +4822,13 @@
             "Click Master"
         );
 
+
         unlockAchievement(
             "achievement100clicks",
             totalClicks >= 100,
             "Clicker Pro"
         );
+
 
         unlockAchievement(
             "achievementCombo10",
@@ -2778,20 +4836,22 @@
             "Combo Starter"
         );
 
+
         unlockAchievement(
             "achievementCombo25",
             maxCombo >= 25,
             "Combo Master"
         );
 
+
         unlockAchievement(
             "achievementCrit",
-            achievements["Critical Hit"] === true,
+            achievements[
+                "Critical Hit"
+            ] === true,
             "Critical Hit"
         );
 
-
-        // 20 NEW ACHIEVEMENTS
 
         unlockAchievement(
             "achievement500",
@@ -2799,11 +4859,13 @@
             "Halfway There"
         );
 
+
         unlockAchievement(
             "achievement50000",
             points >= 50000,
             "Point Explosion"
         );
+
 
         unlockAchievement(
             "achievement100000",
@@ -2811,11 +4873,13 @@
             "Six Figures"
         );
 
+
         unlockAchievement(
             "achievement1000000",
             points >= 1000000,
             "Millionaire"
         );
+
 
         unlockAchievement(
             "achievement500clicks",
@@ -2823,11 +4887,13 @@
             "Speed Clicker"
         );
 
+
         unlockAchievement(
             "achievement1000clicks",
             totalClicks >= 1000,
             "Click Addict"
         );
+
 
         unlockAchievement(
             "achievement5000clicks",
@@ -2835,11 +4901,13 @@
             "Clicking Machine"
         );
 
+
         unlockAchievement(
             "achievement10000clicks",
             totalClicks >= 10000,
             "Human Robot"
         );
+
 
         unlockAchievement(
             "achievementCombo50",
@@ -2847,11 +4915,13 @@
             "Unstoppable"
         );
 
+
         unlockAchievement(
             "achievementCombo100",
             maxCombo >= 100,
             "Combo Legend"
         );
+
 
         unlockAchievement(
             "achievementCombo250",
@@ -2859,11 +4929,13 @@
             "Combo God"
         );
 
+
         unlockAchievement(
             "achievementCrit10",
             criticalHits >= 10,
             "Lucky Streak"
         );
+
 
         unlockAchievement(
             "achievementCrit50",
@@ -2871,11 +4943,13 @@
             "Critical Expert"
         );
 
+
         unlockAchievement(
             "achievementCrit100",
             criticalHits >= 100,
             "Critical Champion"
         );
+
 
         unlockAchievement(
             "achievementAuto10",
@@ -2883,11 +4957,13 @@
             "Getting Automated"
         );
 
+
         unlockAchievement(
             "achievementAuto50",
             pointsPerSecond >= 50,
             "Automation Nation"
         );
+
 
         unlockAchievement(
             "achievementAuto100",
@@ -2895,11 +4971,13 @@
             "Point Factory"
         );
 
+
         unlockAchievement(
             "achievementPower25",
             pointsPerClick >= 25,
             "Super Click"
         );
+
 
         unlockAchievement(
             "achievementPower100",
@@ -2907,11 +4985,10 @@
             "Mega Clicker"
         );
 
+
         unlockAchievement(
             "achievementLevel25",
-            Math.floor(
-                points / 100
-            ) + 1 >= 25,
+            getLevel() >= 25,
             "Rising Star"
         );
     }
@@ -2924,11 +5001,15 @@
     ) {
 
         const element =
-            document.getElementById(id);
+            document.getElementById(
+                id
+            );
+
 
         if (!element) {
             return;
         }
+
 
         if (condition) {
 
@@ -2936,33 +5017,28 @@
                 "unlocked"
             );
 
-            if (!achievements[name]) {
+
+            if (
+                !achievements[name]
+            ) {
 
                 achievements[name] =
                     true;
+
 
                 showToast(
                     "🏆 Achievement unlocked: " +
                     name
                 );
 
-                playSound(
-                    700,
-                    0.15,
-                    "triangle",
-                    0.05
+
+                achievementSound();
+
+
+                createParticles(
+                    25
                 );
 
-                setTimeout(
-                    () =>
-                        playSound(
-                            950,
-                            0.2,
-                            "triangle",
-                            0.05
-                        ),
-                    120
-                );
 
                 saveCurrentUserGame();
             }
@@ -2976,9 +5052,9 @@
     }
 
 
-    // =========================================================
-    // RESET GAME
-    // =========================================================
+    /* =========================================================
+       RESET
+    ========================================================= */
 
     function resetGame() {
 
@@ -2990,11 +5066,15 @@
             return;
         }
 
+
         resetVariablesOnly();
+
 
         saveCurrentUserGame();
 
+
         updateScreen();
+
 
         showToast(
             "🔄 Game reset!"
@@ -3002,13 +5082,17 @@
     }
 
 
-    // =========================================================
-    // UTILITIES
-    // =========================================================
+    /* =========================================================
+       NUMBER FORMAT
+    ========================================================= */
 
-    function formatNumber(number) {
+    function formatNumber(
+        number
+    ) {
 
-        if (number >= 1e12) {
+        if (
+            number >= 1e12
+        ) {
 
             return (
                 number / 1e12
@@ -3016,7 +5100,10 @@
             "T";
         }
 
-        if (number >= 1e9) {
+
+        if (
+            number >= 1e9
+        ) {
 
             return (
                 number / 1e9
@@ -3024,7 +5111,10 @@
             "B";
         }
 
-        if (number >= 1e6) {
+
+        if (
+            number >= 1e6
+        ) {
 
             return (
                 number / 1e6
@@ -3032,7 +5122,10 @@
             "M";
         }
 
-        if (number >= 1e3) {
+
+        if (
+            number >= 1e3
+        ) {
 
             return (
                 number / 1e3
@@ -3040,29 +5133,40 @@
             "K";
         }
 
+
         return Math.floor(
             number
         ).toLocaleString();
     }
 
 
-    function showToast(message) {
+    /* =========================================================
+       TOAST
+    ========================================================= */
+
+    function showToast(
+        message
+    ) {
 
         const toast =
             document.getElementById(
                 "toast"
             );
 
+
         toast.textContent =
             message;
+
 
         toast.classList.add(
             "show"
         );
 
+
         clearTimeout(
             showToast.timeout
         );
+
 
         showToast.timeout =
             setTimeout(
@@ -3078,9 +5182,9 @@
     }
 
 
-    // =========================================================
-    // BACKGROUND PARTICLES
-    // =========================================================
+    /* =========================================================
+       BACKGROUND PARTICLES
+    ========================================================= */
 
     function createBackgroundParticles() {
 
@@ -3088,6 +5192,7 @@
             document.getElementById(
                 "backgroundParticles"
             );
+
 
         for (
             let i = 0;
@@ -3100,30 +5205,39 @@
                     "div"
                 );
 
+
             particle.className =
                 "bg-particle";
+
 
             particle.style.left =
                 Math.random() *
                 100 +
                 "%";
 
+
             particle.style.animationDuration =
                 (
                     8 +
-                    Math.random() * 15
+                    Math.random() *
+                    15
                 ) +
                 "s";
+
 
             particle.style.animationDelay =
                 (
-                    -Math.random() * 15
+                    -Math.random() *
+                    15
                 ) +
                 "s";
 
+
             particle.style.opacity =
                 0.1 +
-                Math.random() * 0.5;
+                Math.random() *
+                0.5;
+
 
             container.appendChild(
                 particle
@@ -3132,9 +5246,9 @@
     }
 
 
-    // =========================================================
-    // START GAME
-    // =========================================================
+    /* =========================================================
+       START
+    ========================================================= */
 
     if (currentUser) {
 
@@ -3145,6 +5259,7 @@
         resetVariablesOnly();
     }
 
+
     createBackgroundParticles();
 
     updateAccountUI();
@@ -3152,15 +5267,16 @@
     updateScreen();
 
 
-    // =========================================================
-    // AUTO-SAVE WHEN LEAVING
-    // =========================================================
+    /* =========================================================
+       SAVE BEFORE LEAVING
+    ========================================================= */
 
     window.addEventListener(
         "beforeunload",
         function() {
 
             saveCurrentUserGame();
+
         }
     );
 
