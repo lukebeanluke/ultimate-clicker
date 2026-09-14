@@ -183,6 +183,7 @@
 
         .bg-particle {
             position: absolute;
+            will-change: transform, opacity;
             width: 4px;
             height: 4px;
             border-radius: 50%;
@@ -350,11 +351,8 @@
             color: white;
 
             text-shadow:
-                0 0 10px var(--accent),
-                0 0 25px var(--accent),
-                0 0 50px var(--primary),
-                0 0 90px var(--secondary),
-                0 0 130px var(--secondary);
+                0 0 12px var(--accent),
+                0 0 28px var(--secondary);
 
             pointer-events: none;
 
@@ -381,8 +379,7 @@
                     scale(0.05)
                     rotate(-10deg);
 
-                filter:
-                    blur(14px);
+                filter: none;
             }
 
             12% {
@@ -426,8 +423,7 @@
                     translate(-50%, -50%)
                     scale(1.5);
 
-                filter:
-                    blur(8px);
+                filter: none;
             }
         }
 
@@ -437,61 +433,27 @@
 
         .level-particle {
             position: fixed;
-
             left: 50%;
             top: 50%;
-
-            width: 10px;
-            height: 10px;
-
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
-
             pointer-events: none;
-
             z-index: 950;
-
-            box-shadow:
-                0 0 8px currentColor,
-                0 0 18px currentColor;
-
-            animation:
-                levelParticleExplosion
-                1.1s
-                cubic-bezier(.1,.7,.2,1)
-                forwards;
+            contain: strict;
+            will-change: transform, opacity;
+            transform: translate3d(-50%, -50%, 0);
+            animation: levelParticleExplosion 0.85s cubic-bezier(.1,.7,.2,1) forwards;
         }
 
         @keyframes levelParticleExplosion {
-
             0% {
                 opacity: 1;
-
-                transform:
-                    translate(-50%, -50%)
-                    scale(0);
+                transform: translate3d(calc(-50% + var(--startX)), calc(-50% + var(--startY)), 0) scale(.2);
             }
-
-            15% {
-                opacity: 1;
-
-                transform:
-                    translate(
-                        calc(-50% + var(--startX)),
-                        calc(-50% + var(--startY))
-                    )
-                    scale(1.4);
-            }
-
             100% {
                 opacity: 0;
-
-                transform:
-                    translate(
-                        calc(-50% + var(--endX)),
-                        calc(-50% + var(--endY))
-                    )
-                    rotate(720deg)
-                    scale(0);
+                transform: translate3d(calc(-50% + var(--endX)), calc(-50% + var(--endY)), 0) scale(0);
             }
         }
 
@@ -502,7 +464,7 @@
         .level-shake {
             animation:
                 levelShake
-                0.5s
+                0.32s
                 cubic-bezier(.36,.07,.19,.97);
         }
 
@@ -918,92 +880,134 @@
         }
 
         #clickButton {
-            position:
-                absolute;
-
-            inset:
-                55px;
-
-            width:
-                calc(100% - 110px);
-
-            height:
-                calc(100% - 110px);
-
-            border:
-                none;
-
-            border-radius:
-                50%;
-
-            cursor:
-                pointer;
-
-            user-select:
-                none;
-
-            color:
-                white;
-
-            font-size:
-                34px;
-
-            font-weight:
-                900;
-
-            letter-spacing:
-                1px;
-
+            position: absolute;
+            inset: 55px;
+            width: calc(100% - 110px);
+            height: calc(100% - 110px);
+            border: 3px solid rgba(255,255,255,0.18);
+            border-radius: 50%;
+            cursor: pointer;
+            user-select: none;
+            color: white;
+            font-size: 34px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.35);
             background:
-                radial-gradient(
-                    circle at 35% 30%,
-                    #80ff9a,
-                    transparent 20%
-                ),
-                radial-gradient(
-                    circle at 60% 70%,
-                    var(--primary),
-                    transparent 45%
-                ),
-                linear-gradient(
-                    145deg,
-                    #30e27a,
-                    var(--secondary)
-                );
-
+                radial-gradient(circle at 32% 24%, rgba(255,255,255,0.42) 0 9%, transparent 22%),
+                radial-gradient(circle at 65% 70%, rgba(0,0,0,0.22), transparent 48%),
+                linear-gradient(145deg, #4cff96, var(--primary) 48%, var(--secondary));
             box-shadow:
-                inset 0 0 30px
-                rgba(255,255,255,0.2),
+                inset 0 4px 10px rgba(255,255,255,0.24),
+                inset 0 -10px 18px rgba(0,0,0,0.16),
+                0 0 22px var(--glow),
+                0 16px 0 rgba(10,20,70,0.62),
+                0 24px 38px rgba(0,0,0,0.30);
+            transition: transform 0.08s ease-out, filter 0.08s ease-out, box-shadow 0.08s ease-out;
+            will-change: transform;
+            overflow: hidden;
+        }
 
-                0 0 25px
-                var(--glow),
+        #clickButton::before {
+            content: "";
+            position: absolute;
+            inset: 9%;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.14);
+            pointer-events: none;
+        }
 
-                0 20px 0
-                rgba(10,20,70,0.65),
+        #clickButton::after {
+            content: "";
+            position: absolute;
+            left: 14%;
+            top: 10%;
+            width: 42%;
+            height: 20%;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.16);
+            transform: rotate(-18deg);
+            filter: blur(2px);
+            pointer-events: none;
+        }
 
-                0 30px 50px
-                rgba(0,0,0,0.35);
+        /* =====================================================
+           LEVEL SHAPES
+        ===================================================== */
 
-            transition:
-                transform 0.08s,
-                filter 0.08s,
-                box-shadow 0.08s;
+        #clickButton {
+            transition: transform 0.08s ease-out, filter 0.08s ease-out, box-shadow 0.08s ease-out, border-radius 0.25s ease;
+        }
+
+        #clickButton.shape-diamond {
+            border-radius: 20%;
+            clip-path: polygon(50% 2%, 98% 50%, 50% 98%, 2% 50%);
+        }
+
+        #clickButton.shape-hexagon {
+            border-radius: 12%;
+            clip-path: polygon(25% 3%, 75% 3%, 98% 50%, 75% 97%, 25% 97%, 2% 50%);
+        }
+
+        #clickButton.shape-octagon {
+            border-radius: 12%;
+            clip-path: polygon(28% 2%, 72% 2%, 98% 28%, 98% 72%, 72% 98%, 28% 98%, 2% 72%, 2% 28%);
+        }
+
+        #clickButton.shape-shield {
+            border-radius: 14% 14% 28% 28%;
+            clip-path: polygon(50% 2%, 93% 15%, 90% 58%, 74% 84%, 50% 98%, 26% 84%, 10% 58%, 7% 15%);
+        }
+
+        #clickButton.shape-star {
+            border-radius: 14%;
+            clip-path: polygon(50% 2%, 61% 35%, 96% 35%, 68% 55%, 79% 91%, 50% 69%, 21% 91%, 32% 55%, 4% 35%, 39% 35%);
+        }
+
+        #clickButton.shape-pentagon {
+            border-radius: 16%;
+            clip-path: polygon(50% 2%, 96% 35%, 78% 96%, 22% 96%, 4% 35%);
+        }
+
+        #clickButton.shape-diamond,
+        #clickButton.shape-hexagon,
+        #clickButton.shape-octagon,
+        #clickButton.shape-shield,
+        #clickButton.shape-star,
+        #clickButton.shape-pentagon {
+            transition: transform 0.08s ease-out, filter 0.08s ease-out, box-shadow 0.08s ease-out, clip-path 0.25s ease, border-radius 0.25s ease;
+        }
+
+        .button-shape-change {
+            animation: buttonShapeChange 0.42s cubic-bezier(.2,.8,.25,1);
+        }
+
+        @keyframes buttonShapeChange {
+            0% { transform: scale(0.86) rotate(-6deg); }
+            45% { transform: scale(1.12) rotate(3deg); }
+            100% { transform: scale(1) rotate(0deg); }
         }
 
         #clickButton:hover {
-
-            filter:
-                brightness(1.12);
-
-            transform:
-                scale(1.035);
+            filter: brightness(1.09);
+            transform: translateY(-3px) scale(1.035);
+            box-shadow:
+                inset 0 4px 10px rgba(255,255,255,0.26),
+                inset 0 -10px 18px rgba(0,0,0,0.14),
+                0 0 28px var(--glow),
+                0 19px 0 rgba(10,20,70,0.62),
+                0 30px 42px rgba(0,0,0,0.32);
         }
 
         #clickButton:active {
-
-            transform:
-                translateY(15px)
-                scale(0.97);
+            transform: translateY(12px) scale(0.965);
+            filter: brightness(1.02);
+            box-shadow:
+                inset 0 3px 10px rgba(0,0,0,0.18),
+                inset 0 -4px 8px rgba(255,255,255,0.08),
+                0 0 16px var(--glow),
+                0 5px 0 rgba(10,20,70,0.62),
+                0 12px 20px rgba(0,0,0,0.25);
         }
 
         .click-pulse {
@@ -1256,9 +1260,40 @@
            PARTICLES
         ===================================================== */
 
+        .click-explosion-particle {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10;
+            will-change: transform, opacity;
+            box-shadow: 0 0 7px currentColor;
+            animation: clickExplosion 0.42s cubic-bezier(.15,.8,.25,1) forwards;
+        }
+
+        @keyframes clickExplosion {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(.25);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(
+                    calc(-50% + var(--explodeX)),
+                    calc(-50% + var(--explodeY))
+                ) scale(0);
+            }
+        }
+
         .particle {
             position:
                 absolute;
+            will-change:
+                transform,
+                opacity;
 
             width:
                 8px;
@@ -1732,6 +1767,19 @@
         /* =====================================================
            MOBILE
         ===================================================== */
+
+        @media (prefers-reduced-motion: reduce) {
+            .bg-particle,
+            .click-ring,
+            .click-ring::before,
+            .click-ring::after {
+                animation: none !important;
+            }
+
+            .affordable {
+                animation: none !important;
+            }
+        }
 
         @media (max-width:750px) {
 
@@ -2659,6 +2707,93 @@
             </div>
         </div>
 
+        <div class="achievement" id="achievementShapeDiamond">
+            <div class="achievement-title">
+                💎 Diamond Hands
+            </div>
+
+            <div class="achievement-text">
+                Get the Diamond button shape.
+            </div>
+        </div>
+
+
+        <div class="achievement" id="achievementShapeHexagon">
+            <div class="achievement-title">
+                🔷 Hexed
+            </div>
+
+            <div class="achievement-text">
+                Get the Hexagon button shape.
+            </div>
+        </div>
+
+
+        <div class="achievement" id="achievementShapeOctagon">
+            <div class="achievement-title">
+                🛑 Eight-Sided
+            </div>
+
+            <div class="achievement-text">
+                Get the Octagon button shape.
+            </div>
+        </div>
+
+
+        <div class="achievement" id="achievementShapeShield">
+            <div class="achievement-title">
+                🛡️ Shielded
+            </div>
+
+            <div class="achievement-text">
+                Get the Shield button shape.
+            </div>
+        </div>
+
+
+        <div class="achievement" id="achievementShapeStar">
+            <div class="achievement-title">
+                ⭐ Star Power
+            </div>
+
+            <div class="achievement-text">
+                Get the Star button shape.
+            </div>
+        </div>
+
+
+        <div class="achievement" id="achievementShapePentagon">
+            <div class="achievement-title">
+                🔺 Rare Five
+            </div>
+
+            <div class="achievement-text">
+                Get the rare Pentagon button shape.
+            </div>
+        </div>
+
+
+        <div class="achievement" id="achievementShapeCircle">
+            <div class="achievement-title">
+                ⚪ Back to Basics
+            </div>
+
+            <div class="achievement-text">
+                Get the Circle button shape.
+            </div>
+        </div>
+
+
+        <div class="achievement" id="achievementShapeCollector">
+            <div class="achievement-title">
+                🏆 Shape Collector
+            </div>
+
+            <div class="achievement-text">
+                Get every button shape at least once.
+            </div>
+        </div>
+
     </div>
 
 
@@ -3079,12 +3214,80 @@
     let achievements = {};
 
 
+    let shapesCollected = {
+        circle: false,
+        diamond: false,
+        hexagon: false,
+        octagon: false,
+        shield: false,
+        star: false,
+        pentagon: false
+    };
+
+
     let comboTimer = 0;
 
     let lastKnownLevel = 1;
 
 
     const COMBO_TIME = 2000;
+
+    /* =========================================================
+       PERFORMANCE
+    ========================================================= */
+
+    let screenUpdateQueued = false;
+    let saveTimer = null;
+    let comboAnimationFrame = 0;
+    let lastComboBarUpdate = 0;
+
+    const SAVE_DELAY = 350;
+
+    const DOM = {};
+
+    function cacheDOM() {
+        const ids = [
+            "points", "perClick", "perSecond", "critChance", "combo",
+            "comboBonus", "level", "clickUpgradeCost", "autoUpgradeCost",
+            "critUpgradeCost", "comboUpgradeCost", "megaUpgradeCost",
+            "autoPowerCost", "powerSurgeCost", "goldMagnetCost",
+            "comboOverdriveCost", "criticalFuryCost", "comboBar",
+            "comboTimerText", "clickButton", "game", "popupArea",
+            "levelUpMessage", "clickUpgradeButton", "autoUpgradeButton",
+            "critUpgradeButton", "comboUpgradeButton", "megaUpgradeButton",
+            "autoPowerButton"
+        ];
+
+        ids.forEach(function(id) {
+            DOM[id] = document.getElementById(id);
+        });
+    }
+
+    function scheduleScreenUpdate() {
+        if (screenUpdateQueued) {
+            return;
+        }
+
+        screenUpdateQueued = true;
+
+        requestAnimationFrame(function() {
+            screenUpdateQueued = false;
+            updateScreen();
+        });
+    }
+
+    function scheduleSave() {
+        if (!currentUser) {
+            return;
+        }
+
+        clearTimeout(saveTimer);
+
+        saveTimer = setTimeout(function() {
+            saveTimer = null;
+            saveCurrentUserGameNow();
+        }, SAVE_DELAY);
+    }
 
 
     /* =========================================================
@@ -3123,28 +3326,26 @@
 
 
     function getLevel() {
-
-        let level = 1;
-
-
-        while (
-            points >=
-            pointsRequiredForLevel(
-                level + 1
-            )
-        ) {
-
-            level++;
-
-
-            if (
-                level >= 10000
-            ) {
-
-                break;
-            }
+        if (points < 300) {
+            return 1;
         }
 
+        // Invert the level curve for a close starting estimate,
+        // then correct by at most a few steps.
+        let level = Math.max(
+            1,
+            Math.floor(
+                1 + Math.pow(points / 300, 1 / 1.75)
+            )
+        );
+
+        while (points >= pointsRequiredForLevel(level + 1)) {
+            level++;
+        }
+
+        while (level > 1 && points < pointsRequiredForLevel(level)) {
+            level--;
+        }
 
         return level;
     }
@@ -3156,45 +3357,16 @@
 
     function checkForLevelUp() {
 
-        const newLevel =
-            getLevel();
+        const newLevel = getLevel();
 
-
-        if (
-            newLevel >
-            lastKnownLevel
-        ) {
-
-            for (
-                let level =
-                    lastKnownLevel + 1;
-
-                level <= newLevel;
-
-                level++
-            ) {
-
-                applyThemeForLevel(
-                    level
-                );
-
-
-                showLevelUp(
-                    level
-                );
-
-
-                createLevelUpParticles(
-                    70
-                );
-
-
-                levelUpSound();
-            }
-
-
-            lastKnownLevel =
-                newLevel;
+        if (newLevel > lastKnownLevel) {
+            // Animate only once even when a large point gain skips multiple levels.
+            applyThemeForLevel(newLevel);
+            applyButtonShape(newLevel, true);
+            showLevelUp(newLevel);
+            createLevelUpParticles(32);
+            levelUpSound();
+            lastKnownLevel = newLevel;
         }
     }
 
@@ -3472,6 +3644,70 @@
        LEVEL UP DISPLAY
     ========================================================= */
 
+    const buttonShapes = [
+        { name: "circle", weight: 30 },
+        { name: "diamond", weight: 25 },
+        { name: "hexagon", weight: 18 },
+        { name: "octagon", weight: 12 },
+        { name: "shield", weight: 8 },
+        { name: "star", weight: 5 },
+        { name: "pentagon", weight: 2 }
+    ];
+
+    let currentButtonShape = "circle";
+
+    function chooseButtonShape() {
+        const choices = buttonShapes.filter(function(item) {
+            return item.name !== currentButtonShape;
+        });
+        const totalWeight = choices.reduce(function(sum, item) {
+            return sum + item.weight;
+        }, 0);
+        let roll = Math.random() * totalWeight;
+        for (let i = 0; i < choices.length; i++) {
+            roll -= choices[i].weight;
+            if (roll < 0) return choices[i].name;
+        }
+        return choices[choices.length - 1].name;
+    }
+
+    function recordButtonShape(shape) {
+        if (!shapesCollected[shape]) {
+            shapesCollected[shape] = true;
+            checkAchievements();
+            scheduleSave();
+        }
+    }
+
+
+    function applyButtonShape(level, animate) {
+        const button = DOM.clickButton || document.getElementById("clickButton");
+        if (!button) return;
+
+        buttonShapes.forEach(function(item) {
+            button.classList.remove("shape-" + item.name);
+        });
+
+        if (level <= 1) {
+            currentButtonShape = "circle";
+        } else {
+            currentButtonShape = chooseButtonShape();
+        }
+
+        if (currentButtonShape !== "circle") {
+            button.classList.add("shape-" + currentButtonShape);
+        }
+
+        recordButtonShape(currentButtonShape);
+
+        if (animate) {
+            button.classList.remove("button-shape-change");
+            requestAnimationFrame(function() {
+                button.classList.add("button-shape-change");
+            });
+        }
+    }
+
     function showLevelUp(
         level
     ) {
@@ -3492,67 +3728,104 @@
             "LEVEL UP!";
 
 
-        message.classList.remove(
-            "show"
-        );
+        /*
+         * Use the Web Animations API instead of repeatedly toggling
+         * the CSS animation class. This reliably restarts the effect
+         * on every level and avoids forced layout/reflow.
+         */
+        if (message.getAnimations) {
+            message.getAnimations().forEach(function(animation) {
+                animation.cancel();
+            });
 
-
-        void message.offsetWidth;
-
-
-        message.classList.add(
-            "show"
-        );
+            message.animate(
+                [
+                    {
+                        opacity: 0,
+                        transform: "translate(-50%, -50%) scale(0.08) rotate(-8deg)",
+                        filter: "blur(6px)"
+                    },
+                    {
+                        opacity: 1,
+                        transform: "translate(-50%, -50%) scale(0.72) rotate(3deg)",
+                        filter: "blur(0px)",
+                        offset: 0.14
+                    },
+                    {
+                        opacity: 1,
+                        transform: "translate(-50%, -50%) scale(1.08) rotate(-1deg)",
+                        offset: 0.28
+                    },
+                    {
+                        opacity: 1,
+                        transform: "translate(-50%, -50%) scale(1) rotate(0deg)",
+                        offset: 0.42
+                    },
+                    {
+                        opacity: 1,
+                        transform: "translate(-50%, -50%) scale(1.04) rotate(0deg)",
+                        offset: 0.68
+                    },
+                    {
+                        opacity: 0,
+                        transform: "translate(-50%, -50%) scale(1.25) rotate(0deg)",
+                        filter: "blur(3px)"
+                    }
+                ],
+                {
+                    duration: 1050,
+                    easing: "cubic-bezier(.12,.72,.2,1)",
+                    fill: "forwards"
+                }
+            );
+        } else {
+            message.classList.remove("show");
+            message.classList.add("show");
+        }
 
 
         /*
-         * Screen shake.
+         * Lightweight screen shake using WAAPI when available.
          */
+        if (game.getAnimations) {
+            game.getAnimations().forEach(function(animation) {
+                if (animation.animationName === "levelShake") {
+                    animation.cancel();
+                }
+            });
 
-        game.classList.remove(
-            "level-shake"
-        );
+            game.animate(
+                [
+                    { transform: "translate(0, 0)" },
+                    { transform: "translate(-6px, -3px)" },
+                    { transform: "translate(6px, 3px)" },
+                    { transform: "translate(-4px, 2px)" },
+                    { transform: "translate(4px, -2px)" },
+                    { transform: "translate(0, 0)" }
+                ],
+                {
+                    duration: 260,
+                    easing: "cubic-bezier(.36,.07,.19,.97)"
+                }
+            );
 
-
-        void game.offsetWidth;
-
-
-        game.classList.add(
-            "level-shake"
-        );
-
-
-        setTimeout(
-            function() {
-
-                game.classList.remove(
-                    "level-shake"
-                );
-
-            },
-            500
-        );
-
-
-        /*
-         * Screen flash.
-         */
-
-        game.classList.add(
-            "level-flash"
-        );
-
-
-        setTimeout(
-            function() {
-
-                game.classList.remove(
-                    "level-flash"
-                );
-
-            },
-            700
-        );
+            game.animate(
+                [
+                    { opacity: 0.45 },
+                    { opacity: 0 }
+                ],
+                {
+                    duration: 300,
+                    easing: "ease-out",
+                    pseudoElement: "::after"
+                }
+            );
+        } else {
+            game.classList.remove("level-shake", "level-flash");
+            requestAnimationFrame(function() {
+                game.classList.add("level-shake", "level-flash");
+            });
+        }
 
 
         showToast(
@@ -3582,16 +3855,11 @@
         ];
 
 
-        for (
-            let i = 0;
-            i < amount;
-            i++
-        ) {
+        const fragment = document.createDocumentFragment();
+        const particles = [];
 
-            const particle =
-                document.createElement(
-                    "div"
-                );
+        for (let i = 0; i < amount; i++) {
+            const particle = document.createElement("div");
 
 
             particle.className =
@@ -3666,17 +3934,13 @@
 
 
             const size =
-                5 +
+                4 +
                 Math.random() *
-                12;
+                6;
 
 
-            particle.style.width =
-                size + "px";
-
-
-            particle.style.height =
-                size + "px";
+            particle.style.width = size + "px";
+            particle.style.height = size + "px";
 
 
             particle.style.color =
@@ -3688,25 +3952,9 @@
                 ];
 
 
-            particle.style.animationDelay =
-                Math.random() *
-                0.12 +
-                "s";
-
-
-            document.body.appendChild(
-                particle
-            );
-
-
-            setTimeout(
-                function() {
-
-                    particle.remove();
-
-                },
-                1300
-            );
+            particle.style.animationDelay = Math.random() * 0.06 + "s";
+            fragment.appendChild(particle);
+            particles.push(particle);
         }
     }
 
@@ -3777,7 +4025,16 @@
 
             maxCombo: 0,
 
-            achievements: {}
+            achievements: {},
+            shapesCollected: {
+                circle: false,
+                diamond: false,
+                hexagon: false,
+                octagon: false,
+                shield: false,
+                star: false,
+                pentagon: false
+            }
         };
     }
 
@@ -3875,6 +4132,9 @@
         achievements =
             fresh.achievements;
 
+        shapesCollected =
+            fresh.shapesCollected;
+
 
         comboTimer =
             0;
@@ -3895,86 +4155,51 @@
     ========================================================= */
 
     function saveCurrentUserGame() {
+        scheduleSave();
+    }
 
+    function saveCurrentUserGameNow() {
         if (!currentUser) {
             return;
         }
 
+        const accounts = getAccounts();
 
-        const accounts =
-            getAccounts();
-
-
-        if (
-            !accounts[currentUser]
-        ) {
+        if (!accounts[currentUser]) {
             return;
         }
 
-
         accounts[currentUser].game = {
-
             points,
-
             pointsPerClick,
-
             pointsPerSecond,
-
             criticalChance,
-
             criticalMultiplier,
-
             comboBonusPerLevel,
-
             totalPointsMultiplier,
-
-
             clickUpgradeCost,
-
             autoUpgradeCost,
-
             critUpgradeCost,
-
             comboUpgradeCost,
-
             megaUpgradeCost,
-
             autoPowerCost,
-
-
             powerSurgeCost,
-
             goldMagnetCost,
-
             comboOverdriveCost,
-
             criticalFuryCost,
-
-
             powerSurgePurchased,
-
             goldMagnetPurchased,
-
             comboOverdrivePurchased,
-
             criticalFuryPurchased,
-
-
             totalClicks,
-
             criticalHits,
-
             combo,
-
             maxCombo,
-
-            achievements
+            achievements,
+            shapesCollected
         };
 
-
-        saveAccounts(
-            accounts
-        );
+        saveAccounts(accounts);
     }
 
 
@@ -4092,6 +4317,17 @@
         achievements =
             data.achievements ?? {};
 
+        shapesCollected =
+            data.shapesCollected ?? {
+                circle: false,
+                diamond: false,
+                hexagon: false,
+                octagon: false,
+                shield: false,
+                star: false,
+                pentagon: false
+            };
+
 
         comboTimer =
             0;
@@ -4202,35 +4438,33 @@
 
     function clickSound() {
 
+        // Short, layered click: soft thump + bright snap.
+        const boost = Math.min(combo * 2, 70);
+
         playSound(
-            180 +
-            combo * 4,
-
-            0.10,
-
-            "sine",
-
-            0.22
+            145 + boost,
+            0.075,
+            "triangle",
+            0.16
         );
 
+        setTimeout(function() {
+            playSound(
+                520 + boost * 2,
+                0.045,
+                "square",
+                0.075
+            );
+        }, 12);
 
-        setTimeout(
-            function() {
-
-                playSound(
-                    420 +
-                    combo * 8,
-
-                    0.06,
-
-                    "triangle",
-
-                    0.12
-                );
-
-            },
-            20
-        );
+        setTimeout(function() {
+            playSound(
+                250 + boost,
+                0.035,
+                "sine",
+                0.045
+            );
+        }, 24);
 
 
         setTimeout(
@@ -4238,7 +4472,6 @@
 
                 playSound(
                     100,
-
                     0.05,
 
                     "square",
@@ -4441,8 +4674,13 @@
 
         combo++;
 
-        comboTimer =
-            COMBO_TIME;
+        // Lightweight burst from the button on every press.
+        createClickExplosion();
+
+        comboTimer = COMBO_TIME;
+        if (!comboAnimationFrame) {
+            comboAnimationFrame = requestAnimationFrame(runComboTimer);
+        }
 
 
         if (
@@ -4696,9 +4934,8 @@
 
         bumpPoints();
 
-        saveCurrentUserGame();
-
-        updateScreen();
+        scheduleSave();
+        scheduleScreenUpdate();
     }
 
 
@@ -4707,46 +4944,18 @@
     ========================================================= */
 
     function pulseClickButton() {
-
-        const button =
-            document.getElementById(
-                "clickButton"
-            );
-
-
-        button.classList.remove(
-            "click-pulse"
-        );
-
-
-        void button.offsetWidth;
-
-
-        button.classList.add(
-            "click-pulse"
-        );
+        DOM.clickButton.classList.remove("click-pulse");
+        requestAnimationFrame(function() {
+            DOM.clickButton.classList.add("click-pulse");
+        });
     }
 
 
     function bumpPoints() {
-
-        const element =
-            document.getElementById(
-                "points"
-            );
-
-
-        element.classList.remove(
-            "points-bump"
-        );
-
-
-        void element.offsetWidth;
-
-
-        element.classList.add(
-            "points-bump"
-        );
+        DOM.points.classList.remove("points-bump");
+        requestAnimationFrame(function() {
+            DOM.points.classList.add("points-bump");
+        });
     }
 
 
@@ -4754,57 +4963,26 @@
        POPUPS
     ========================================================= */
 
-    function showPopup(
-        text,
-        className
-    ) {
+    function showPopup(text, className) {
+        const area = DOM.popupArea;
 
-        const area =
-            document.getElementById(
-                "popupArea"
-            );
+        // Prevent a backlog of floating text during very rapid clicking.
+        const popups = area.querySelectorAll(".popup");
+        if (popups.length >= 12) {
+            popups[0].remove();
+        }
 
-
-        const popup =
-            document.createElement(
-                "div"
-            );
-
-
-        popup.className =
-            "popup " +
-            className;
-
-
-        popup.textContent =
-            text;
-
-
+        const popup = document.createElement("div");
+        popup.className = "popup " + className;
+        popup.textContent = text;
         popup.style.left =
-            (
-                50 +
-                (
-                    Math.random() *
-                    30 -
-                    15
-                )
-            ) +
-            "%";
+            (50 + (Math.random() * 30 - 15)) + "%";
 
+        area.appendChild(popup);
 
-        area.appendChild(
-            popup
-        );
-
-
-        setTimeout(
-            function() {
-
-                popup.remove();
-
-            },
-            1000
-        );
+        setTimeout(function() {
+            popup.remove();
+        }, 1050);
     }
 
 
@@ -4812,110 +4990,105 @@
        PARTICLES
     ========================================================= */
 
-    function createParticles(
-        amount
-    ) {
-
-        const area =
-            document.getElementById(
-                "popupArea"
-            );
-
-
+    function createClickExplosion() {
+        const area = DOM.popupArea;
         const colors = [
-
-            "#4dd0e1",
-            "#ffd740",
-            "#ff4081",
-            "#7c4dff",
-            "#69f0ae",
-            "#ffffff"
+            "#4dd0e1", "#ffd740", "#ff4081",
+            "#7c4dff", "#69f0ae", "#ffffff"
         ];
 
+        const existing = area.querySelectorAll(".click-explosion-particle").length;
+        const amount = Math.min(8, Math.max(0, 56 - existing));
+        if (amount <= 0) return;
 
-        for (
-            let i = 0;
-            i < amount;
-            i++
-        ) {
+        const fragment = document.createDocumentFragment();
+        const particles = [];
 
-            const particle =
-                document.createElement(
-                    "div"
-                );
+        for (let i = 0; i < amount; i++) {
+            const particle = document.createElement("div");
+            particle.className = "click-explosion-particle";
+
+            const angle = Math.random() * Math.PI * 2;
+            const distance = 55 + Math.random() * 70;
+            const size = 4 + Math.random() * 5;
+
+            particle.style.setProperty(
+                "--explodeX",
+                Math.cos(angle) * distance + "px"
+            );
+            particle.style.setProperty(
+                "--explodeY",
+                Math.sin(angle) * distance + "px"
+            );
+            particle.style.width = size + "px";
+            particle.style.height = size + "px";
+            particle.style.background =
+                colors[(Math.random() * colors.length) | 0];
+
+            fragment.appendChild(particle);
+            particles.push(particle);
+        }
+
+        area.appendChild(fragment);
+
+        setTimeout(function() {
+            particles.forEach(function(particle) {
+                particle.remove();
+            });
+        }, 450);
+    }
 
 
-            particle.className =
-                "particle";
+    function createParticles(amount) {
+        const area = DOM.popupArea;
+        const colors = [
+            "#4dd0e1", "#ffd740", "#ff4081",
+            "#7c4dff", "#69f0ae", "#ffffff"
+        ];
 
+        const current = area.querySelectorAll(".particle").length;
+        const maxParticles = 80;
+        amount = Math.min(amount, Math.max(0, maxParticles - current));
 
-            const angle =
-                Math.random() *
-                Math.PI *
-                2;
+        if (amount <= 0) {
+            return;
+        }
 
+        const fragment = document.createDocumentFragment();
+        const particles = [];
 
-            const distance =
-                80 +
-                Math.random() *
-                120;
+        for (let i = 0; i < amount; i++) {
+            const particle = document.createElement("div");
+            particle.className = "particle";
 
+            const angle = Math.random() * Math.PI * 2;
+            const distance = 80 + Math.random() * 120;
+            const size = 5 + Math.random() * 9;
 
             particle.style.setProperty(
                 "--x",
-                Math.cos(angle) *
-                distance +
-                "px"
+                Math.cos(angle) * distance + "px"
             );
-
-
             particle.style.setProperty(
                 "--y",
-                Math.sin(angle) *
-                distance +
-                "px"
+                Math.sin(angle) * distance + "px"
             );
-
-
-            const size =
-                5 +
-                Math.random() *
-                9;
-
-
-            particle.style.width =
-                size +
-                "px";
-
-
-            particle.style.height =
-                size +
-                "px";
-
-
+            particle.style.width = size + "px";
+            particle.style.height = size + "px";
             particle.style.background =
-                colors[
-                    Math.floor(
-                        Math.random() *
-                        colors.length
-                    )
-                ];
+                colors[Math.floor(Math.random() * colors.length)];
 
-
-            area.appendChild(
-                particle
-            );
-
-
-            setTimeout(
-                function() {
-
-                    particle.remove();
-
-                },
-                700
-            );
+            fragment.appendChild(particle);
+            particles.push(particle);
         }
+
+        area.appendChild(fragment);
+
+        setTimeout(function() {
+            particles.forEach(function(particle) {
+                particle.remove();
+            });
+        }, 750);
     }
 
 
@@ -4923,74 +5096,66 @@
        COMBO TIMER
     ========================================================= */
 
-    function updateComboBar() {
+    function updateComboBar(force) {
+        const now = performance.now();
 
-        const percent =
-            (
-                comboTimer /
-                COMBO_TIME
-            ) * 100;
+        if (!force && now - lastComboBarUpdate < 80) {
+            return;
+        }
 
+        lastComboBarUpdate = now;
 
-        document.getElementById(
-            "comboBar"
-        ).style.width =
-            Math.max(
-                0,
-                percent
-            ) +
-            "%";
+        const percent = Math.max(
+            0,
+            (comboTimer / COMBO_TIME) * 100
+        );
 
+        const width = percent.toFixed(1) + "%";
+        if (DOM.comboBar.style.width !== width) {
+            DOM.comboBar.style.width = width;
+        }
 
-        document.getElementById(
-            "comboTimerText"
-        ).textContent =
-            comboTimer > 0
-                ? (
-                    comboTimer /
-                    1000
-                ).toFixed(1) +
-                "s"
-                : "Ready!";
+        const timerText = comboTimer > 0
+            ? (comboTimer / 1000).toFixed(1) + "s"
+            : "Ready!";
+
+        if (DOM.comboTimerText.textContent !== timerText) {
+            DOM.comboTimerText.textContent = timerText;
+        }
     }
 
 
-    setInterval(
-        function() {
+    function runComboTimer(timestamp) {
+        if (!comboAnimationFrame) {
+            comboAnimationFrame = requestAnimationFrame(runComboTimer);
+        }
 
-            if (
-                comboTimer >
-                0
-            ) {
+        if (comboTimer <= 0) {
+            comboAnimationFrame = 0;
+            updateComboBar(true);
+            return;
+        }
 
-                comboTimer -=
-                    50;
+        const delta = lastComboTick
+            ? Math.min(100, timestamp - lastComboTick)
+            : 16;
 
+        lastComboTick = timestamp;
+        comboTimer = Math.max(0, comboTimer - delta);
 
-                if (
-                    comboTimer <=
-                    0
-                ) {
+        if (comboTimer === 0) {
+            combo = 0;
+            scheduleSave();
+            scheduleScreenUpdate();
+            lastComboTick = 0;
+        } else {
+            updateComboBar(false);
+        }
 
-                    comboTimer =
-                        0;
+        comboAnimationFrame = requestAnimationFrame(runComboTimer);
+    }
 
-                    combo =
-                        0;
-
-
-                    saveCurrentUserGame();
-
-                    updateScreen();
-                }
-
-
-                updateComboBar();
-            }
-
-        },
-        50
-    );
+    let lastComboTick = 0;
 
 
     /* =========================================================
@@ -5027,9 +5192,8 @@
                 }
 
 
-                saveCurrentUserGame();
-
-                updateScreen();
+                scheduleSave();
+                scheduleScreenUpdate();
             }
 
         },
@@ -5042,156 +5206,37 @@
     ========================================================= */
 
     function updateScreen() {
+        const level = getLevel();
+        applyButtonShape(level, false);
 
-        const level =
-            getLevel();
+        DOM.points.textContent = formatNumber(points);
+        DOM.perClick.textContent = formatNumber(
+            pointsPerClick * totalPointsMultiplier
+        );
+        DOM.perSecond.textContent = formatNumber(
+            pointsPerSecond * totalPointsMultiplier
+        );
+        DOM.critChance.textContent = criticalChance + "%";
+        DOM.combo.textContent = combo + "x";
+        DOM.comboBonus.textContent =
+            (combo * comboBonusPerLevel) + "%";
+        DOM.level.textContent = level;
 
-
-        document.getElementById(
-            "points"
-        ).textContent =
-            formatNumber(
-                points
-            );
-
-
-        document.getElementById(
-            "perClick"
-        ).textContent =
-            formatNumber(
-                pointsPerClick *
-                totalPointsMultiplier
-            );
-
-
-        document.getElementById(
-            "perSecond"
-        ).textContent =
-            formatNumber(
-                pointsPerSecond *
-                totalPointsMultiplier
-            );
-
-
-        document.getElementById(
-            "critChance"
-        ).textContent =
-            criticalChance +
-            "%";
-
-
-        document.getElementById(
-            "combo"
-        ).textContent =
-            combo +
-            "x";
-
-
-        document.getElementById(
-            "comboBonus"
-        ).textContent =
-            (
-                combo *
-                comboBonusPerLevel
-            ) +
-            "%";
-
-
-        document.getElementById(
-            "level"
-        ).textContent =
-            level;
-
-
-        document.getElementById(
-            "clickUpgradeCost"
-        ).textContent =
-            formatNumber(
-                clickUpgradeCost
-            );
-
-
-        document.getElementById(
-            "autoUpgradeCost"
-        ).textContent =
-            formatNumber(
-                autoUpgradeCost
-            );
-
-
-        document.getElementById(
-            "critUpgradeCost"
-        ).textContent =
-            formatNumber(
-                critUpgradeCost
-            );
-
-
-        document.getElementById(
-            "comboUpgradeCost"
-        ).textContent =
-            formatNumber(
-                comboUpgradeCost
-            );
-
-
-        document.getElementById(
-            "megaUpgradeCost"
-        ).textContent =
-            formatNumber(
-                megaUpgradeCost
-            );
-
-
-        document.getElementById(
-            "autoPowerCost"
-        ).textContent =
-            formatNumber(
-                autoPowerCost
-            );
-
-
-        document.getElementById(
-            "powerSurgeCost"
-        ).textContent =
-            formatNumber(
-                powerSurgeCost
-            );
-
-
-        document.getElementById(
-            "goldMagnetCost"
-        ).textContent =
-            formatNumber(
-                goldMagnetCost
-            );
-
-
-        document.getElementById(
-            "comboOverdriveCost"
-        ).textContent =
-            formatNumber(
-                comboOverdriveCost
-            );
-
-
-        document.getElementById(
-            "criticalFuryCost"
-        ).textContent =
-            formatNumber(
-                criticalFuryCost
-            );
-
+        DOM.clickUpgradeCost.textContent = formatNumber(clickUpgradeCost);
+        DOM.autoUpgradeCost.textContent = formatNumber(autoUpgradeCost);
+        DOM.critUpgradeCost.textContent = formatNumber(critUpgradeCost);
+        DOM.comboUpgradeCost.textContent = formatNumber(comboUpgradeCost);
+        DOM.megaUpgradeCost.textContent = formatNumber(megaUpgradeCost);
+        DOM.autoPowerCost.textContent = formatNumber(autoPowerCost);
+        DOM.powerSurgeCost.textContent = formatNumber(powerSurgeCost);
+        DOM.goldMagnetCost.textContent = formatNumber(goldMagnetCost);
+        DOM.comboOverdriveCost.textContent = formatNumber(comboOverdriveCost);
+        DOM.criticalFuryCost.textContent = formatNumber(criticalFuryCost);
 
         updateButtons();
-
         updateLockedUpgrades();
-
         updateComboBar();
-
         checkAchievements();
-
-        updateAccountUI();
     }
 
 
@@ -5200,65 +5245,21 @@
     ========================================================= */
 
     function updateButtons() {
-
         const buttons = [
-
-            [
-                "clickUpgradeButton",
-                clickUpgradeCost
-            ],
-
-            [
-                "autoUpgradeButton",
-                autoUpgradeCost
-            ],
-
-            [
-                "critUpgradeButton",
-                critUpgradeCost
-            ],
-
-            [
-                "comboUpgradeButton",
-                comboUpgradeCost
-            ],
-
-            [
-                "megaUpgradeButton",
-                megaUpgradeCost
-            ],
-
-            [
-                "autoPowerButton",
-                autoPowerCost
-            ]
+            [DOM.clickUpgradeButton || document.getElementById("clickUpgradeButton"), clickUpgradeCost],
+            [DOM.autoUpgradeButton || document.getElementById("autoUpgradeButton"), autoUpgradeCost],
+            [DOM.critUpgradeButton || document.getElementById("critUpgradeButton"), critUpgradeCost],
+            [DOM.comboUpgradeButton || document.getElementById("comboUpgradeButton"), comboUpgradeCost],
+            [DOM.megaUpgradeButton || document.getElementById("megaUpgradeButton"), megaUpgradeCost],
+            [DOM.autoPowerButton || document.getElementById("autoPowerButton"), autoPowerCost]
         ];
 
-
-        buttons.forEach(
-            function(item) {
-
-                const button =
-                    document.getElementById(
-                        item[0]
-                    );
-
-
-                const affordable =
-                    points >=
-                    item[1];
-
-
-                button.disabled =
-                    !affordable;
-
-
-                button.classList.toggle(
-                    "affordable",
-                    affordable
-                );
-            }
-        );
+        buttons.forEach(function(item) {
+            const button = item[0];
+            const affordable = points >= item[1];
+            button.disabled = !affordable;
+            button.classList.toggle("affordable", affordable);
+        });
     }
 
 
@@ -6005,6 +6006,56 @@
             getLevel() >= 25,
             "Rising Star"
         );
+
+        unlockAchievement(
+            "achievementShapeDiamond",
+            shapesCollected.diamond === true,
+            "Diamond Hands"
+        );
+
+        unlockAchievement(
+            "achievementShapeHexagon",
+            shapesCollected.hexagon === true,
+            "Hexed"
+        );
+
+        unlockAchievement(
+            "achievementShapeOctagon",
+            shapesCollected.octagon === true,
+            "Eight-Sided"
+        );
+
+        unlockAchievement(
+            "achievementShapeShield",
+            shapesCollected.shield === true,
+            "Shielded"
+        );
+
+        unlockAchievement(
+            "achievementShapeStar",
+            shapesCollected.star === true,
+            "Star Power"
+        );
+
+        unlockAchievement(
+            "achievementShapePentagon",
+            shapesCollected.pentagon === true,
+            "Rare Five"
+        );
+
+        unlockAchievement(
+            "achievementShapeCircle",
+            shapesCollected.circle === true,
+            "Back to Basics"
+        );
+
+        unlockAchievement(
+            "achievementShapeCollector",
+            buttonShapes.every(function(item) {
+                return shapesCollected[item.name] === true;
+            }),
+            "Shape Collector"
+        );
     }
 
 
@@ -6084,7 +6135,9 @@
         resetVariablesOnly();
 
 
-        saveCurrentUserGame();
+        clearTimeout(saveTimer);
+        saveTimer = null;
+        saveCurrentUserGameNow();
 
 
         updateScreen();
@@ -6214,7 +6267,7 @@
 
         for (
             let i = 0;
-            i < 50;
+            i < 30;
             i++
         ) {
 
@@ -6268,6 +6321,8 @@
        START GAME
     ========================================================= */
 
+    cacheDOM();
+
     if (currentUser) {
 
         loadCurrentUserGame();
@@ -6292,9 +6347,8 @@
     window.addEventListener(
         "beforeunload",
         function() {
-
-            saveCurrentUserGame();
-
+            clearTimeout(saveTimer);
+            saveCurrentUserGameNow();
         }
     );
 
