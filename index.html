@@ -1702,6 +1702,69 @@
            SETTINGS PANEL
         ===================================================== */
 
+        .video-panel {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .video-panel.show {
+            display: flex;
+        }
+
+        .video-panel-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.78);
+            backdrop-filter: blur(6px);
+        }
+
+        .video-panel-card {
+            position: relative;
+            width: min(960px, 96vw);
+            max-height: 90vh;
+            overflow: hidden;
+            border-radius: 22px;
+            background: linear-gradient(145deg, rgba(15, 22, 42, 0.98), rgba(7, 12, 26, 0.98));
+            border: 1px solid rgba(120, 170, 255, 0.28);
+            box-shadow: 0 30px 90px rgba(0,0,0,.55);
+        }
+
+        .video-panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 18px 20px;
+        }
+
+        .video-panel-header h2 {
+            margin: 0;
+        }
+
+        .video-frame-wrap {
+            padding: 0 20px 20px;
+        }
+
+        .video-frame {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border: 0;
+            border-radius: 16px;
+            display: block;
+            background: #000;
+        }
+
+        @media (max-width: 700px) {
+            .video-panel { padding: 12px; }
+            .video-panel-card { width: 100%; }
+            .video-frame-wrap { padding: 0 12px 12px; }
+        }
+
         .settings-panel-card {
             width: min(760px, 94vw);
         }
@@ -2134,6 +2197,7 @@
             }
 
             #achievementsButton,
+            #videoButton,
             #settingsButton,
             #shopPanelButton,
             #accountButton {
@@ -2221,6 +2285,15 @@
             aria-expanded="false"
         >
             🏆 Achievements
+        </button>
+
+        <button
+            id="videoButton"
+            onclick="toggleVideoPanel()"
+            aria-controls="videoPanel"
+            aria-expanded="false"
+        >
+            🎬 Video
         </button>
 
         <button
@@ -2530,6 +2603,50 @@
                 </div>
 
                 <button class="secondary-button settings-reset-button" onclick="resetSettingsToDefault()">↩️ Restore Defaults</button>
+            </div>
+        </section>
+    </div>
+
+
+    <!-- =====================================================
+         VIDEO PANEL
+    ===================================================== -->
+
+    <div
+        class="video-panel"
+        id="videoPanel"
+        aria-hidden="true"
+    >
+        <div
+            class="video-panel-backdrop"
+            onclick="closeVideoPanel()"
+        ></div>
+
+        <section
+            class="video-panel-card"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="videoPanelTitle"
+        >
+            <div class="video-panel-header">
+                <h2 id="videoPanelTitle">🎬 Ultimate Clicker Video</h2>
+                <button
+                    class="achievement-panel-close"
+                    onclick="closeVideoPanel()"
+                    aria-label="Close video"
+                >
+                    ✕
+                </button>
+            </div>
+            <div class="video-frame-wrap">
+                <iframe
+                    id="ultimateClickerVideo"
+                    class="video-frame"
+                    src="https://www.youtube.com/embed/YE7VzlLtp-4?autoplay=0&rel=0"
+                    title="Big Buck Bunny by Blender"
+                    allow="autoplay; encrypted-media; picture-in-picture"
+                    allowfullscreen
+                ></iframe>
             </div>
         </section>
     </div>
@@ -3778,7 +3895,7 @@
     }
 
     function closeOtherContentPanels(exceptId) {
-        const panelIds = ["settingsPanel", "achievementPanel", "shopPanel"];
+        const panelIds = ["settingsPanel", "achievementPanel", "shopPanel", "videoPanel"];
 
         panelIds.forEach(function(id) {
             if (id !== exceptId) {
@@ -3793,7 +3910,8 @@
         const buttonIds = {
             settingsPanel: "settingsButton",
             achievementPanel: "achievementsButton",
-            shopPanel: "shopPanelButton"
+            shopPanel: "shopPanelButton",
+            videoPanel: "videoButton"
         };
 
         Object.keys(buttonIds).forEach(function(id) {
@@ -3902,9 +4020,44 @@
                 closeAchievementsPanel();
                 closeShopPanel();
                 closeSettingsPanel();
+                closeVideoPanel();
             }
         }
     );
+
+
+    function toggleVideoPanel() {
+        const panel = document.getElementById("videoPanel");
+        const frame = document.getElementById("ultimateClickerVideo");
+        const button = document.getElementById("videoButton");
+        if (!panel) return;
+
+        const isOpen = panel.classList.contains("show");
+        if (!isOpen) {
+            closeOtherContentPanels("videoPanel");
+            panel.classList.add("show");
+            panel.setAttribute("aria-hidden", "false");
+            if (button) button.setAttribute("aria-expanded", "true");
+            if (frame) {
+                frame.src = "https://www.youtube.com/embed/YE7VzlLtp-4?autoplay=1&rel=0";
+            }
+        } else {
+            closeVideoPanel();
+        }
+    }
+
+    function closeVideoPanel() {
+        const panel = document.getElementById("videoPanel");
+        const frame = document.getElementById("ultimateClickerVideo");
+        const button = document.getElementById("videoButton");
+        if (!panel) return;
+        panel.classList.remove("show");
+        panel.setAttribute("aria-hidden", "true");
+        if (button) button.setAttribute("aria-expanded", "false");
+        if (frame) {
+            frame.src = "https://www.youtube.com/embed/YE7VzlLtp-4?autoplay=0&rel=0";
+        }
+    }
 
 
     function syncShopPanel() {
