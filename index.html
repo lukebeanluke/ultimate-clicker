@@ -1,4 +1,4 @@
-```html id="6p4jqa"
+ id="6p4jqa"
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,6 +65,69 @@
             top: 18px;
             right: 18px;
             z-index: 1000;
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        #achievementsButton {
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 12px;
+            padding: 11px 16px;
+            color: white;
+            background: rgba(30,30,50,0.92);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+            transition: 0.2s;
+        }
+
+        #achievementsButton:hover {
+            background: rgba(50,50,80,0.98);
+            transform: translateY(-1px);
+            box-shadow: 0 0 20px var(--glow);
+        }
+
+        #settingsButton {
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 12px;
+            padding: 11px 16px;
+            color: white;
+            background: rgba(30,30,50,0.92);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+            transition: 0.2s;
+        }
+
+        #settingsButton:hover {
+            background: rgba(50,50,80,0.98);
+            transform: translateY(-1px) rotate(8deg);
+            box-shadow: 0 0 20px var(--glow);
+        }
+
+        #shopPanelButton {
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 12px;
+            padding: 11px 16px;
+            color: white;
+            background: rgba(30,30,50,0.92);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+            transition: 0.2s;
+        }
+
+        #shopPanelButton:hover {
+            background: rgba(50,50,80,0.98);
+            transform: translateY(-1px);
+            box-shadow: 0 0 20px var(--glow);
         }
 
         #accountButton {
@@ -134,6 +197,45 @@
 
         .account-menu input:focus {
             box-shadow: 0 0 0 2px var(--secondary);
+        }
+
+
+        /* =====================================================
+           UNIVERSAL BUTTON FEEDBACK
+        ===================================================== */
+
+        button {
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.28), transparent 55%);
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.2);
+        }
+
+        button.button-clicked {
+            animation: universalButtonClick 0.24s cubic-bezier(.2,.8,.25,1);
+        }
+
+        button.button-clicked::after {
+            animation: buttonRipple 0.24s ease-out;
+        }
+
+        @keyframes universalButtonClick {
+            0% { transform: scale(1); }
+            40% { transform: scale(0.93); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes buttonRipple {
+            0% { opacity: 0.55; transform: scale(0.2); }
+            100% { opacity: 0; transform: scale(1.8); }
         }
 
         .account-menu button {
@@ -1597,6 +1699,245 @@
         }
 
         /* =====================================================
+           SETTINGS PANEL
+        ===================================================== */
+
+        .settings-panel-card {
+            width: min(760px, 94vw);
+        }
+
+        .settings-list {
+            display: grid;
+            gap: 14px;
+        }
+
+        .setting-card {
+            padding: 18px;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.10);
+        }
+
+        .setting-row,
+        .toggle-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .setting-card h3 {
+            margin: 0 0 5px;
+            font-size: 18px;
+        }
+
+        .setting-card p {
+            margin: 0;
+            color: #aaaabd;
+            font-size: 14px;
+        }
+
+        .setting-card strong {
+            min-width: 52px;
+            text-align: right;
+            color: #ffffff;
+        }
+
+        .setting-card input[type="range"] {
+            width: 100%;
+            margin-top: 14px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .settings-toggle {
+            min-width: 72px;
+            padding: 10px 14px;
+            border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 0 18px rgba(77,208,225,0.18);
+        }
+
+        .settings-reset-button {
+            width: 100%;
+            padding: 13px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.14);
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* =====================================================
+           SHOP PANEL
+        ===================================================== */
+
+        .shop-panel {
+            position: fixed;
+            inset: 0;
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+        }
+
+        .shop-panel.show {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .shop-panel-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(3,3,12,0.78);
+            backdrop-filter: blur(8px);
+        }
+
+        .shop-panel-card {
+            position: relative;
+            z-index: 1;
+            width: min(1100px, 94vw);
+            max-height: 88vh;
+            overflow-y: auto;
+            padding: 26px;
+            border-radius: 22px;
+            background: linear-gradient(145deg, rgba(20,20,38,0.98), rgba(10,10,24,0.98));
+            border: 1px solid rgba(255,255,255,0.14);
+            box-shadow: 0 30px 100px rgba(0,0,0,0.65), 0 0 45px var(--glow);
+            transform: translateY(14px) scale(0.97);
+            transition: transform 0.25s ease;
+        }
+
+        .shop-panel.show .shop-panel-card {
+            transform: translateY(0) scale(1);
+        }
+
+        .shop-panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 18px;
+            text-align: left;
+        }
+
+        .shop-panel-header h2 {
+            margin: 0;
+            font-size: clamp(24px, 4vw, 34px);
+        }
+
+        .shop-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+        }
+
+        .shop-items .card {
+            margin: 0;
+        }
+
+        /* =====================================================
+           ACHIEVEMENT PANEL
+        ===================================================== */
+
+        .achievement-panel {
+            position: fixed;
+            inset: 0;
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+        }
+
+        .achievement-panel.show {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .achievement-panel-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(3,3,12,0.78);
+            backdrop-filter: blur(8px);
+        }
+
+        .achievement-panel-card {
+            position: relative;
+            z-index: 1;
+            width: min(1000px, 94vw);
+            max-height: 88vh;
+            overflow-y: auto;
+            padding: 26px;
+            border-radius: 22px;
+            background: linear-gradient(145deg, rgba(20,20,38,0.98), rgba(10,10,24,0.98));
+            border: 1px solid rgba(255,255,255,0.14);
+            box-shadow: 0 30px 100px rgba(0,0,0,0.65), 0 0 45px var(--glow);
+            transform: translateY(14px) scale(0.97);
+            transition: transform 0.25s ease;
+        }
+
+        .achievement-panel.show .achievement-panel-card {
+            transform: translateY(0) scale(1);
+        }
+
+        .achievement-panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 18px;
+            text-align: left;
+        }
+
+        .achievement-panel-header h2 {
+            margin: 0;
+            font-size: clamp(24px, 4vw, 34px);
+        }
+
+        .achievement-panel-close {
+            border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 12px;
+            width: 42px;
+            height: 42px;
+            color: white;
+            background: rgba(255,255,255,0.08);
+            cursor: pointer;
+            font-size: 22px;
+            transition: 0.2s;
+        }
+
+        .achievement-panel-close:hover {
+            background: rgba(255,255,255,0.16);
+            transform: scale(1.05);
+        }
+
+        .achievement-progress {
+            margin-bottom: 18px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.06);
+            color: #cfd0df;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        /* =====================================================
            ACHIEVEMENTS
         ===================================================== */
 
@@ -1783,6 +2124,22 @@
         }
 
         @media (max-width:750px) {
+            .account-area {
+                top: 10px;
+                right: 10px;
+            }
+
+            .top-actions {
+                gap: 5px;
+            }
+
+            #achievementsButton,
+            #settingsButton,
+            #shopPanelButton,
+            #accountButton {
+                padding: 9px 10px;
+                font-size: 12px;
+            }
 
             .cards,
             .achievements {
@@ -1856,12 +2213,41 @@
 
 <div class="account-area">
 
-    <button
-        id="accountButton"
-        onclick="toggleAccountMenu()"
-    >
-        👤 Sign Up / Log In
-    </button>
+    <div class="top-actions">
+        <button
+            id="achievementsButton"
+            onclick="toggleAchievementsPanel()"
+            aria-controls="achievementPanel"
+            aria-expanded="false"
+        >
+            🏆 Achievements
+        </button>
+
+        <button
+            id="settingsButton"
+            onclick="toggleSettingsPanel()"
+            aria-controls="settingsPanel"
+            aria-expanded="false"
+        >
+            ⚙️ Settings
+        </button>
+
+        <button
+            id="shopPanelButton"
+            onclick="toggleShopPanel()"
+            aria-controls="shopPanel"
+            aria-expanded="false"
+        >
+            🛒 Shop
+        </button>
+
+        <button
+            id="accountButton"
+            onclick="toggleAccountMenu()"
+        >
+            👤 Sign Up / Log In
+        </button>
+    </div>
 
     <div
         class="account-menu"
@@ -2060,15 +2446,128 @@
     </div>
 
 
+
+
     <!-- =====================================================
-         UPGRADE SHOP
+         SETTINGS PANEL
     ===================================================== -->
 
-    <h2 class="section-title">
-        🛒 Upgrade Shop
-    </h2>
+    <div
+        class="achievement-panel settings-panel"
+        id="settingsPanel"
+        aria-hidden="true"
+    >
+        <div
+            class="achievement-panel-backdrop"
+            onclick="closeSettingsPanel()"
+        ></div>
 
-    <div class="cards">
+        <section
+            class="achievement-panel-card settings-panel-card"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="settingsPanelTitle"
+        >
+            <div class="achievement-panel-header">
+                <h2 id="settingsPanelTitle">⚙️ Settings</h2>
+                <button
+                    class="achievement-panel-close"
+                    onclick="closeSettingsPanel()"
+                    aria-label="Close settings"
+                >
+                    ✕
+                </button>
+            </div>
+
+            <div class="settings-list">
+                <div class="setting-card">
+                    <div class="setting-row">
+                        <div>
+                            <h3>🔊 Volume</h3>
+                            <p>Control all game sounds.</p>
+                        </div>
+                        <strong id="volumeValue">70%</strong>
+                    </div>
+                    <input id="volumeSetting" type="range" min="0" max="100" value="70" oninput="updateVolumeSetting(this.value)">
+                </div>
+
+                <div class="setting-card">
+                    <div class="setting-row">
+                        <div>
+                            <h3>✨ Click Particles</h3>
+                            <p>Change the number of particles created by clicks.</p>
+                        </div>
+                        <strong id="particleValue">70%</strong>
+                    </div>
+                    <input id="particleSetting" type="range" min="0" max="100" value="70" oninput="updateParticleSetting(this.value)">
+                </div>
+
+                <div class="setting-card">
+                    <div class="setting-row">
+                        <div>
+                            <h3>🌌 Background Particles</h3>
+                            <p>Change the number of floating background particles.</p>
+                        </div>
+                        <strong id="backgroundParticleValue">50%</strong>
+                    </div>
+                    <input id="backgroundParticleSetting" type="range" min="0" max="100" value="50" oninput="updateBackgroundParticleSetting(this.value)">
+                </div>
+
+                <div class="setting-card toggle-card">
+                    <div>
+                        <h3>💥 Screen Effects</h3>
+                        <p>Enable screen shake, flashes, and big visual effects.</p>
+                    </div>
+                    <button id="screenEffectsToggle" class="settings-toggle" type="button" onclick="toggleScreenEffects()">ON</button>
+                </div>
+
+                <div class="setting-card toggle-card">
+                    <div>
+                        <h3>🔔 Sound Effects</h3>
+                        <p>Turn game sound effects on or off.</p>
+                    </div>
+                    <button id="soundToggle" class="settings-toggle" type="button" onclick="toggleSoundSetting()">ON</button>
+                </div>
+
+                <button class="secondary-button settings-reset-button" onclick="resetSettingsToDefault()">↩️ Restore Defaults</button>
+            </div>
+        </section>
+    </div>
+
+
+    <!-- =====================================================
+         SHOP PANEL
+    ===================================================== -->
+
+    <div
+        class="shop-panel"
+        id="shopPanel"
+        aria-hidden="true"
+    >
+        <div
+            class="shop-panel-backdrop"
+            onclick="closeShopPanel()"
+        ></div>
+
+        <section
+            class="shop-panel-card"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="shopPanelTitle"
+        >
+            <div class="shop-panel-header">
+                <h2 id="shopPanelTitle">🛒 Upgrade Shop</h2>
+                <button
+                    class="achievement-panel-close"
+                    onclick="closeShopPanel()"
+                    aria-label="Close shop"
+                >
+                    ✕
+                </button>
+            </div>
+
+
+            <div class="shop-items" id="shopPanelItems">
 
         <!-- POWER CLICK -->
 
@@ -2244,6 +2743,64 @@
         </div>
 
 
+        <!-- QUANTUM CLICK -->
+
+        <div class="card">
+
+            <h3>
+                ⚛️ Quantum Click
+            </h3>
+
+            <p>
+                Increase points earned from every click by 10.
+            </p>
+
+            <div class="cost">
+                Cost:
+                <span id="quantumClickCost">
+                    1.00K
+                </span>
+            </div>
+
+            <button
+                id="quantumClickButton"
+                onclick="buyQuantumClick()"
+            >
+                Buy
+            </button>
+
+        </div>
+
+
+        <!-- OVERCLOCK -->
+
+        <div class="card">
+
+            <h3>
+                ⚡ Overclock
+            </h3>
+
+            <p>
+                Increase automatic points generation by 25 per second.
+            </p>
+
+            <div class="cost">
+                Cost:
+                <span id="overclockCost">
+                    5.00K
+                </span>
+            </div>
+
+            <button
+                id="overclockButton"
+                onclick="buyOverclock()"
+            >
+                Buy
+            </button>
+
+        </div>
+
+
         <!-- =================================================
              LEVEL 5
         ================================================= -->
@@ -2399,18 +2956,125 @@
 
         </div>
 
+
+        <!-- =================================================
+             LEVEL 40
+        ================================================= -->
+
+        <div
+            class="card level-locked"
+            id="infinityCoreCard"
+        >
+
+            <div class="unlock-label">
+                🔒 Unlocks at Level 40
+            </div>
+
+            <h3>
+                ♾️ Infinity Core
+            </h3>
+
+            <p>
+                Permanently doubles your points generated per second.
+            </p>
+
+            <div class="cost">
+                Cost:
+                <span id="infinityCoreCost">
+                    1.00M
+                </span>
+            </div>
+
+            <button
+                id="infinityCoreButton"
+                onclick="buyInfinityCore()"
+                disabled
+            >
+                🔒 Reach Level 40
+            </button>
+
+        </div>
+
+
+        <!-- =================================================
+             LEVEL 50
+        ================================================= -->
+
+        <div
+            class="card level-locked"
+            id="realityBreakerCard"
+        >
+
+            <div class="unlock-label">
+                🔒 Unlocks at Level 50
+            </div>
+
+            <h3>
+                🌌 Reality Breaker
+            </h3>
+
+            <p>
+                Permanently doubles your points earned per click.
+            </p>
+
+            <div class="cost">
+                Cost:
+                <span id="realityBreakerCost">
+                    10.00M
+                </span>
+            </div>
+
+            <button
+                id="realityBreakerButton"
+                onclick="buyRealityBreaker()"
+                disabled
+            >
+                🔒 Reach Level 50
+            </button>
+
+        </div>
+
+            </div>
+        </section>
     </div>
 
 
     <!-- =====================================================
-         ACHIEVEMENTS
+         ACHIEVEMENT PANEL
     ===================================================== -->
 
-    <h2 class="section-title">
-        🏆 Achievements
-    </h2>
+    <div
+        class="achievement-panel"
+        id="achievementPanel"
+        aria-hidden="true"
+    >
+        <div
+            class="achievement-panel-backdrop"
+            onclick="closeAchievementsPanel()"
+        ></div>
 
-    <div class="achievements">
+        <section
+            class="achievement-panel-card"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="achievementPanelTitle"
+        >
+            <div class="achievement-panel-header">
+                <h2 id="achievementPanelTitle">🏆 Achievements</h2>
+                <button
+                    class="achievement-panel-close"
+                    onclick="closeAchievementsPanel()"
+                    aria-label="Close achievements"
+                >
+                    ✕
+                </button>
+            </div>
+
+            <div class="achievement-progress" id="achievementProgress">
+                0 / 65 unlocked
+            </div>
+
+            <div class="achievements">
 
         <div class="achievement" id="achievement100">
             <div class="achievement-title">
@@ -2708,6 +3372,163 @@
             </div>
         </div>
 
+        <!-- 30 NEW ACHIEVEMENTS -->
+
+        <div class="achievement" id="achievement5Million">
+            <div class="achievement-title">💰 Fortune Hunter</div>
+            <div class="achievement-text">Reach 5,000,000 points.</div>
+        </div>
+
+        <div class="achievement" id="achievement25Million">
+            <div class="achievement-title">💎 Mega Fortune</div>
+            <div class="achievement-text">Reach 25,000,000 points.</div>
+        </div>
+
+        <div class="achievement" id="achievement100Million">
+            <div class="achievement-title">🌌 Point Overlord</div>
+            <div class="achievement-text">Reach 100,000,000 points.</div>
+        </div>
+
+        <div class="achievement" id="achievement1Billion">
+            <div class="achievement-title">👑 Billionaire</div>
+            <div class="achievement-text">Reach 1,000,000,000 points.</div>
+        </div>
+
+        <div class="achievement" id="achievement10Billion">
+            <div class="achievement-title">🌠 Beyond Wealth</div>
+            <div class="achievement-text">Reach 10,000,000,000 points.</div>
+        </div>
+
+        <div class="achievement" id="achievement25KClicks">
+            <div class="achievement-title">🖱️ Finger of Fury</div>
+            <div class="achievement-text">Click 25,000 times.</div>
+        </div>
+
+        <div class="achievement" id="achievement50KClicks">
+            <div class="achievement-title">⚡ Clickstorm</div>
+            <div class="achievement-text">Click 50,000 times.</div>
+        </div>
+
+        <div class="achievement" id="achievement100KClicks">
+            <div class="achievement-title">🔥 Hundred Thousand</div>
+            <div class="achievement-text">Click 100,000 times.</div>
+        </div>
+
+        <div class="achievement" id="achievement250KClicks">
+            <div class="achievement-title">🤖 Mechanical Finger</div>
+            <div class="achievement-text">Click 250,000 times.</div>
+        </div>
+
+        <div class="achievement" id="achievement1MClicks">
+            <div class="achievement-title">🏆 The Million Click</div>
+            <div class="achievement-text">Click 1,000,000 times.</div>
+        </div>
+
+        <div class="achievement" id="achievementCombo500">
+            <div class="achievement-title">🔥 Combo Inferno</div>
+            <div class="achievement-text">Reach a 500x combo.</div>
+        </div>
+
+        <div class="achievement" id="achievementCombo1000">
+            <div class="achievement-title">⚡ Thousandfold</div>
+            <div class="achievement-text">Reach a 1,000x combo.</div>
+        </div>
+
+        <div class="achievement" id="achievementCombo2500">
+            <div class="achievement-title">🌋 Combo Apocalypse</div>
+            <div class="achievement-text">Reach a 2,500x combo.</div>
+        </div>
+
+        <div class="achievement" id="achievementCombo5000">
+            <div class="achievement-title">☠️ Impossible Rhythm</div>
+            <div class="achievement-text">Reach a 5,000x combo.</div>
+        </div>
+
+        <div class="achievement" id="achievementCrit250">
+            <div class="achievement-title">🎯 Critical Veteran</div>
+            <div class="achievement-text">Land 250 critical clicks.</div>
+        </div>
+
+        <div class="achievement" id="achievementCrit500">
+            <div class="achievement-title">💥 Crit Machine</div>
+            <div class="achievement-text">Land 500 critical clicks.</div>
+        </div>
+
+        <div class="achievement" id="achievementCrit1000">
+            <div class="achievement-title">☄️ Critical Legend</div>
+            <div class="achievement-text">Land 1,000 critical clicks.</div>
+        </div>
+
+        <div class="achievement" id="achievementCrit5000">
+            <div class="achievement-title">🌟 Critical Singularity</div>
+            <div class="achievement-text">Land 5,000 critical clicks.</div>
+        </div>
+
+        <div class="achievement" id="achievementAuto250">
+            <div class="achievement-title">🤖 Assembly Line</div>
+            <div class="achievement-text">Reach 250 points per second.</div>
+        </div>
+
+        <div class="achievement" id="achievementAuto500">
+            <div class="achievement-title">🏭 Industrial Power</div>
+            <div class="achievement-text">Reach 500 points per second.</div>
+        </div>
+
+        <div class="achievement" id="achievementAuto1000">
+            <div class="achievement-title">🚀 Autonomous Empire</div>
+            <div class="achievement-text">Reach 1,000 points per second.</div>
+        </div>
+
+        <div class="achievement" id="achievementPower250">
+            <div class="achievement-title">💪 Superhuman Click</div>
+            <div class="achievement-text">Reach 250 points per click.</div>
+        </div>
+
+        <div class="achievement" id="achievementPower500">
+            <div class="achievement-title">💥 Click Titan</div>
+            <div class="achievement-text">Reach 500 points per click.</div>
+        </div>
+
+        <div class="achievement" id="achievementPower1000">
+            <div class="achievement-title">🌋 One-Click Cataclysm</div>
+            <div class="achievement-text">Reach 1,000 points per click.</div>
+        </div>
+
+        <div class="achievement" id="achievementLevel50">
+            <div class="achievement-title">⭐ Elite Clicker</div>
+            <div class="achievement-text">Reach level 50.</div>
+        </div>
+
+        <div class="achievement" id="achievementLevel100">
+            <div class="achievement-title">👑 Century Legend</div>
+            <div class="achievement-text">Reach level 100.</div>
+        </div>
+
+        <div class="achievement" id="achievementMaxCritChance">
+            <div class="achievement-title">🎯 Perfect Aim</div>
+            <div class="achievement-text">Reach the maximum 75% critical chance.</div>
+        </div>
+
+        <div class="achievement" id="achievementCritMultiplier5">
+            <div class="achievement-title">💥 Devastating Crit</div>
+            <div class="achievement-text">Reach a 5x critical multiplier.</div>
+        </div>
+
+        <div class="achievement" id="achievementAllSpecialUpgrades">
+            <div class="achievement-title">🔓 Master Key</div>
+            <div class="achievement-text">Purchase all four level-locked upgrades.</div>
+        </div>
+
+        <div class="achievement" id="achievementUltimateBuild">
+            <div class="achievement-title">🏆 Ultimate Build</div>
+            <div class="achievement-text">Reach 500 points/click, 500 points/second, 75% crit chance, 20% combo power, and a 5x crit multiplier.</div>
+        </div>
+
+        <div class="achievement" id="achievementGojoSixEyes">
+            <div class="achievement-title">👁️ Six Eyes</div>
+            <div class="achievement-text">Land 10,000 critical clicks. A little Gojo-inspired Easter egg for the strongest clickers.</div>
+        </div>
+
         <div class="achievement" id="achievementShapeDiamond">
             <div class="achievement-title">
                 💎 Diamond Hands
@@ -2795,6 +3616,8 @@
             </div>
         </div>
 
+            </div>
+        </section>
     </div>
 
 
@@ -2825,6 +3648,29 @@
         ) || null;
 
 
+    const DEFAULT_SETTINGS = {
+        volume: 70,
+        particles: 70,
+        backgroundParticles: 50,
+        screenEffects: true,
+        sound: true
+    };
+
+    let settings = loadSettings();
+
+    function loadSettings() {
+        try {
+            const saved = JSON.parse(localStorage.getItem("ultimateClickerSettings") || "null");
+            return Object.assign({}, DEFAULT_SETTINGS, saved || {});
+        } catch {
+            return Object.assign({}, DEFAULT_SETTINGS);
+        }
+    }
+
+    function saveSettings() {
+        localStorage.setItem("ultimateClickerSettings", JSON.stringify(settings));
+    }
+
     function getAccounts() {
 
         try {
@@ -2848,6 +3694,283 @@
             "ultimateClickerAccounts",
             JSON.stringify(accounts)
         );
+    }
+
+
+    function updateAchievementProgress() {
+
+        const cards = document.querySelectorAll(
+            "#achievementPanel .achievement"
+        );
+
+        const unlocked = document.querySelectorAll(
+            "#achievementPanel .achievement.unlocked"
+        ).length;
+
+        const progress = document.getElementById(
+            "achievementProgress"
+        );
+
+        if (progress) {
+            progress.textContent =
+                unlocked + " / " + cards.length + " unlocked";
+        }
+    }
+
+
+    function syncSettingsUI() {
+        const volume = document.getElementById("volumeSetting");
+        const particles = document.getElementById("particleSetting");
+        const backgroundParticles = document.getElementById("backgroundParticleSetting");
+        const volumeValue = document.getElementById("volumeValue");
+        const particleValue = document.getElementById("particleValue");
+        const backgroundParticleValue = document.getElementById("backgroundParticleValue");
+        const screenEffectsToggle = document.getElementById("screenEffectsToggle");
+        const soundToggle = document.getElementById("soundToggle");
+
+        if (volume) volume.value = settings.volume;
+        if (particles) particles.value = settings.particles;
+        if (backgroundParticles) backgroundParticles.value = settings.backgroundParticles;
+        if (volumeValue) volumeValue.textContent = settings.volume + "%";
+        if (particleValue) particleValue.textContent = settings.particles + "%";
+        if (backgroundParticleValue) backgroundParticleValue.textContent = settings.backgroundParticles + "%";
+        if (screenEffectsToggle) screenEffectsToggle.textContent = settings.screenEffects ? "ON" : "OFF";
+        if (soundToggle) soundToggle.textContent = settings.sound ? "ON" : "OFF";
+    }
+
+    function updateVolumeSetting(value) {
+        settings.volume = Number(value);
+        saveSettings();
+        syncSettingsUI();
+    }
+
+    function updateParticleSetting(value) {
+        settings.particles = Number(value);
+        saveSettings();
+        syncSettingsUI();
+    }
+
+    function updateBackgroundParticleSetting(value) {
+        settings.backgroundParticles = Number(value);
+        saveSettings();
+        createBackgroundParticles();
+        syncSettingsUI();
+    }
+
+    function toggleScreenEffects() {
+        settings.screenEffects = !settings.screenEffects;
+        saveSettings();
+        syncSettingsUI();
+    }
+
+    function toggleSoundSetting() {
+        settings.sound = !settings.sound;
+        saveSettings();
+        syncSettingsUI();
+    }
+
+    function resetSettingsToDefault() {
+        settings = Object.assign({}, DEFAULT_SETTINGS);
+        saveSettings();
+        createBackgroundParticles();
+        syncSettingsUI();
+        showToast("⚙️ Settings restored!");
+    }
+
+    function closeOtherContentPanels(exceptId) {
+        const panelIds = ["settingsPanel", "achievementPanel", "shopPanel"];
+
+        panelIds.forEach(function(id) {
+            if (id !== exceptId) {
+                const panel = document.getElementById(id);
+                if (panel) {
+                    panel.classList.remove("show");
+                    panel.setAttribute("aria-hidden", "true");
+                }
+            }
+        });
+
+        const buttonIds = {
+            settingsPanel: "settingsButton",
+            achievementPanel: "achievementsButton",
+            shopPanel: "shopPanelButton"
+        };
+
+        Object.keys(buttonIds).forEach(function(id) {
+            if (id !== exceptId) {
+                const button = document.getElementById(buttonIds[id]);
+                if (button) button.setAttribute("aria-expanded", "false");
+            }
+        });
+    }
+
+
+    function toggleSettingsPanel() {
+        const panel = document.getElementById("settingsPanel");
+        if (!panel) return;
+        const isOpen = panel.classList.contains("show");
+
+        if (!isOpen) {
+            closeOtherContentPanels("settingsPanel");
+        }
+
+        panel.classList.toggle("show");
+        const nextState = panel.classList.contains("show");
+        panel.setAttribute("aria-hidden", nextState ? "false" : "true");
+        const button = document.getElementById("settingsButton");
+        if (button) button.setAttribute("aria-expanded", nextState ? "true" : "false");
+        if (nextState) syncSettingsUI();
+    }
+
+    function closeSettingsPanel() {
+        const panel = document.getElementById("settingsPanel");
+        if (!panel) return;
+        panel.classList.remove("show");
+        panel.setAttribute("aria-hidden", "true");
+        const button = document.getElementById("settingsButton");
+        if (button) button.setAttribute("aria-expanded", "false");
+    }
+
+
+    function toggleAchievementsPanel() {
+
+        const panel = document.getElementById(
+            "achievementPanel"
+        );
+
+        if (!panel) return;
+
+        const isOpen = panel.classList.contains("show");
+
+        if (!isOpen) {
+            closeOtherContentPanels("achievementPanel");
+        }
+
+        panel.classList.toggle("show");
+        const nextState = panel.classList.contains("show");
+
+        panel.setAttribute(
+            "aria-hidden",
+            nextState ? "false" : "true"
+        );
+
+        const button = document.getElementById(
+            "achievementsButton"
+        );
+
+        if (button) {
+            button.setAttribute(
+                "aria-expanded",
+                nextState ? "true" : "false"
+            );
+        }
+
+        if (nextState) {
+            updateAchievementProgress();
+        }
+    }
+
+
+    function closeAchievementsPanel() {
+
+        const panel = document.getElementById(
+            "achievementPanel"
+        );
+
+        if (!panel) return;
+
+        panel.classList.remove("show");
+        panel.setAttribute("aria-hidden", "true");
+
+        const button = document.getElementById(
+            "achievementsButton"
+        );
+
+        if (button) {
+            button.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+        }
+    }
+
+
+    document.addEventListener(
+        "keydown",
+        function(event) {
+            if (event.key === "Escape") {
+                closeAchievementsPanel();
+                closeShopPanel();
+                closeSettingsPanel();
+            }
+        }
+    );
+
+
+    function syncShopPanel() {
+        updateScreen();
+    }
+
+    function toggleShopPanel() {
+
+        const panel = document.getElementById(
+            "shopPanel"
+        );
+
+        if (!panel) return;
+
+        const isOpen = panel.classList.contains("show");
+
+        if (!isOpen) {
+            closeOtherContentPanels("shopPanel");
+        }
+
+        panel.classList.toggle("show");
+        const nextState = panel.classList.contains("show");
+
+        panel.setAttribute(
+            "aria-hidden",
+            nextState ? "false" : "true"
+        );
+
+        const button = document.getElementById(
+            "shopPanelButton"
+        );
+
+        if (button) {
+            button.setAttribute(
+                "aria-expanded",
+                nextState ? "true" : "false"
+            );
+        }
+
+        if (nextState) {
+            updateScreen();
+        }
+    }
+
+
+    function closeShopPanel() {
+
+        const panel = document.getElementById(
+            "shopPanel"
+        );
+
+        if (!panel) return;
+
+        panel.classList.remove("show");
+        panel.setAttribute("aria-hidden", "true");
+
+        const button = document.getElementById(
+            "shopPanelButton"
+        );
+
+        if (button) {
+            button.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+        }
     }
 
 
@@ -3185,6 +4308,10 @@
 
     let autoPowerCost = 500;
 
+    let quantumClickCost = 1000;
+
+    let overclockCost = 5000;
+
 
     let powerSurgeCost = 2500;
 
@@ -3194,6 +4321,10 @@
 
     let criticalFuryCost = 250000;
 
+    let infinityCoreCost = 1000000;
+
+    let realityBreakerCost = 10000000;
+
 
     let powerSurgePurchased = false;
 
@@ -3202,6 +4333,10 @@
     let comboOverdrivePurchased = false;
 
     let criticalFuryPurchased = false;
+
+    let infinityCorePurchased = false;
+
+    let realityBreakerPurchased = false;
 
 
     let totalClicks = 0;
@@ -3256,7 +4391,8 @@
             "comboTimerText", "clickButton", "game", "popupArea",
             "levelUpMessage", "clickUpgradeButton", "autoUpgradeButton",
             "critUpgradeButton", "comboUpgradeButton", "megaUpgradeButton",
-            "autoPowerButton"
+            "autoPowerButton", "quantumClickCost", "overclockCost",
+            "quantumClickButton", "overclockButton"
         ];
 
         ids.forEach(function(id) {
@@ -3845,6 +4981,9 @@
         amount
     ) {
 
+        if (!settings.screenEffects || settings.particles <= 0) return;
+        amount = Math.round(amount * (settings.particles / 100));
+
         const colors = [
 
             "#ffffff",
@@ -3995,6 +5134,10 @@
 
             autoPowerCost: 500,
 
+            quantumClickCost: 1000,
+
+            overclockCost: 5000,
+
 
             powerSurgeCost: 2500,
 
@@ -4003,6 +5146,10 @@
             comboOverdriveCost: 50000,
 
             criticalFuryCost: 250000,
+
+            infinityCoreCost: 1000000,
+
+            realityBreakerCost: 10000000,
 
 
             powerSurgePurchased:
@@ -4015,6 +5162,12 @@
                 false,
 
             criticalFuryPurchased:
+                false,
+
+            infinityCorePurchased:
+                false,
+
+            realityBreakerPurchased:
                 false,
 
 
@@ -4090,6 +5243,12 @@
         autoPowerCost =
             fresh.autoPowerCost;
 
+        quantumClickCost =
+            fresh.quantumClickCost;
+
+        overclockCost =
+            fresh.overclockCost;
+
 
         powerSurgeCost =
             fresh.powerSurgeCost;
@@ -4103,6 +5262,12 @@
         criticalFuryCost =
             fresh.criticalFuryCost;
 
+        infinityCoreCost =
+            fresh.infinityCoreCost;
+
+        realityBreakerCost =
+            fresh.realityBreakerCost;
+
 
         powerSurgePurchased =
             fresh.powerSurgePurchased;
@@ -4115,6 +5280,12 @@
 
         criticalFuryPurchased =
             fresh.criticalFuryPurchased;
+
+        infinityCorePurchased =
+            fresh.infinityCorePurchased;
+
+        realityBreakerPurchased =
+            fresh.realityBreakerPurchased;
 
 
         totalClicks =
@@ -4184,14 +5355,20 @@
             comboUpgradeCost,
             megaUpgradeCost,
             autoPowerCost,
+            quantumClickCost,
+            overclockCost,
             powerSurgeCost,
             goldMagnetCost,
             comboOverdriveCost,
             criticalFuryCost,
+            infinityCoreCost,
+            realityBreakerCost,
             powerSurgePurchased,
             goldMagnetPurchased,
             comboOverdrivePurchased,
             criticalFuryPurchased,
+            infinityCorePurchased,
+            realityBreakerPurchased,
             totalClicks,
             criticalHits,
             combo,
@@ -4272,6 +5449,12 @@
         autoPowerCost =
             data.autoPowerCost ?? 500;
 
+        quantumClickCost =
+            data.quantumClickCost ?? 1000;
+
+        overclockCost =
+            data.overclockCost ?? 5000;
+
 
         powerSurgeCost =
             data.powerSurgeCost ?? 2500;
@@ -4284,6 +5467,12 @@
 
         criticalFuryCost =
             data.criticalFuryCost ?? 250000;
+
+        infinityCoreCost =
+            data.infinityCoreCost ?? 1000000;
+
+        realityBreakerCost =
+            data.realityBreakerCost ?? 10000000;
 
 
         powerSurgePurchased =
@@ -4300,6 +5489,14 @@
 
         criticalFuryPurchased =
             data.criticalFuryPurchased ??
+            false;
+
+        infinityCorePurchased =
+            data.infinityCorePurchased ??
+            false;
+
+        realityBreakerPurchased =
+            data.realityBreakerPurchased ??
             false;
 
 
@@ -4347,6 +5544,46 @@
     }
 
 
+
+
+    /* =========================================================
+       UNIVERSAL BUTTON CLICK FEEDBACK
+    ========================================================= */
+
+    function buttonClickAnimation(button) {
+        if (!button || button.disabled) return;
+
+        button.classList.remove("button-clicked");
+        void button.offsetWidth;
+        button.classList.add("button-clicked");
+
+        setTimeout(function() {
+            button.classList.remove("button-clicked");
+        }, 260);
+    }
+
+    function buttonClickSound() {
+        if (!settings.sound || settings.volume <= 0) return;
+
+        playSound(320, 0.045, "triangle", 0.07);
+
+        setTimeout(function() {
+            playSound(520, 0.035, "sine", 0.045);
+        }, 18);
+    }
+
+    document.addEventListener("click", function(event) {
+        const button = event.target.closest("button");
+        if (!button || button.disabled) return;
+
+        // The main clicker already has its own layered click sound/effect.
+        if (button.id !== "clickButton") {
+            buttonClickAnimation(button);
+            buttonClickSound();
+        }
+    }, true);
+
+
     /* =========================================================
        SOUND ENGINE
     ========================================================= */
@@ -4387,6 +5624,10 @@
         volume = 0.04
     ) {
 
+        if (!settings.sound || settings.volume <= 0) {
+            return;
+        }
+
         const ctx =
             getAudioContext();
 
@@ -4405,8 +5646,10 @@
             frequency;
 
 
+        const masterVolume = settings.volume / 100;
+
         gain.gain.setValueAtTime(
-            volume,
+            volume * masterVolume,
             ctx.currentTime
         );
 
@@ -4998,8 +6241,11 @@
             "#7c4dff", "#69f0ae", "#ffffff"
         ];
 
+        if (settings.particles <= 0) return;
+
         const existing = area.querySelectorAll(".click-explosion-particle").length;
-        const amount = Math.min(8, Math.max(0, 56 - existing));
+        const particleScale = settings.particles / 100;
+        const amount = Math.min(8, Math.max(0, Math.round(56 * particleScale) - existing));
         if (amount <= 0) return;
 
         const fragment = document.createDocumentFragment();
@@ -5048,6 +6294,10 @@
         ];
 
         const current = area.querySelectorAll(".particle").length;
+        if (settings.particles <= 0) return;
+
+        const particleScale = settings.particles / 100;
+        amount = Math.round(amount * particleScale);
         const maxParticles = 80;
         amount = Math.min(amount, Math.max(0, maxParticles - current));
 
@@ -5228,10 +6478,16 @@
         DOM.comboUpgradeCost.textContent = formatNumber(comboUpgradeCost);
         DOM.megaUpgradeCost.textContent = formatNumber(megaUpgradeCost);
         DOM.autoPowerCost.textContent = formatNumber(autoPowerCost);
+        DOM.quantumClickCost.textContent = formatNumber(quantumClickCost);
+        DOM.overclockCost.textContent = formatNumber(overclockCost);
         DOM.powerSurgeCost.textContent = formatNumber(powerSurgeCost);
         DOM.goldMagnetCost.textContent = formatNumber(goldMagnetCost);
         DOM.comboOverdriveCost.textContent = formatNumber(comboOverdriveCost);
         DOM.criticalFuryCost.textContent = formatNumber(criticalFuryCost);
+        const infinityCostEl = document.getElementById("infinityCoreCost");
+        const realityCostEl = document.getElementById("realityBreakerCost");
+        if (infinityCostEl) infinityCostEl.textContent = formatNumber(infinityCoreCost);
+        if (realityCostEl) realityCostEl.textContent = formatNumber(realityBreakerCost);
 
         updateButtons();
         updateLockedUpgrades();
@@ -5251,7 +6507,9 @@
             [DOM.critUpgradeButton || document.getElementById("critUpgradeButton"), critUpgradeCost],
             [DOM.comboUpgradeButton || document.getElementById("comboUpgradeButton"), comboUpgradeCost],
             [DOM.megaUpgradeButton || document.getElementById("megaUpgradeButton"), megaUpgradeCost],
-            [DOM.autoPowerButton || document.getElementById("autoPowerButton"), autoPowerCost]
+            [DOM.autoPowerButton || document.getElementById("autoPowerButton"), autoPowerCost],
+            [DOM.quantumClickButton || document.getElementById("quantumClickButton"), quantumClickCost],
+            [DOM.overclockButton || document.getElementById("overclockButton"), overclockCost]
         ];
 
         buttons.forEach(function(item) {
@@ -5260,6 +6518,52 @@
             button.disabled = !affordable;
             button.classList.toggle("affordable", affordable);
         });
+    }
+
+
+    function buyQuantumClick() {
+
+        if (points < quantumClickCost) {
+            return;
+        }
+
+        points -= quantumClickCost;
+        pointsPerClick += 10;
+
+        quantumClickCost =
+            Math.floor(quantumClickCost * 2.2);
+
+        upgradeSound();
+
+        showToast(
+            "⚛️ Quantum Click upgraded! +10 points/click"
+        );
+
+        saveCurrentUserGame();
+        updateScreen();
+    }
+
+
+    function buyOverclock() {
+
+        if (points < overclockCost) {
+            return;
+        }
+
+        points -= overclockCost;
+        pointsPerSecond += 25;
+
+        overclockCost =
+            Math.floor(overclockCost * 2.2);
+
+        upgradeSound();
+
+        showToast(
+            "⚡ Overclock upgraded! +25 points/sec"
+        );
+
+        saveCurrentUserGame();
+        updateScreen();
     }
 
 
@@ -5306,6 +6610,23 @@
             30,
             criticalFuryPurchased,
             points >= criticalFuryCost
+        );
+
+
+        updateLockedUpgrade(
+            "infinityCoreCard",
+            "infinityCoreButton",
+            40,
+            infinityCorePurchased,
+            points >= infinityCoreCost
+        );
+
+        updateLockedUpgrade(
+            "realityBreakerCard",
+            "realityBreakerButton",
+            50,
+            realityBreakerPurchased,
+            points >= realityBreakerCost
         );
 
 
@@ -5811,6 +7132,52 @@
     }
 
 
+    function buyInfinityCore() {
+
+        if (
+            getLevel() < 40 ||
+            points < infinityCoreCost ||
+            infinityCorePurchased
+        ) {
+            return;
+        }
+
+        points -= infinityCoreCost;
+        pointsPerSecond *= 2;
+        infinityCorePurchased = true;
+
+        upgradeSound();
+        showToast("♾️ INFINITY CORE ACTIVATED!");
+        createParticles(70);
+
+        saveCurrentUserGame();
+        updateScreen();
+    }
+
+
+    function buyRealityBreaker() {
+
+        if (
+            getLevel() < 50 ||
+            points < realityBreakerCost ||
+            realityBreakerPurchased
+        ) {
+            return;
+        }
+
+        points -= realityBreakerCost;
+        pointsPerClick *= 2;
+        realityBreakerPurchased = true;
+
+        criticalSound();
+        showToast("🌌 REALITY BREAKER ACTIVATED!");
+        createParticles(90);
+
+        saveCurrentUserGame();
+        updateScreen();
+    }
+
+
     /* =========================================================
        ACHIEVEMENTS
     ========================================================= */
@@ -6008,6 +7375,199 @@
         );
 
         unlockAchievement(
+            "achievement5Million",
+            points >= 5000000,
+            "Fortune Hunter"
+        );
+
+        unlockAchievement(
+            "achievement25Million",
+            points >= 25000000,
+            "Mega Fortune"
+        );
+
+        unlockAchievement(
+            "achievement100Million",
+            points >= 100000000,
+            "Point Overlord"
+        );
+
+        unlockAchievement(
+            "achievement1Billion",
+            points >= 1000000000,
+            "Billionaire"
+        );
+
+        unlockAchievement(
+            "achievement10Billion",
+            points >= 10000000000,
+            "Beyond Wealth"
+        );
+
+        unlockAchievement(
+            "achievement25KClicks",
+            totalClicks >= 25000,
+            "Finger of Fury"
+        );
+
+        unlockAchievement(
+            "achievement50KClicks",
+            totalClicks >= 50000,
+            "Clickstorm"
+        );
+
+        unlockAchievement(
+            "achievement100KClicks",
+            totalClicks >= 100000,
+            "Hundred Thousand"
+        );
+
+        unlockAchievement(
+            "achievement250KClicks",
+            totalClicks >= 250000,
+            "Mechanical Finger"
+        );
+
+        unlockAchievement(
+            "achievement1MClicks",
+            totalClicks >= 1000000,
+            "The Million Click"
+        );
+
+        unlockAchievement(
+            "achievementCombo500",
+            maxCombo >= 500,
+            "Combo Inferno"
+        );
+
+        unlockAchievement(
+            "achievementCombo1000",
+            maxCombo >= 1000,
+            "Thousandfold"
+        );
+
+        unlockAchievement(
+            "achievementCombo2500",
+            maxCombo >= 2500,
+            "Combo Apocalypse"
+        );
+
+        unlockAchievement(
+            "achievementCombo5000",
+            maxCombo >= 5000,
+            "Impossible Rhythm"
+        );
+
+        unlockAchievement(
+            "achievementCrit250",
+            criticalHits >= 250,
+            "Critical Veteran"
+        );
+
+        unlockAchievement(
+            "achievementCrit500",
+            criticalHits >= 500,
+            "Crit Machine"
+        );
+
+        unlockAchievement(
+            "achievementCrit1000",
+            criticalHits >= 1000,
+            "Critical Legend"
+        );
+
+        unlockAchievement(
+            "achievementCrit5000",
+            criticalHits >= 5000,
+            "Critical Singularity"
+        );
+
+        unlockAchievement(
+            "achievementAuto250",
+            pointsPerSecond >= 250,
+            "Assembly Line"
+        );
+
+        unlockAchievement(
+            "achievementAuto500",
+            pointsPerSecond >= 500,
+            "Industrial Power"
+        );
+
+        unlockAchievement(
+            "achievementAuto1000",
+            pointsPerSecond >= 1000,
+            "Autonomous Empire"
+        );
+
+        unlockAchievement(
+            "achievementPower250",
+            pointsPerClick >= 250,
+            "Superhuman Click"
+        );
+
+        unlockAchievement(
+            "achievementPower500",
+            pointsPerClick >= 500,
+            "Click Titan"
+        );
+
+        unlockAchievement(
+            "achievementPower1000",
+            pointsPerClick >= 1000,
+            "One-Click Cataclysm"
+        );
+
+        unlockAchievement(
+            "achievementLevel50",
+            getLevel() >= 50,
+            "Elite Clicker"
+        );
+
+        unlockAchievement(
+            "achievementLevel100",
+            getLevel() >= 100,
+            "Century Legend"
+        );
+
+        unlockAchievement(
+            "achievementMaxCritChance",
+            criticalChance >= 75,
+            "Perfect Aim"
+        );
+
+        unlockAchievement(
+            "achievementCritMultiplier5",
+            criticalMultiplier >= 5,
+            "Devastating Crit"
+        );
+
+        unlockAchievement(
+            "achievementAllSpecialUpgrades",
+            powerSurgePurchased &&
+            goldMagnetPurchased &&
+            comboOverdrivePurchased &&
+            criticalFuryPurchased,
+            "Master Key"
+        );
+
+        unlockAchievement(
+            "achievementUltimateBuild",
+            pointsPerClick >= 500 &&
+            pointsPerSecond >= 500 &&
+            criticalChance >= 75 &&
+            comboBonusPerLevel >= 20 &&
+            criticalMultiplier >= 5,
+            "Ultimate Build"
+        );
+
+        unlockAchievement(
+            "achievementGojoSixEyes",
+            criticalHits >= 10000,
+            "Six Eyes"
+        );
+
+        unlockAchievement(
             "achievementShapeDiamond",
             shapesCollected.diamond === true,
             "Diamond Hands"
@@ -6114,6 +7674,8 @@
                 "unlocked"
             );
         }
+
+        updateAchievementProgress();
     }
 
 
@@ -6264,10 +7826,15 @@
                 "backgroundParticles"
             );
 
+        if (!container) return;
+
+        container.innerHTML = "";
+
+        const count = Math.round(60 * (settings.backgroundParticles / 100));
 
         for (
             let i = 0;
-            i < 30;
+            i < count;
             i++
         ) {
 
@@ -6338,6 +7905,7 @@
     updateAccountUI();
 
     updateScreen();
+    syncSettingsUI();
 
 
     /* =========================================================
@@ -6352,8 +7920,9 @@
         }
     );
 
+    updateAchievementProgress();
+
 </script>
 
 </body>
 </html>
-```
