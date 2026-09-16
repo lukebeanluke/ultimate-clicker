@@ -6445,9 +6445,9 @@
         points +=
             earned;
 
-
-        // Every manual click permanently increases the base points gained by the next click.
-        pointsPerClick += 1;
+        // Every manual click permanently increases the base value
+        // used for the next click by 100 points.
+        pointsPerClick += 100;
 
 
         /* ======================
@@ -7166,7 +7166,7 @@
             clickUpgradeCost;
 
 
-        pointsPerClick *= 2;
+        pointsPerClick++;
 
 
         clickUpgradeCost =
@@ -7182,7 +7182,7 @@
 
 
         showToast(
-            "💪 Power Click upgraded! Points per click doubled!"
+            "💪 Power Click upgraded!"
         );
 
 
