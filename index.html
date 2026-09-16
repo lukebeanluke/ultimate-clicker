@@ -3217,6 +3217,48 @@
 
         </div>
 
+
+
+        <!-- LEGENDARY LEVEL-LOCKED UPGRADES -->
+
+
+    function buyLegendaryUpgrade(config) {
+        if (getLevel() < config.level || points < config.cost || config.getPurchased()) return;
+        points -= config.cost;
+        config.effect();
+        config.setPurchased(true);
+        registerUpgradePurchase();
+        upgradeSound();
+        showToast(config.toast);
+        createParticles(70);
+        saveCurrentUserGame();
+        updateScreen();
+    }
+
+    function buyTitansGrip(){buyLegendaryUpgrade({level:60,cost:titansGripCost,getPurchased:function(){return titansGripPurchased;},setPurchased:function(v){titansGripPurchased=v;},effect:function(){pointsPerClick*=3;},toast:"🗿 TITAN'S GRIP ACTIVATED!"});}
+    function buyChronoEngine(){buyLegendaryUpgrade({level:70,cost:chronoEngineCost,getPurchased:function(){return chronoEnginePurchased;},setPurchased:function(v){chronoEnginePurchased=v;},effect:function(){pointsPerSecond*=3;},toast:"⏳ CHRONO ENGINE ACTIVATED!"});}
+    function buyLuckyStar(){buyLegendaryUpgrade({level:80,cost:luckyStarCost,getPurchased:function(){return luckyStarPurchased;},setPurchased:function(v){luckyStarPurchased=v;},effect:function(){criticalChance=Math.min(75,criticalChance+10);},toast:"🌟 LUCKY STAR ACTIVATED!"});}
+    function buyComboAscension(){buyLegendaryUpgrade({level:90,cost:comboAscensionCost,getPurchased:function(){return comboAscensionPurchased;},setPurchased:function(v){comboAscensionPurchased=v;},effect:function(){comboBonusPerLevel+=2;},toast:"🔥 COMBO ASCENSION ACTIVATED!"});}
+    function buyGoldenEpoch(){buyLegendaryUpgrade({level:100,cost:goldenEpochCost,getPurchased:function(){return goldenEpochPurchased;},setPurchased:function(v){goldenEpochPurchased=v;},effect:function(){totalPointsMultiplier*=1.5;},toast:"🏛️ GOLDEN EPOCH ACTIVATED!"});}
+    function buyHyperdrive(){buyLegendaryUpgrade({level:110,cost:hyperdriveCost,getPurchased:function(){return hyperdrivePurchased;},setPurchased:function(v){hyperdrivePurchased=v;},effect:function(){pointsPerSecond+=250;},toast:"🚀 HYPERDRIVE ACTIVATED!"});}
+    function buyVoidTouch(){buyLegendaryUpgrade({level:120,cost:voidTouchCost,getPurchased:function(){return voidTouchPurchased;},setPurchased:function(v){voidTouchPurchased=v;},effect:function(){pointsPerClick*=5;},toast:"🌑 VOID TOUCH ACTIVATED!"});}
+    function buyCriticalSingularity(){buyLegendaryUpgrade({level:130,cost:criticalSingularityCost,getPurchased:function(){return criticalSingularityPurchased;},setPurchased:function(v){criticalSingularityPurchased=v;},effect:function(){criticalMultiplier+=5;},toast:"☄️ CRITICAL SINGULARITY ACTIVATED!"});}
+    function buyAutomationNexus(){buyLegendaryUpgrade({level:140,cost:automationNexusCost,getPurchased:function(){return automationNexusPurchased;},setPurchased:function(v){automationNexusPurchased=v;},effect:function(){pointsPerSecond*=4;},toast:"🏭 AUTOMATION NEXUS ACTIVATED!"});}
+    function buyCosmicMultiplier(){buyLegendaryUpgrade({level:150,cost:cosmicMultiplierCost,getPurchased:function(){return cosmicMultiplierPurchased;},setPurchased:function(v){cosmicMultiplierPurchased=v;},effect:function(){totalPointsMultiplier*=2;},toast:"🌌 COSMIC MULTIPLIER ACTIVATED!"});}
+    function buyStarForge(){buyLegendaryUpgrade({level:160,cost:starForgeCost,getPurchased:function(){return starForgePurchased;},setPurchased:function(v){starForgePurchased=v;},effect:function(){pointsPerClick*=10;},toast:"⭐ STAR FORGE ACTIVATED!"});}
+    function buyLimitlessEngine(){buyLegendaryUpgrade({level:170,cost:limitlessEngineCost,getPurchased:function(){return limitlessEnginePurchased;},setPurchased:function(v){limitlessEnginePurchased=v;},effect:function(){pointsPerSecond*=5;},toast:"♾️ LIMITLESS ENGINE ACTIVATED!"});}
+        <div class="card level-locked" id="titansGripCard"><div class="unlock-label">🔒 Unlocks at Level 60</div><h3>🗿 Titan's Grip</h3><p>Permanently triples your points per click.</p><div class="cost">Cost: <span id="titansGripCost">50.00M</span></div><button id="titansGripButton" onclick="buyTitansGrip()" disabled>🔒 Reach Level 60</button></div>
+        <div class="card level-locked" id="chronoEngineCard"><div class="unlock-label">🔒 Unlocks at Level 70</div><h3>⏳ Chrono Engine</h3><p>Permanently triples your points generated per second.</p><div class="cost">Cost: <span id="chronoEngineCost">250.00M</span></div><button id="chronoEngineButton" onclick="buyChronoEngine()" disabled>🔒 Reach Level 70</button></div>
+        <div class="card level-locked" id="luckyStarCard"><div class="unlock-label">🔒 Unlocks at Level 80</div><h3>🌟 Lucky Star</h3><p>Permanently adds 10% critical chance, up to the 75% cap.</p><div class="cost">Cost: <span id="luckyStarCost">1.00B</span></div><button id="luckyStarButton" onclick="buyLuckyStar()" disabled>🔒 Reach Level 80</button></div>
+        <div class="card level-locked" id="comboAscensionCard"><div class="unlock-label">🔒 Unlocks at Level 90</div><h3>🔥 Combo Ascension</h3><p>Permanently adds 2% more combo bonus per combo level.</p><div class="cost">Cost: <span id="comboAscensionCost">5.00B</span></div><button id="comboAscensionButton" onclick="buyComboAscension()" disabled>🔒 Reach Level 90</button></div>
+        <div class="card level-locked" id="goldenEpochCard"><div class="unlock-label">🔒 Unlocks at Level 100</div><h3>🏛️ Golden Epoch</h3><p>Permanently multiplies all points earned by 1.5×.</p><div class="cost">Cost: <span id="goldenEpochCost">25.00B</span></div><button id="goldenEpochButton" onclick="buyGoldenEpoch()" disabled>🔒 Reach Level 100</button></div>
+        <div class="card level-locked" id="hyperdriveCard"><div class="unlock-label">🔒 Unlocks at Level 110</div><h3>🚀 Hyperdrive</h3><p>Permanently adds 250 points per second.</p><div class="cost">Cost: <span id="hyperdriveCost">100.00B</span></div><button id="hyperdriveButton" onclick="buyHyperdrive()" disabled>🔒 Reach Level 110</button></div>
+        <div class="card level-locked" id="voidTouchCard"><div class="unlock-label">🔒 Unlocks at Level 120</div><h3>🌑 Void Touch</h3><p>Permanently quintuples your points per click.</p><div class="cost">Cost: <span id="voidTouchCost">500.00B</span></div><button id="voidTouchButton" onclick="buyVoidTouch()" disabled>🔒 Reach Level 120</button></div>
+        <div class="card level-locked" id="criticalSingularityCard"><div class="unlock-label">🔒 Unlocks at Level 130</div><h3>☄️ Critical Singularity</h3><p>Permanently adds 5× to your critical multiplier.</p><div class="cost">Cost: <span id="criticalSingularityCost">2.50T</span></div><button id="criticalSingularityButton" onclick="buyCriticalSingularity()" disabled>🔒 Reach Level 130</button></div>
+        <div class="card level-locked" id="automationNexusCard"><div class="unlock-label">🔒 Unlocks at Level 140</div><h3>🏭 Automation Nexus</h3><p>Permanently quadruples points generated per second.</p><div class="cost">Cost: <span id="automationNexusCost">10.00T</span></div><button id="automationNexusButton" onclick="buyAutomationNexus()" disabled>🔒 Reach Level 140</button></div>
+        <div class="card level-locked" id="cosmicMultiplierCard"><div class="unlock-label">🔒 Unlocks at Level 150</div><h3>🌌 Cosmic Multiplier</h3><p>Permanently doubles your total points multiplier.</p><div class="cost">Cost: <span id="cosmicMultiplierCost">50.00T</span></div><button id="cosmicMultiplierButton" onclick="buyCosmicMultiplier()" disabled>🔒 Reach Level 150</button></div>
+        <div class="card level-locked" id="starForgeCard"><div class="unlock-label">🔒 Unlocks at Level 160</div><h3>⭐ Star Forge</h3><p>Permanently multiplies your points per click by 10×.</p><div class="cost">Cost: <span id="starForgeCost">250.00T</span></div><button id="starForgeButton" onclick="buyStarForge()" disabled>🔒 Reach Level 160</button></div>
+        <div class="card level-locked" id="limitlessEngineCard"><div class="unlock-label">🔒 Unlocks at Level 170</div><h3>♾️ Limitless Engine</h3><p>Permanently quintuples your points generated per second.</p><div class="cost">Cost: <span id="limitlessEngineCost">1.00Q</span></div><button id="limitlessEngineButton" onclick="buyLimitlessEngine()" disabled>🔒 Reach Level 170</button></div>
             </div>
         </section>
     </div>
@@ -4557,6 +4599,32 @@
 
     let realityBreakerPurchased = false;
 
+    let titansGripCost = 50000000;
+    let chronoEngineCost = 250000000;
+    let luckyStarCost = 1000000000;
+    let comboAscensionCost = 5000000000;
+    let goldenEpochCost = 25000000000;
+    let hyperdriveCost = 100000000000;
+    let voidTouchCost = 500000000000;
+    let criticalSingularityCost = 2500000000000;
+    let automationNexusCost = 10000000000000;
+    let cosmicMultiplierCost = 50000000000000;
+    let starForgeCost = 250000000000000;
+    let limitlessEngineCost = 1000000000000000;
+
+    let titansGripPurchased = false;
+    let chronoEnginePurchased = false;
+    let luckyStarPurchased = false;
+    let comboAscensionPurchased = false;
+    let goldenEpochPurchased = false;
+    let hyperdrivePurchased = false;
+    let voidTouchPurchased = false;
+    let criticalSingularityPurchased = false;
+    let automationNexusPurchased = false;
+    let cosmicMultiplierPurchased = false;
+    let starForgePurchased = false;
+    let limitlessEnginePurchased = false;
+
     // Every purchased upgrade permanently makes future level requirements harder.
     let totalUpgradesPurchased = 0;
 
@@ -4614,7 +4682,13 @@
             "levelUpMessage", "clickUpgradeButton", "autoUpgradeButton",
             "critUpgradeButton", "comboUpgradeButton", "megaUpgradeButton",
             "autoPowerButton", "quantumClickCost", "overclockCost",
-            "quantumClickButton", "overclockButton"
+            "quantumClickButton", "overclockButton",
+            "titansGripCost", "chronoEngineCost", "luckyStarCost", "comboAscensionCost",
+            "goldenEpochCost", "hyperdriveCost", "voidTouchCost", "criticalSingularityCost",
+            "automationNexusCost", "cosmicMultiplierCost", "starForgeCost", "limitlessEngineCost",
+            "titansGripButton", "chronoEngineButton", "luckyStarButton", "comboAscensionButton",
+            "goldenEpochButton", "hyperdriveButton", "voidTouchButton", "criticalSingularityButton",
+            "automationNexusButton", "cosmicMultiplierButton", "starForgeButton", "limitlessEngineButton"
         ];
 
         ids.forEach(function(id) {
@@ -5368,6 +5442,19 @@
 
             realityBreakerCost: 10000000,
 
+            titansGripCost: 50000000,
+            chronoEngineCost: 250000000,
+            luckyStarCost: 1000000000,
+            comboAscensionCost: 5000000000,
+            goldenEpochCost: 25000000000,
+            hyperdriveCost: 100000000000,
+            voidTouchCost: 500000000000,
+            criticalSingularityCost: 2500000000000,
+            automationNexusCost: 10000000000000,
+            cosmicMultiplierCost: 50000000000000,
+            starForgeCost: 250000000000000,
+            limitlessEngineCost: 1000000000000000,
+
 
             powerSurgePurchased:
                 false,
@@ -5386,6 +5473,19 @@
 
             realityBreakerPurchased:
                 false,
+
+            titansGripPurchased: false,
+            chronoEnginePurchased: false,
+            luckyStarPurchased: false,
+            comboAscensionPurchased: false,
+            goldenEpochPurchased: false,
+            hyperdrivePurchased: false,
+            voidTouchPurchased: false,
+            criticalSingularityPurchased: false,
+            automationNexusPurchased: false,
+            cosmicMultiplierPurchased: false,
+            starForgePurchased: false,
+            limitlessEnginePurchased: false,
 
             totalUpgradesPurchased: 0,
 
@@ -5487,6 +5587,19 @@
         realityBreakerCost =
             fresh.realityBreakerCost;
 
+        titansGripCost = fresh.titansGripCost;
+        chronoEngineCost = fresh.chronoEngineCost;
+        luckyStarCost = fresh.luckyStarCost;
+        comboAscensionCost = fresh.comboAscensionCost;
+        goldenEpochCost = fresh.goldenEpochCost;
+        hyperdriveCost = fresh.hyperdriveCost;
+        voidTouchCost = fresh.voidTouchCost;
+        criticalSingularityCost = fresh.criticalSingularityCost;
+        automationNexusCost = fresh.automationNexusCost;
+        cosmicMultiplierCost = fresh.cosmicMultiplierCost;
+        starForgeCost = fresh.starForgeCost;
+        limitlessEngineCost = fresh.limitlessEngineCost;
+
 
         powerSurgePurchased =
             fresh.powerSurgePurchased;
@@ -5505,6 +5618,19 @@
 
         realityBreakerPurchased =
             fresh.realityBreakerPurchased;
+
+        titansGripPurchased = fresh.titansGripPurchased;
+        chronoEnginePurchased = fresh.chronoEnginePurchased;
+        luckyStarPurchased = fresh.luckyStarPurchased;
+        comboAscensionPurchased = fresh.comboAscensionPurchased;
+        goldenEpochPurchased = fresh.goldenEpochPurchased;
+        hyperdrivePurchased = fresh.hyperdrivePurchased;
+        voidTouchPurchased = fresh.voidTouchPurchased;
+        criticalSingularityPurchased = fresh.criticalSingularityPurchased;
+        automationNexusPurchased = fresh.automationNexusPurchased;
+        cosmicMultiplierPurchased = fresh.cosmicMultiplierPurchased;
+        starForgePurchased = fresh.starForgePurchased;
+        limitlessEnginePurchased = fresh.limitlessEnginePurchased;
 
         totalUpgradesPurchased =
             fresh.totalUpgradesPurchased;
@@ -5585,12 +5711,18 @@
             criticalFuryCost,
             infinityCoreCost,
             realityBreakerCost,
+            titansGripCost, chronoEngineCost, luckyStarCost, comboAscensionCost,
+            goldenEpochCost, hyperdriveCost, voidTouchCost, criticalSingularityCost,
+            automationNexusCost, cosmicMultiplierCost, starForgeCost, limitlessEngineCost,
             powerSurgePurchased,
             goldMagnetPurchased,
             comboOverdrivePurchased,
             criticalFuryPurchased,
             infinityCorePurchased,
             realityBreakerPurchased,
+            titansGripPurchased, chronoEnginePurchased, luckyStarPurchased, comboAscensionPurchased,
+            goldenEpochPurchased, hyperdrivePurchased, voidTouchPurchased, criticalSingularityPurchased,
+            automationNexusPurchased, cosmicMultiplierPurchased, starForgePurchased, limitlessEnginePurchased,
             totalUpgradesPurchased,
             totalClicks,
             criticalHits,
@@ -5697,6 +5829,19 @@
         realityBreakerCost =
             data.realityBreakerCost ?? 10000000;
 
+        titansGripCost = data.titansGripCost ?? 50000000;
+        chronoEngineCost = data.chronoEngineCost ?? 250000000;
+        luckyStarCost = data.luckyStarCost ?? 1000000000;
+        comboAscensionCost = data.comboAscensionCost ?? 5000000000;
+        goldenEpochCost = data.goldenEpochCost ?? 25000000000;
+        hyperdriveCost = data.hyperdriveCost ?? 100000000000;
+        voidTouchCost = data.voidTouchCost ?? 500000000000;
+        criticalSingularityCost = data.criticalSingularityCost ?? 2500000000000;
+        automationNexusCost = data.automationNexusCost ?? 10000000000000;
+        cosmicMultiplierCost = data.cosmicMultiplierCost ?? 50000000000000;
+        starForgeCost = data.starForgeCost ?? 250000000000000;
+        limitlessEngineCost = data.limitlessEngineCost ?? 1000000000000000;
+
 
         powerSurgePurchased =
             data.powerSurgePurchased ??
@@ -5721,6 +5866,19 @@
         realityBreakerPurchased =
             data.realityBreakerPurchased ??
             false;
+
+        titansGripPurchased = data.titansGripPurchased ?? false;
+        chronoEnginePurchased = data.chronoEnginePurchased ?? false;
+        luckyStarPurchased = data.luckyStarPurchased ?? false;
+        comboAscensionPurchased = data.comboAscensionPurchased ?? false;
+        goldenEpochPurchased = data.goldenEpochPurchased ?? false;
+        hyperdrivePurchased = data.hyperdrivePurchased ?? false;
+        voidTouchPurchased = data.voidTouchPurchased ?? false;
+        criticalSingularityPurchased = data.criticalSingularityPurchased ?? false;
+        automationNexusPurchased = data.automationNexusPurchased ?? false;
+        cosmicMultiplierPurchased = data.cosmicMultiplierPurchased ?? false;
+        starForgePurchased = data.starForgePurchased ?? false;
+        limitlessEnginePurchased = data.limitlessEnginePurchased ?? false;
 
         totalUpgradesPurchased =
             data.totalUpgradesPurchased ??
@@ -6288,6 +6446,10 @@
             earned;
 
 
+        // Every manual click permanently increases the base points gained by the next click.
+        pointsPerClick += 1;
+
+
         /* ======================
            COMBO 10
         ====================== */
@@ -6719,6 +6881,14 @@
         const realityCostEl = document.getElementById("realityBreakerCost");
         if (infinityCostEl) infinityCostEl.textContent = formatNumber(infinityCoreCost);
         if (realityCostEl) realityCostEl.textContent = formatNumber(realityBreakerCost);
+        [
+            [DOM.titansGripCost, titansGripCost], [DOM.chronoEngineCost, chronoEngineCost],
+            [DOM.luckyStarCost, luckyStarCost], [DOM.comboAscensionCost, comboAscensionCost],
+            [DOM.goldenEpochCost, goldenEpochCost], [DOM.hyperdriveCost, hyperdriveCost],
+            [DOM.voidTouchCost, voidTouchCost], [DOM.criticalSingularityCost, criticalSingularityCost],
+            [DOM.automationNexusCost, automationNexusCost], [DOM.cosmicMultiplierCost, cosmicMultiplierCost],
+            [DOM.starForgeCost, starForgeCost], [DOM.limitlessEngineCost, limitlessEngineCost]
+        ].forEach(function(entry){ if (entry[0]) entry[0].textContent = formatNumber(entry[1]); });
 
         updateButtons();
         updateLockedUpgrades();
@@ -6863,6 +7033,18 @@
             realityBreakerPurchased,
             points >= realityBreakerCost
         );
+        updateLockedUpgrade("titansGripCard", "titansGripButton", 60, titansGripPurchased, points >= titansGripCost);
+        updateLockedUpgrade("chronoEngineCard", "chronoEngineButton", 70, chronoEnginePurchased, points >= chronoEngineCost);
+        updateLockedUpgrade("luckyStarCard", "luckyStarButton", 80, luckyStarPurchased, points >= luckyStarCost);
+        updateLockedUpgrade("comboAscensionCard", "comboAscensionButton", 90, comboAscensionPurchased, points >= comboAscensionCost);
+        updateLockedUpgrade("goldenEpochCard", "goldenEpochButton", 100, goldenEpochPurchased, points >= goldenEpochCost);
+        updateLockedUpgrade("hyperdriveCard", "hyperdriveButton", 110, hyperdrivePurchased, points >= hyperdriveCost);
+        updateLockedUpgrade("voidTouchCard", "voidTouchButton", 120, voidTouchPurchased, points >= voidTouchCost);
+        updateLockedUpgrade("criticalSingularityCard", "criticalSingularityButton", 130, criticalSingularityPurchased, points >= criticalSingularityCost);
+        updateLockedUpgrade("automationNexusCard", "automationNexusButton", 140, automationNexusPurchased, points >= automationNexusCost);
+        updateLockedUpgrade("cosmicMultiplierCard", "cosmicMultiplierButton", 150, cosmicMultiplierPurchased, points >= cosmicMultiplierCost);
+        updateLockedUpgrade("starForgeCard", "starForgeButton", 160, starForgePurchased, points >= starForgeCost);
+        updateLockedUpgrade("limitlessEngineCard", "limitlessEngineButton", 170, limitlessEnginePurchased, points >= limitlessEngineCost);
 
 
         function updateLockedUpgrade(
@@ -6984,7 +7166,7 @@
             clickUpgradeCost;
 
 
-        pointsPerClick++;
+        pointsPerClick *= 2;
 
 
         clickUpgradeCost =
@@ -7000,7 +7182,7 @@
 
 
         showToast(
-            "💪 Power Click upgraded!"
+            "💪 Power Click upgraded! Points per click doubled!"
         );
 
 
