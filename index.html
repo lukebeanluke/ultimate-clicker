@@ -470,6 +470,24 @@
                 8px 0 20px;
         }
 
+        #themeBadge {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin: 0 0 16px;
+            padding: 7px 12px;
+            border: 1px solid rgba(255,255,255,0.14);
+            border-radius: 999px;
+            background: rgba(0,0,0,0.22);
+            box-shadow: 0 0 18px var(--glow);
+            color: var(--highlight);
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.4px;
+            transition: all 0.45s ease;
+        }
+
         #playerWelcome {
             position: relative;
 
@@ -2470,6 +2488,8 @@
         <div class="subtitle">
             Build combos. Hit criticals. Become the click master.
         </div>
+
+        <div id="themeBadge" aria-live="polite">⚡ Classic Theme</div>
 
         <div id="playerWelcome">
             Playing as Guest
@@ -4805,214 +4825,27 @@
 
     const levelThemes = [
 
-        {
-            primary:
-                "#3478f6",
-
-            secondary:
-                "#7c4dff",
-
-            accent:
-                "#4dd0e1",
-
-            highlight:
-                "#ffd740",
-
-            background:
-                "#090914",
-
-            glow:
-                "rgba(77,208,225,0.45)"
-        },
-
-
-        {
-            primary:
-                "#00bfa5",
-
-            secondary:
-                "#00e676",
-
-            accent:
-                "#69f0ae",
-
-            highlight:
-                "#ffff00",
-
-            background:
-                "#061412",
-
-            glow:
-                "rgba(105,240,174,0.45)"
-        },
-
-
-        {
-            primary:
-                "#ff6d00",
-
-            secondary:
-                "#ff1744",
-
-            accent:
-                "#ffab40",
-
-            highlight:
-                "#ffe082",
-
-            background:
-                "#180906",
-
-            glow:
-                "rgba(255,109,0,0.5)"
-        },
-
-
-        {
-            primary:
-                "#aa00ff",
-
-            secondary:
-                "#e040fb",
-
-            accent:
-                "#ea80fc",
-
-            highlight:
-                "#f8bbd0",
-
-            background:
-                "#120615",
-
-            glow:
-                "rgba(224,64,251,0.5)"
-        },
-
-
-        {
-            primary:
-                "#00b8d4",
-
-            secondary:
-                "#2979ff",
-
-            accent:
-                "#80deea",
-
-            highlight:
-                "#40c4ff",
-
-            background:
-                "#061018",
-
-            glow:
-                "rgba(0,188,212,0.5)"
-        },
-
-
-        {
-            primary:
-                "#d50000",
-
-            secondary:
-                "#ff4081",
-
-            accent:
-                "#ff80ab",
-
-            highlight:
-                "#ff5252",
-
-            background:
-                "#190608",
-
-            glow:
-                "rgba(255,64,129,0.5)"
-        },
-
-
-        {
-            primary:
-                "#00c853",
-
-            secondary:
-                "#64dd17",
-
-            accent:
-                "#b2ff59",
-
-            highlight:
-                "#eeff41",
-
-            background:
-                "#071305",
-
-            glow:
-                "rgba(100,221,23,0.5)"
-        },
-
-
-        {
-            primary:
-                "#6200ea",
-
-            secondary:
-                "#304ffe",
-
-            accent:
-                "#7c4dff",
-
-            highlight:
-                "#b388ff",
-
-            background:
-                "#090712",
-
-            glow:
-                "rgba(98,0,234,0.5)"
-        },
-
-
-        {
-            primary:
-                "#ff0080",
-
-            secondary:
-                "#ff8c00",
-
-            accent:
-                "#ffea00",
-
-            highlight:
-                "#ffffff",
-
-            background:
-                "#180608",
-
-            glow:
-                "rgba(255,0,128,0.5)"
-        },
-
-
-        {
-            primary:
-                "#00e5ff",
-
-            secondary:
-                "#1de9b6",
-
-            accent:
-                "#64ffda",
-
-            highlight:
-                "#ffffff",
-
-            background:
-                "#041112",
-
-            glow:
-                "rgba(0,229,255,0.5)"
-        }
+        { name: "Classic", icon: "⚡", primary: "#3478f6", secondary: "#7c4dff", accent: "#4dd0e1", highlight: "#ffd740", background: "#090914", glow: "rgba(77,208,225,0.45)" },
+        { name: "Emerald", icon: "💚", primary: "#00bfa5", secondary: "#00e676", accent: "#69f0ae", highlight: "#ffff00", background: "#061412", glow: "rgba(105,240,174,0.45)" },
+        { name: "Inferno", icon: "🔥", primary: "#ff6d00", secondary: "#ff1744", accent: "#ffab40", highlight: "#ffe082", background: "#180906", glow: "rgba(255,109,0,0.5)" },
+        { name: "Neon Purple", icon: "💜", primary: "#aa00ff", secondary: "#e040fb", accent: "#ea80fc", highlight: "#f8bbd0", background: "#120615", glow: "rgba(224,64,251,0.5)" },
+        { name: "Ocean", icon: "🌊", primary: "#00b8d4", secondary: "#2979ff", accent: "#80deea", highlight: "#40c4ff", background: "#061018", glow: "rgba(0,188,212,0.5)" },
+        { name: "Crimson", icon: "❤️", primary: "#d50000", secondary: "#ff4081", accent: "#ff80ab", highlight: "#ff5252", background: "#190608", glow: "rgba(255,64,129,0.5)" },
+        { name: "Toxic", icon: "☢️", primary: "#00c853", secondary: "#64dd17", accent: "#b2ff59", highlight: "#eeff41", background: "#071305", glow: "rgba(100,221,23,0.5)" },
+        { name: "Royal", icon: "👑", primary: "#6200ea", secondary: "#304ffe", accent: "#7c4dff", highlight: "#b388ff", background: "#090712", glow: "rgba(98,0,234,0.5)" },
+        { name: "Sunset", icon: "🌅", primary: "#ff0080", secondary: "#ff8c00", accent: "#ffea00", highlight: "#ffffff", background: "#180608", glow: "rgba(255,0,128,0.5)" },
+        { name: "Aqua", icon: "💎", primary: "#00e5ff", secondary: "#1de9b6", accent: "#64ffda", highlight: "#ffffff", background: "#041112", glow: "rgba(0,229,255,0.5)" },
+
+        { name: "Dinosaurs", icon: "🦖", primary: "#3f8f3f", secondary: "#7a5c2e", accent: "#9be15d", highlight: "#f4d35e", background: "#0b1609", glow: "rgba(155,225,93,0.48)" },
+        { name: "Gaming", icon: "🎮", primary: "#00e5ff", secondary: "#8a2be2", accent: "#ff2bd6", highlight: "#7cff00", background: "#080812", glow: "rgba(0,229,255,0.5)" },
+        { name: "Emoji", icon: "😀", primary: "#ffd000", secondary: "#ff4f81", accent: "#00c2ff", highlight: "#ffffff", background: "#171007", glow: "rgba(255,208,0,0.5)" },
+        { name: "Space", icon: "🚀", primary: "#5b5bd6", secondary: "#00b8ff", accent: "#b66dff", highlight: "#ffffff", background: "#040513", glow: "rgba(91,91,214,0.5)" },
+        { name: "Volcano", icon: "🌋", primary: "#ff3d00", secondary: "#b71c1c", accent: "#ffb300", highlight: "#fff3e0", background: "#160704", glow: "rgba(255,61,0,0.55)" },
+        { name: "Candy", icon: "🍭", primary: "#ff4fa3", secondary: "#9c6cff", accent: "#63e6ff", highlight: "#fff0f8", background: "#160914", glow: "rgba(255,79,163,0.5)" },
+        { name: "Ice", icon: "🧊", primary: "#42a5f5", secondary: "#80deea", accent: "#e1f5fe", highlight: "#ffffff", background: "#061018", glow: "rgba(128,222,234,0.5)" },
+        { name: "Forest", icon: "🌲", primary: "#2e7d32", secondary: "#1b5e20", accent: "#81c784", highlight: "#dcedc8", background: "#061007", glow: "rgba(129,199,132,0.48)" },
+        { name: "Cyberpunk", icon: "🤖", primary: "#ff00aa", secondary: "#00f0ff", accent: "#7dff00", highlight: "#ffffff", background: "#09030d", glow: "rgba(255,0,170,0.52)" },
+        { name: "Arcade", icon: "🕹️", primary: "#ff1744", secondary: "#651fff", accent: "#00e676", highlight: "#ffea00", background: "#09070f", glow: "rgba(101,31,255,0.5)" }
     ];
 
 
@@ -5065,6 +4898,16 @@
             "--glow",
             theme.glow
         );
+
+        root.style.setProperty(
+            "--themeEmoji",
+            JSON.stringify(theme.icon)
+        );
+
+        const themeBadge = document.getElementById("themeBadge");
+        if (themeBadge) {
+            themeBadge.textContent = theme.icon + " " + theme.name + " Theme";
+        }
     }
 
 
@@ -6294,6 +6137,72 @@
 
 
     /* =========================================================
+       RNG CLICK EVENTS
+    ========================================================= */
+
+    function rollRandomClickEvent() {
+        const roll = Math.random();
+
+        if (roll < 0.005) {
+            return {
+                name: "🌌 COSMIC SURGE!",
+                multiplier: 7,
+                comboBoost: 7,
+                forceCritical: true,
+                popupClass: "critical-popup",
+                particles: 70
+            };
+        }
+
+        if (roll < 0.02) {
+            return {
+                name: "✨ GOLDEN SURGE!",
+                multiplier: 3.5,
+                comboBoost: 2,
+                forceCritical: false,
+                popupClass: "combo-popup",
+                particles: 50
+            };
+        }
+
+        if (roll < 0.08) {
+            return {
+                name: "🍀 LUCKY SURGE!",
+                multiplier: 1.75,
+                comboBoost: 1,
+                forceCritical: false,
+                popupClass: "combo-popup",
+                particles: 30
+            };
+        }
+
+        if (roll < 0.13) {
+            return {
+                name: "🔥 COMBO BURST!",
+                multiplier: 1.25,
+                comboBoost: 5,
+                forceCritical: false,
+                popupClass: "combo-popup",
+                particles: 36
+            };
+        }
+
+        if (roll < 0.145) {
+            return {
+                name: "⚡ WILD CRIT!",
+                multiplier: 1,
+                comboBoost: 0,
+                forceCritical: true,
+                popupClass: "critical-popup",
+                particles: 45
+            };
+        }
+
+        return null;
+    }
+
+
+    /* =========================================================
        CLICK
     ========================================================= */
 
@@ -6302,6 +6211,18 @@
         totalClicks++;
 
         combo++;
+
+        // Each click gets a separate RNG roll for an occasional bonus event.
+        // Events can add combo and/or multiply the click reward.
+        const rngEvent = rollRandomClickEvent();
+
+        if (rngEvent && rngEvent.comboBoost > 0) {
+            combo += rngEvent.comboBoost;
+
+            if (combo > maxCombo) {
+                maxCombo = combo;
+            }
+        }
 
         // Lightweight burst from the button on every press.
         createClickExplosion();
@@ -6332,14 +6253,47 @@
             (comboBonus / 100);
 
 
-        const isCritical =
+        let isCritical =
             Math.random() *
             100 <
             criticalChance;
 
+        if (rngEvent && rngEvent.forceCritical) {
+            isCritical = true;
+        }
+
 
         let multiplier =
             comboMultiplier;
+
+        if (rngEvent) {
+            multiplier *= rngEvent.multiplier;
+
+            showPopup(
+                rngEvent.name,
+                rngEvent.popupClass
+            );
+
+            createParticles(
+                rngEvent.particles
+            );
+
+            playSound(
+                rngEvent.forceCritical ? 1000 : 800,
+                0.14,
+                "triangle",
+                0.14
+            );
+
+            setTimeout(function() {
+                playSound(
+                    rngEvent.forceCritical ? 1400 : 1100,
+                    0.16,
+                    "triangle",
+                    0.11
+                );
+            }, 90);
+        }
 
 
         if (isCritical) {
